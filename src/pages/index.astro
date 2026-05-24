@@ -1,0 +1,458 @@
+---
+import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout>
+  <!-- HERO SECTION -->
+  <section class="relative min-h-[90vh] flex items-center overflow-hidden grid-bg">
+    <!-- Animated background -->
+    <div class="absolute inset-0 opacity-30 pointer-events-none">
+      <div class="absolute top-1/4 -left-1/4 w-[600px] h-[600px] bg-blood/10 rounded-full blur-[120px]"></div>
+      <div class="absolute bottom-1/4 -right-1/4 w-[600px] h-[600px] bg-blood-dim/10 rounded-full blur-[120px]"></div>
+    </div>
+
+    <!-- ASCII art decoration -->
+    <div class="absolute top-32 right-8 hidden xl:block opacity-20 pointer-events-none">
+      <pre class="ascii">
+   ╔══════════════════╗
+   ║  TARGET ACQUIRED ║
+   ║  STATUS: ACTIVE  ║
+   ║  CLASS: RED TEAM ║
+   ╚══════════════════╝
+      </pre>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-6 py-20 w-full">
+      <!-- Top mini-badge -->
+      <div class="flex items-center gap-3 mb-8 font-mono text-xs animate-fade-in">
+        <span class="num-label">[01]</span>
+        <span class="h-px w-12 bg-blood"></span>
+        <span class="text-ghost-light uppercase tracking-widest">Offensive Security Consultancy</span>
+      </div>
+
+      <!-- Main headline -->
+      <h1 class="font-display font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.95] mb-8 animate-fade-up">
+        <span class="block text-bone">Adversary</span>
+        <span class="block text-bone">simulation,</span>
+        <span class="block text-blood">without the theatre.</span>
+      </h1>
+
+      <p class="text-ghost-light text-lg md:text-xl max-w-2xl mb-12 leading-relaxed font-light animate-fade-up" style="animation-delay: 0.2s">
+        Red team engagements, penetration testing, and adversary emulation for organizations that need real attack depth — not automated scanners with a logo on top.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row gap-4 mb-16 animate-fade-up" style="animation-delay: 0.4s">
+        <a href={`${base}contact`} class="cta-primary">
+          Request Engagement
+          <span>→</span>
+        </a>
+        <a href={`${base}services`} class="cta-secondary">
+          View Services
+        </a>
+      </div>
+
+      <!-- Stats row -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t border-ash-lighter animate-fade-up" style="animation-delay: 0.6s">
+        <div>
+          <div class="font-display text-3xl md:text-4xl text-blood font-bold">6+</div>
+          <div class="text-[0.7rem] font-mono uppercase tracking-widest text-ghost mt-2">Years in Offsec</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl md:text-4xl text-blood font-bold">10</div>
+          <div class="text-[0.7rem] font-mono uppercase tracking-widest text-ghost mt-2">Published CVEs</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl md:text-4xl text-blood font-bold">OSEP</div>
+          <div class="text-[0.7rem] font-mono uppercase tracking-widest text-ghost mt-2">+ OSCP / CRTP</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl md:text-4xl text-blood font-bold">EU</div>
+          <div class="text-[0.7rem] font-mono uppercase tracking-widest text-ghost mt-2">Cyprus Ltd</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ETHOS SECTION -->
+  <section class="py-32 border-t border-ash-lighter relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-12 gap-8">
+        <div class="md:col-span-4">
+          <div class="sticky top-32">
+            <div class="num-label mb-4">[02] // ETHOS</div>
+            <h2 class="font-display text-4xl md:text-5xl font-bold leading-tight">
+              We don't run<br />
+              <span class="text-blood">checkbox audits.</span>
+            </h2>
+          </div>
+        </div>
+
+        <div class="md:col-span-8 space-y-12">
+          <div class="reveal">
+            <p class="text-xl md:text-2xl text-bone leading-relaxed font-light">
+              Most security assessments are theatre: a Nessus scan, a screenshot of CVE-2017-something, a 100-page PDF nobody reads. We do something different.
+            </p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-8 reveal">
+            <div class="border-l border-blood pl-6">
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">// Field-tested</div>
+              <p class="text-ghost-light leading-relaxed">
+                Real offensive operators with hands-on experience compromising production environments — not consultants reading runbooks.
+              </p>
+            </div>
+
+            <div class="border-l border-blood pl-6">
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">// Senior-only</div>
+              <p class="text-ghost-light leading-relaxed">
+                Every engagement led by OSEP-certified operators with 6+ years in offensive security. No juniors learning on your network.
+              </p>
+            </div>
+
+            <div class="border-l border-blood pl-6">
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">// Manual depth</div>
+              <p class="text-ghost-light leading-relaxed">
+                Custom tooling, business logic flaws, chained exploitation. The vulnerabilities scanners miss are the ones attackers find.
+              </p>
+            </div>
+
+            <div class="border-l border-blood pl-6">
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">// Actionable output</div>
+              <p class="text-ghost-light leading-relaxed">
+                Reports that satisfy compliance auditors and give your technical teams a real remediation path. No filler.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION -->
+  <section class="py-32 border-t border-ash-lighter">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
+        <div>
+          <div class="num-label mb-4">[03] // CAPABILITIES</div>
+          <h2 class="font-display text-4xl md:text-5xl font-bold">
+            What we<br />
+            <span class="text-blood">break, document, fix.</span>
+          </h2>
+        </div>
+        <a href={`${base}services`} class="cta-secondary">
+          Full Service Catalog →
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Service 1 -->
+        <a href={`${base}services`} class="service-card group reveal">
+          <div class="flex justify-between items-start mb-6">
+            <div class="num-label">01 / 06</div>
+            <span class="pill pill-blood">From €5,000</span>
+          </div>
+          <h3 class="font-display text-2xl font-bold mb-3 text-bone group-hover:text-blood transition">
+            Web Application Pentest
+          </h3>
+          <p class="text-ghost-light text-sm leading-relaxed mb-6">
+            Deep manual testing beyond OWASP Top 10. Business logic, auth bypass, race conditions, API abuse. Reports your dev team will actually use.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="pill">OWASP</span>
+            <span class="pill">API/REST</span>
+            <span class="pill">GraphQL</span>
+            <span class="pill">Business Logic</span>
+          </div>
+          <div class="flex justify-between items-center pt-6 border-t border-ash-lighter">
+            <span class="font-mono text-xs text-ghost uppercase tracking-widest">5-7 days</span>
+            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition">View details →</span>
+          </div>
+        </a>
+
+        <!-- Service 2 -->
+        <a href={`${base}services`} class="service-card group reveal">
+          <div class="flex justify-between items-start mb-6">
+            <div class="num-label">02 / 06</div>
+            <span class="pill pill-blood">From €8,000</span>
+          </div>
+          <h3 class="font-display text-2xl font-bold mb-3 text-bone group-hover:text-blood transition">
+            Active Directory Assessment
+          </h3>
+          <p class="text-ghost-light text-sm leading-relaxed mb-6">
+            Full AD attack chain from initial access to Domain Admin. Kerberoasting, ACL abuse, GPO weaknesses, LSA secrets, lateral movement.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="pill">Kerberos</span>
+            <span class="pill">BloodHound</span>
+            <span class="pill">CRTP-grade</span>
+            <span class="pill">LSA / NTDS</span>
+          </div>
+          <div class="flex justify-between items-center pt-6 border-t border-ash-lighter">
+            <span class="font-mono text-xs text-ghost uppercase tracking-widest">7-10 days</span>
+            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition">View details →</span>
+          </div>
+        </a>
+
+        <!-- Service 3 -->
+        <a href={`${base}services`} class="service-card group reveal">
+          <div class="flex justify-between items-start mb-6">
+            <div class="num-label">03 / 06</div>
+            <span class="pill pill-blood">From €4,500</span>
+          </div>
+          <h3 class="font-display text-2xl font-bold mb-3 text-bone group-hover:text-blood transition">
+            External Network Pentest
+          </h3>
+          <p class="text-ghost-light text-sm leading-relaxed mb-6">
+            Internet-facing infrastructure assessment. OSINT, active enumeration, exploitation validation, post-exploitation chains.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="pill">OSINT</span>
+            <span class="pill">Recon</span>
+            <span class="pill">CVE Exploitation</span>
+            <span class="pill">Validation</span>
+          </div>
+          <div class="flex justify-between items-center pt-6 border-t border-ash-lighter">
+            <span class="font-mono text-xs text-ghost uppercase tracking-widest">5-7 days</span>
+            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition">View details →</span>
+          </div>
+        </a>
+
+        <!-- Service 4 -->
+        <a href={`${base}services`} class="service-card group reveal">
+          <div class="flex justify-between items-start mb-6">
+            <div class="num-label">04 / 06</div>
+            <span class="pill pill-blood">From €15,000</span>
+          </div>
+          <h3 class="font-display text-2xl font-bold mb-3 text-bone group-hover:text-blood transition">
+            Red Team Operations
+          </h3>
+          <p class="text-ghost-light text-sm leading-relaxed mb-6">
+            Full-spectrum adversary simulation. Initial access via phishing/exploits, EDR evasion, lateral movement, objective-driven exfiltration.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="pill">EDR Evasion</span>
+            <span class="pill">C2 Ops</span>
+            <span class="pill">Phishing</span>
+            <span class="pill">Custom Tooling</span>
+          </div>
+          <div class="flex justify-between items-center pt-6 border-t border-ash-lighter">
+            <span class="font-mono text-xs text-ghost uppercase tracking-widest">2-4 weeks</span>
+            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition">View details →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDENTIALS / TRUST SECTION -->
+  <section class="py-32 border-t border-ash-lighter relative overflow-hidden">
+    <div class="absolute inset-0 grid-bg opacity-30"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+      <div class="num-label mb-4">[04] // CREDENTIALS</div>
+      <h2 class="font-display text-4xl md:text-5xl font-bold mb-16 max-w-3xl">
+        Verifiable expertise.<br />
+        <span class="text-blood">Not LinkedIn fluff.</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-16">
+        <!-- Certifications -->
+        <div class="reveal">
+          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-6">// Certifications</div>
+          <ul class="space-y-4">
+            <li class="flex items-center justify-between pb-4 border-b border-ash-lighter">
+              <div>
+                <div class="font-mono text-bone font-bold">OSEP</div>
+                <div class="text-xs text-ghost-light mt-1">Offensive Security Experienced Penetration Tester</div>
+              </div>
+              <div class="font-mono text-xs text-ghost">2026</div>
+            </li>
+            <li class="flex items-center justify-between pb-4 border-b border-ash-lighter">
+              <div>
+                <div class="font-mono text-bone font-bold">OSCP</div>
+                <div class="text-xs text-ghost-light mt-1">Offensive Security Certified Professional</div>
+              </div>
+              <div class="font-mono text-xs text-ghost">2023</div>
+            </li>
+            <li class="flex items-center justify-between pb-4 border-b border-ash-lighter">
+              <div>
+                <div class="font-mono text-bone font-bold">OSWP</div>
+                <div class="text-xs text-ghost-light mt-1">Offensive Security Wireless Professional</div>
+              </div>
+              <div class="font-mono text-xs text-ghost">2023</div>
+            </li>
+            <li class="flex items-center justify-between pb-4 border-b border-ash-lighter">
+              <div>
+                <div class="font-mono text-bone font-bold">CRTP</div>
+                <div class="text-xs text-ghost-light mt-1">Certified Red Team Professional</div>
+              </div>
+              <div class="font-mono text-xs text-ghost">2022</div>
+            </li>
+            <li class="flex items-center justify-between pb-4 border-b border-ash-lighter">
+              <div>
+                <div class="font-mono text-bone font-bold">CEH</div>
+                <div class="text-xs text-ghost-light mt-1">Certified Ethical Hacker (EC-Council)</div>
+              </div>
+              <div class="font-mono text-xs text-ghost">2022</div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- CVEs and research -->
+        <div class="reveal">
+          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-6">// Published Research</div>
+          <div class="terminal-box p-6 mb-6">
+            <div class="flex items-center gap-2 mb-4 pb-4 border-b border-ash-lighter">
+              <span class="w-3 h-3 rounded-full bg-blood-dim"></span>
+              <span class="w-3 h-3 rounded-full bg-ash-lighter"></span>
+              <span class="w-3 h-3 rounded-full bg-ash-lighter"></span>
+              <span class="font-mono text-xs text-ghost ml-2">cve_database.log</span>
+            </div>
+            <pre class="font-mono text-xs text-ghost-light leading-relaxed whitespace-pre-wrap">
+<span class="text-blood">$</span> grep -r "asier" /cve/published/
+
+<span class="text-blood">CVE-2024-8161</span>  SQL Injection · ATISolutions CIGESv2
+<span class="text-blood">CVE-2024-29723</span> Security Research · MITRE
+<span class="text-blood">CVE-2024-29724</span> Security Research · MITRE
+<span class="text-blood">CVE-2024-29725</span> Security Research · MITRE
+<span class="text-blood">CVE-2024-29726</span> Security Research · MITRE
+<span class="text-blood">CVE-2024-29727</span> Security Research · MITRE
+<span class="text-blood">CVE-2024-29728</span> Security Research · MITRE
+<span class="text-blood">CVE-2024-29729</span> Security Research · MITRE
+<span class="text-blood">CVE-2024-29730</span> Security Research · MITRE
+<span class="text-blood">CVE-2024-29731</span> Security Research · INCIBE
+
+<span class="text-phosphor">10 vulnerabilities · MITRE/INCIBE assigned</span>
+<span class="cursor"></span>
+            </pre>
+          </div>
+
+          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-4 mt-8">// Background</div>
+          <ul class="space-y-3 text-sm text-ghost-light">
+            <li class="flex gap-3">
+              <span class="text-blood font-mono">▸</span>
+              <span><span class="text-bone font-medium">VerSprite Cybersecurity</span> · Senior Offensive Security Consultant</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="text-blood font-mono">▸</span>
+              <span><span class="text-bone font-medium">Telefónica Tech</span> · Senior Offensive Security Engineer · 4 years</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="text-blood font-mono">▸</span>
+              <span><span class="text-bone font-medium">Assured Clarity (UK)</span> · Offensive Security Instructor</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="text-blood font-mono">▸</span>
+              <span><span class="text-bone font-medium">Bullhost Cloud Services</span> · Offensive Security Engineer · 3 years</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH BLOG PREVIEW -->
+  <section class="py-32 border-t border-ash-lighter">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
+        <div>
+          <div class="num-label mb-4">[05] // RESEARCH</div>
+          <h2 class="font-display text-4xl md:text-5xl font-bold">
+            Recent field<br />
+            <span class="text-blood">notes & write-ups.</span>
+          </h2>
+        </div>
+        <a href="https://blog.redghostops.com" class="cta-secondary">
+          All Research →
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <a href="https://blog.redghostops.com/sam-exfil-credential-extraction-via-raw-ntfs-volume-reads" class="service-card group reveal block">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="pill pill-blood">Post-Exploitation</span>
+            <span class="font-mono text-xs text-ghost">May 2026</span>
+          </div>
+          <h3 class="font-display text-xl font-bold mb-3 text-bone group-hover:text-blood transition leading-tight">
+            SAM-EXFIL: Credential Extraction via Raw NTFS Volume Reads
+          </h3>
+          <p class="text-ghost-light text-sm leading-relaxed mb-6">
+            Bypassing EDR monitoring of Windows credential hive files at the API level by reading the raw NTFS volume directly.
+          </p>
+          <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition inline-block">Read article →</span>
+        </a>
+
+        <a href="https://blog.redghostops.com/rexldr-anatom-a-de-un-shellcode-loader-moderno-t-cnicas-evidencia-y-perspectiva-dual" class="service-card group reveal block">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="pill pill-blood">EDR Evasion</span>
+            <span class="font-mono text-xs text-ghost">Apr 2026</span>
+          </div>
+          <h3 class="font-display text-xl font-bold mb-3 text-bone group-hover:text-blood transition leading-tight">
+            RexLDR: Anatomía de un Shellcode Loader Moderno
+          </h3>
+          <p class="text-ghost-light text-sm leading-relaxed mb-6">
+            Deep dive into modern shellcode loader techniques: RC4 encryption via SystemFunction032, EDR evasion against Sophos and CrowdStrike.
+          </p>
+          <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition inline-block">Read article →</span>
+        </a>
+
+        <a href="https://blog.redghostops.com/windows-anti-forensics-erasing-tracks-to-evade-blue-team-in-red-team-ops" class="service-card group reveal block">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="pill pill-blood">Anti-Forensics</span>
+            <span class="font-mono text-xs text-ghost">Nov 2025</span>
+          </div>
+          <h3 class="font-display text-xl font-bold mb-3 text-bone group-hover:text-blood transition leading-tight">
+            Windows Anti-Forensics: Erasing Tracks to Evade Blue Team
+          </h3>
+          <p class="text-ghost-light text-sm leading-relaxed mb-6">
+            Practical anti-forensics techniques for red team operations: log clearing, DNS cache evasion, deleted file recovery prevention.
+          </p>
+          <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition inline-block">Read article →</span>
+        </a>
+
+        <a href="https://blog.redghostops.com/living-in-the-run-key-practical-persistence-for-red-team-ops" class="service-card group reveal block">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="pill pill-blood">Persistence</span>
+            <span class="font-mono text-xs text-ghost">Nov 2025</span>
+          </div>
+          <h3 class="font-display text-xl font-bold mb-3 text-bone group-hover:text-blood transition leading-tight">
+            Living in the Run Key: Practical Persistence for Red Team Ops
+          </h3>
+          <p class="text-ghost-light text-sm leading-relaxed mb-6">
+            Registry Run Keys and Startup Folder persistence techniques for modern red team operations. MITRE T1547.001 deep dive.
+          </p>
+          <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition inline-block">Read article →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="py-32 border-t border-ash-lighter relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blood/5 rounded-full blur-[150px]"></div>
+    </div>
+
+    <div class="relative max-w-5xl mx-auto px-6 text-center">
+      <div class="num-label mb-4">[06] // ENGAGE</div>
+      <h2 class="font-display text-4xl md:text-6xl font-bold mb-8 leading-tight">
+        Ready to find out<br />
+        <span class="text-blood">what attackers will find?</span>
+      </h2>
+      <p class="text-ghost-light text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
+        Engagements typically scoped within 48 hours. NDAs signed before scope discussion. All work invoiced through our EU-registered entity.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={`${base}contact`} class="cta-primary">
+          Request Engagement
+          <span>→</span>
+        </a>
+        <a href={`${base}asier-barranco-cv.pdf`} class="cta-secondary" target="_blank">
+          Download Profile (PDF)
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

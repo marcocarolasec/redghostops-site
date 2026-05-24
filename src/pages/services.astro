@@ -1,0 +1,468 @@
+---
+import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout title="Services — REDOPS Security" description="Detailed service catalog: web application pentest, Active Directory assessment, external/internal network testing, red team operations.">
+  <!-- HERO -->
+  <section class="pt-20 pb-16 border-b border-ash-lighter grid-bg">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="num-label mb-4 animate-fade-in">[ SERVICES ] // CATALOG</div>
+      <h1 class="font-display text-5xl md:text-7xl font-bold mb-6 leading-[0.95] animate-fade-up">
+        Engagements,<br />
+        <span class="text-blood">scoped & priced.</span>
+      </h1>
+      <p class="text-ghost-light text-lg md:text-xl max-w-2xl leading-relaxed animate-fade-up" style="animation-delay: 0.2s">
+        Each engagement is scoped to your specific environment. Below are typical packages with indicative pricing. All include scoping call, execution, written report, and remediation walkthrough.
+      </p>
+    </div>
+  </section>
+
+  <!-- SERVICES DETAIL -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-6 space-y-16">
+      
+      <!-- Service 1: Web App Pentest -->
+      <div class="grid md:grid-cols-12 gap-8 reveal">
+        <div class="md:col-span-4">
+          <div class="num-label mb-2">01 / 06</div>
+          <h2 class="font-display text-3xl font-bold mb-4">Web Application Pentest</h2>
+          <div class="terminal-box p-4 mb-4">
+            <div class="font-mono text-xs space-y-2">
+              <div class="flex justify-between">
+                <span class="text-ghost">Duration</span>
+                <span class="text-bone">5–7 days</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-ghost">Starting</span>
+                <span class="text-blood font-bold">€5,000</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-ghost">Format</span>
+                <span class="text-bone">Remote</span>
+              </div>
+            </div>
+          </div>
+          <a href={`${base}contact?service=web-pentest`} class="cta-primary !text-xs w-full justify-center">
+            Request Scope →
+          </a>
+        </div>
+        <div class="md:col-span-8 service-card !p-8">
+          <p class="text-bone mb-6 leading-relaxed">
+            Manual penetration testing of web applications and APIs. Goes far beyond automated scanners — authentication bypass, business logic flaws, race conditions, IDOR/BOLA, server-side template injection, and chained exploitation.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-4 mb-6">
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Coverage</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· OWASP Top 10 + ASVS</li>
+                <li>· REST/GraphQL/WebSocket APIs</li>
+                <li>· Authentication & session flows</li>
+                <li>· Business logic attacks</li>
+                <li>· Authorization (IDOR/BOLA)</li>
+                <li>· Server-side injection chains</li>
+              </ul>
+            </div>
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Deliverables</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· Executive summary report</li>
+                <li>· Technical findings (CVSS scored)</li>
+                <li>· Reproduction steps + evidence</li>
+                <li>· Remediation recommendations</li>
+                <li>· Free retest within 30 days</li>
+                <li>· Optional dev team walkthrough</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="pill">OWASP</span>
+            <span class="pill">PortSwigger BSCP-grade</span>
+            <span class="pill">Burp Suite Pro</span>
+            <span class="pill">Custom Tooling</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 2: AD Assessment -->
+      <div class="grid md:grid-cols-12 gap-8 reveal">
+        <div class="md:col-span-4">
+          <div class="num-label mb-2">02 / 06</div>
+          <h2 class="font-display text-3xl font-bold mb-4">Active Directory Assessment</h2>
+          <div class="terminal-box p-4 mb-4">
+            <div class="font-mono text-xs space-y-2">
+              <div class="flex justify-between">
+                <span class="text-ghost">Duration</span>
+                <span class="text-bone">7–10 days</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-ghost">Starting</span>
+                <span class="text-blood font-bold">€8,000</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-ghost">Format</span>
+                <span class="text-bone">Remote / On-site</span>
+              </div>
+            </div>
+          </div>
+          <a href={`${base}contact?service=ad-assessment`} class="cta-primary !text-xs w-full justify-center">
+            Request Scope →
+          </a>
+        </div>
+        <div class="md:col-span-8 service-card !p-8">
+          <p class="text-bone mb-6 leading-relaxed">
+            Full Active Directory attack chain assessment. Internal pentest assuming initial foothold, with the goal of identifying paths to Domain Admin and Tier-0 assets. Maps real attacker behavior, not theoretical vulnerabilities.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-4 mb-6">
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Coverage</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· Kerberos attacks (AS-REP, S4U2)</li>
+                <li>· Kerberoasting & ASREPRoasting</li>
+                <li>· ACL/ACE abuse chains</li>
+                <li>· GPO weaknesses</li>
+                <li>· LSA secrets / NTDS extraction</li>
+                <li>· Lateral movement & privesc</li>
+                <li>· LDAP signing & relay attacks</li>
+              </ul>
+            </div>
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Deliverables</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· Attack path documentation</li>
+                <li>· BloodHound graph artifacts</li>
+                <li>· CVSS-scored findings</li>
+                <li>· Prioritized remediation roadmap</li>
+                <li>· Detection engineering hints</li>
+                <li>· Free retest within 30 days</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="pill">BloodHound</span>
+            <span class="pill">Impacket</span>
+            <span class="pill">Rubeus</span>
+            <span class="pill">CRTP-grade</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 3: External Network -->
+      <div class="grid md:grid-cols-12 gap-8 reveal">
+        <div class="md:col-span-4">
+          <div class="num-label mb-2">03 / 06</div>
+          <h2 class="font-display text-3xl font-bold mb-4">External Network Pentest</h2>
+          <div class="terminal-box p-4 mb-4">
+            <div class="font-mono text-xs space-y-2">
+              <div class="flex justify-between">
+                <span class="text-ghost">Duration</span>
+                <span class="text-bone">5–7 days</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-ghost">Starting</span>
+                <span class="text-blood font-bold">€4,500</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-ghost">Format</span>
+                <span class="text-bone">Remote</span>
+              </div>
+            </div>
+          </div>
+          <a href={`${base}contact?service=external-pentest`} class="cta-primary !text-xs w-full justify-center">
+            Request Scope →
+          </a>
+        </div>
+        <div class="md:col-span-8 service-card !p-8">
+          <p class="text-bone mb-6 leading-relaxed">
+            Internet-facing infrastructure assessment from an external attacker's perspective. OSINT-driven recon, active enumeration, exploit validation, and post-exploitation chains.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-4 mb-6">
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Coverage</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· OSINT & passive recon</li>
+                <li>· Subdomain enumeration</li>
+                <li>· Service fingerprinting</li>
+                <li>· CVE validation & exploitation</li>
+                <li>· Cloud asset discovery</li>
+                <li>· Email/credential exposure</li>
+              </ul>
+            </div>
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Deliverables</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· Attack surface inventory</li>
+                <li>· Verified vulnerability findings</li>
+                <li>· Exposed credentials report</li>
+                <li>· Hardening recommendations</li>
+                <li>· Free retest within 30 days</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="pill">OSINT</span>
+            <span class="pill">Nuclei</span>
+            <span class="pill">Custom Recon</span>
+            <span class="pill">CVE Validation</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 4: Red Team -->
+      <div class="grid md:grid-cols-12 gap-8 reveal">
+        <div class="md:col-span-4">
+          <div class="num-label mb-2">04 / 06</div>
+          <h2 class="font-display text-3xl font-bold mb-4">Red Team Operations</h2>
+          <div class="terminal-box p-4 mb-4">
+            <div class="font-mono text-xs space-y-2">
+              <div class="flex justify-between">
+                <span class="text-ghost">Duration</span>
+                <span class="text-bone">2–4 weeks</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-ghost">Starting</span>
+                <span class="text-blood font-bold">€15,000</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-ghost">Format</span>
+                <span class="text-bone">Remote / On-site</span>
+              </div>
+            </div>
+          </div>
+          <a href={`${base}contact?service=red-team`} class="cta-primary !text-xs w-full justify-center">
+            Request Scope →
+          </a>
+        </div>
+        <div class="md:col-span-8 service-card !p-8">
+          <p class="text-bone mb-6 leading-relaxed">
+            Full-spectrum adversary simulation against agreed objectives. Initial access via phishing or external exploitation, EDR evasion with custom tooling, lateral movement, and objective-driven exfiltration. Tests both prevention and detection.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-4 mb-6">
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Coverage</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· Phishing campaigns (mature)</li>
+                <li>· EDR evasion (Sophos/CrowdStrike/SentinelOne)</li>
+                <li>· Custom C2 infrastructure</li>
+                <li>· Custom shellcode loaders</li>
+                <li>· Lateral movement & persistence</li>
+                <li>· Objective exfiltration</li>
+                <li>· Blue team detection mapping</li>
+              </ul>
+            </div>
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Deliverables</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· Full operation narrative</li>
+                <li>· MITRE ATT&amp;CK mapping</li>
+                <li>· IOCs for blue team replay</li>
+                <li>· Detection gap analysis</li>
+                <li>· Executive briefing session</li>
+                <li>· Technical debrief with SOC</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="pill">OSEP-grade</span>
+            <span class="pill">Custom Loaders</span>
+            <span class="pill">MITRE ATT&amp;CK</span>
+            <span class="pill">Purple Team Optional</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 5: Cloud Assessment -->
+      <div class="grid md:grid-cols-12 gap-8 reveal">
+        <div class="md:col-span-4">
+          <div class="num-label mb-2">05 / 06</div>
+          <h2 class="font-display text-3xl font-bold mb-4">Cloud Security Assessment</h2>
+          <div class="terminal-box p-4 mb-4">
+            <div class="font-mono text-xs space-y-2">
+              <div class="flex justify-between">
+                <span class="text-ghost">Duration</span>
+                <span class="text-bone">5–10 days</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-ghost">Starting</span>
+                <span class="text-blood font-bold">€6,500</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-ghost">Format</span>
+                <span class="text-bone">Remote</span>
+              </div>
+            </div>
+          </div>
+          <a href={`${base}contact?service=cloud`} class="cta-primary !text-xs w-full justify-center">
+            Request Scope →
+          </a>
+        </div>
+        <div class="md:col-span-8 service-card !p-8">
+          <p class="text-bone mb-6 leading-relaxed">
+            Offensive assessment of cloud environments (AWS, Azure, GCP). Privilege escalation paths, misconfigured IAM, exposed services, and lateral movement between cloud and on-premises infrastructure.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-4 mb-6">
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Coverage</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· IAM misconfigurations</li>
+                <li>· Privilege escalation chains</li>
+                <li>· Storage exposure (S3/Blob/GCS)</li>
+                <li>· Serverless attack surface</li>
+                <li>· Hybrid cloud-on-prem paths</li>
+                <li>· Container/K8s security</li>
+              </ul>
+            </div>
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Deliverables</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· Cloud attack surface map</li>
+                <li>· IAM privilege graph</li>
+                <li>· Exploitable misconfigurations</li>
+                <li>· Hardening playbook</li>
+                <li>· Free retest within 30 days</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="pill">AWS</span>
+            <span class="pill">Azure</span>
+            <span class="pill">GCP</span>
+            <span class="pill">K8s</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 6: Continuous Retainer -->
+      <div class="grid md:grid-cols-12 gap-8 reveal">
+        <div class="md:col-span-4">
+          <div class="num-label mb-2">06 / 06</div>
+          <h2 class="font-display text-3xl font-bold mb-4">Continuous Offensive Testing</h2>
+          <div class="terminal-box p-4 mb-4">
+            <div class="font-mono text-xs space-y-2">
+              <div class="flex justify-between">
+                <span class="text-ghost">Duration</span>
+                <span class="text-bone">Monthly retainer</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-ghost">Starting</span>
+                <span class="text-blood font-bold">€3,500/mo</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-ghost">Format</span>
+                <span class="text-bone">Ongoing</span>
+              </div>
+            </div>
+          </div>
+          <a href={`${base}contact?service=retainer`} class="cta-primary !text-xs w-full justify-center">
+            Request Scope →
+          </a>
+        </div>
+        <div class="md:col-span-8 service-card !p-8">
+          <p class="text-bone mb-6 leading-relaxed">
+            Ongoing offensive testing for mature security programs. Continuous attack surface monitoring, scoped engagements per quarter, rapid response for new asset releases, and on-demand consultation.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-4 mb-6">
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Included</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· Monthly attack surface scan</li>
+                <li>· Quarterly deep engagement (40h)</li>
+                <li>· New asset rapid assessment</li>
+                <li>· On-demand security consultation</li>
+                <li>· Slack/Teams direct channel</li>
+                <li>· Threat intel briefings</li>
+              </ul>
+            </div>
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Best for</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· SaaS companies with frequent releases</li>
+                <li>· Fintech / regulated industries</li>
+                <li>· Companies post-Series B funding</li>
+                <li>· Mature security teams</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="pill">12-month minimum</span>
+            <span class="pill">Dedicated channel</span>
+            <span class="pill">Priority response</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CUSTOM ENGAGEMENT -->
+  <section class="py-32 border-t border-ash-lighter">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <div class="num-label mb-4">// CUSTOM</div>
+      <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">
+        Don't see what<br />
+        <span class="text-blood">you need?</span>
+      </h2>
+      <p class="text-ghost-light text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+        Mobile app pentest, source code review, phishing simulations, IoT/embedded testing, social engineering campaigns, M&amp;A cyber due diligence, vCISO advisory. Custom scoping available.
+      </p>
+      <a href={`${base}contact`} class="cta-primary">
+        Discuss Custom Engagement →
+      </a>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="py-32 border-t border-ash-lighter">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="num-label mb-4">// PROCESS</div>
+      <h2 class="font-display text-4xl md:text-5xl font-bold mb-16 max-w-3xl">
+        How engagements<br />
+        <span class="text-blood">flow.</span>
+      </h2>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="reveal">
+          <div class="font-mono text-blood text-3xl font-bold mb-4">01</div>
+          <h3 class="font-display text-lg font-bold mb-3">Scoping Call</h3>
+          <p class="text-ghost-light text-sm leading-relaxed">
+            30-min discovery to understand objectives, scope, constraints. NDA signed before any technical details discussed.
+          </p>
+        </div>
+        <div class="reveal">
+          <div class="font-mono text-blood text-3xl font-bold mb-4">02</div>
+          <h3 class="font-display text-lg font-bold mb-3">Proposal & Contract</h3>
+          <p class="text-ghost-light text-sm leading-relaxed">
+            Fixed-price proposal with clear scope, timeline, and deliverables. Standard MSA + SOW. 50% upfront, 50% on delivery.
+          </p>
+        </div>
+        <div class="reveal">
+          <div class="font-mono text-blood text-3xl font-bold mb-4">03</div>
+          <h3 class="font-display text-lg font-bold mb-3">Execution</h3>
+          <p class="text-ghost-light text-sm leading-relaxed">
+            Active testing with daily status updates on critical findings. Live channel for coordination during engagement.
+          </p>
+        </div>
+        <div class="reveal">
+          <div class="font-mono text-blood text-3xl font-bold mb-4">04</div>
+          <h3 class="font-display text-lg font-bold mb-3">Delivery</h3>
+          <p class="text-ghost-light text-sm leading-relaxed">
+            Written report + technical walkthrough call. Free retest within 30 days to verify remediation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="py-32 border-t border-ash-lighter">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <h2 class="font-display text-4xl md:text-6xl font-bold mb-8 leading-tight">
+        Engagement starts<br />
+        <span class="text-blood">with a 30-min call.</span>
+      </h2>
+      <a href={`${base}contact`} class="cta-primary">
+        Request Scoping Call →
+      </a>
+    </div>
+  </section>
+</Layout>

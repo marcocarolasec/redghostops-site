@@ -1,0 +1,187 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'REDOPS Security — Offensive Security Consultancy',
+  description = 'Boutique offensive security consultancy. Red team operations, penetration testing, and adversary simulation by senior operators. EU-registered.',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/png" href={`${base}logo.png`} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content="/logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://redghostops.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <title>{title}</title>
+</head>
+<body class="min-h-screen bg-void text-bone">
+  <!-- Top status bar -->
+  <div class="border-b border-ash-lighter bg-void/80 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center text-[0.65rem] font-mono text-ghost-light uppercase tracking-widest">
+      <div class="flex items-center gap-4">
+        <span class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-phosphor rounded-full animate-pulse"></span>
+          OPERATIONAL
+        </span>
+        <span class="hidden sm:inline opacity-50">·</span>
+        <span class="hidden sm:inline">EU.CY / HE 491541</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="hidden md:inline opacity-50">SECURE TRANSMISSION</span>
+        <span class="text-blood">●</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main navigation -->
+  <nav class="sticky top-0 z-50 border-b border-ash-lighter bg-void/95 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href={base} class="flex items-center gap-3 group">
+        <img src={`${base}logo.png`} alt="REDOPS" class="w-10 h-10 transition-transform group-hover:scale-110" />
+        <div class="font-mono">
+          <div class="text-bone font-bold text-sm tracking-wider">REDOPS</div>
+          <div class="text-blood text-[0.6rem] tracking-[0.3em] uppercase">Security</div>
+        </div>
+      </a>
+
+      <div class="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-wider">
+        <a href={base} class="hover-underline text-ghost-light hover:text-bone transition">Home</a>
+        <a href={`${base}services`} class="hover-underline text-ghost-light hover:text-bone transition">Services</a>
+        <a href={`${base}about`} class="hover-underline text-ghost-light hover:text-bone transition">About</a>
+        <a href="https://blog.redghostops.com" class="hover-underline text-ghost-light hover:text-bone transition">Research</a>
+        <a href={`${base}contact`} class="cta-primary !py-2 !px-4 !text-xs">
+          Request Engagement
+          <span>→</span>
+        </a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden text-bone p-2" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden border-t border-ash-lighter bg-void">
+      <div class="px-6 py-4 flex flex-col gap-4 font-mono text-sm uppercase tracking-wider">
+        <a href={base} class="text-ghost-light hover:text-blood transition">Home</a>
+        <a href={`${base}services`} class="text-ghost-light hover:text-blood transition">Services</a>
+        <a href={`${base}about`} class="text-ghost-light hover:text-blood transition">About</a>
+        <a href="https://blog.redghostops.com" class="text-ghost-light hover:text-blood transition">Research</a>
+        <a href={`${base}contact`} class="text-blood">Request Engagement →</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-ash-lighter mt-32 bg-ash/30">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+      <div class="grid md:grid-cols-4 gap-12 mb-12">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <img src={`${base}logo.png`} alt="REDOPS" class="w-10 h-10" />
+            <div class="font-mono">
+              <div class="text-bone font-bold tracking-wider">REDOPS SECURITY</div>
+              <div class="text-blood text-[0.6rem] tracking-[0.3em] uppercase">Offensive Operations</div>
+            </div>
+          </div>
+          <p class="text-ghost-light text-sm max-w-md leading-relaxed">
+            Boutique offensive security consultancy. Built by practitioners for organizations that need depth over checkboxes.
+          </p>
+          <div class="mt-6 pill pill-blood">
+            <span>EU.CY · HE 491541</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="font-mono text-xs uppercase tracking-widest text-blood mb-4">// Navigate</div>
+          <ul class="space-y-3 text-sm">
+            <li><a href={base} class="text-ghost-light hover:text-bone transition">Home</a></li>
+            <li><a href={`${base}services`} class="text-ghost-light hover:text-bone transition">Services</a></li>
+            <li><a href={`${base}about`} class="text-ghost-light hover:text-bone transition">About</a></li>
+            <li><a href="https://blog.redghostops.com" class="text-ghost-light hover:text-bone transition">Research Blog</a></li>
+            <li><a href={`${base}contact`} class="text-ghost-light hover:text-bone transition">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-mono text-xs uppercase tracking-widest text-blood mb-4">// Contact</div>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a href="mailto:engagements@redghostops.com" class="text-ghost-light hover:text-bone transition font-mono text-xs">
+                engagements@redghostops.com
+              </a>
+            </li>
+            <li>
+              <a href="https://x.com/r3is42" class="text-ghost-light hover:text-bone transition font-mono text-xs">
+                x.com/r3is42
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/marcocarolasec" class="text-ghost-light hover:text-bone transition font-mono text-xs">
+                github.com/marcocarolasec
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="divider-line mb-8"></div>
+
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-[0.7rem] font-mono uppercase tracking-widest text-ghost">
+        <div>© 2026 REDOPS Security Ltd. · All operations recorded.</div>
+        <div class="flex gap-6">
+          <span>EU-registered</span>
+          <span class="text-blood">●</span>
+          <span>OPSEC enforced</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    btn?.addEventListener('click', () => {
+      menu?.classList.toggle('hidden');
+    });
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
