@@ -2,8 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 
 const CALENDLY_URL = 'https://calendly.com/asbarraninfor/redghostops-onboarding';
-const CALENDLY_THEME = '?background_color=000000&text_color=f5f0e8&primary_color=dc2626';
-const CALENDLY_EMBED = `${CALENDLY_URL}${CALENDLY_THEME}`;
 ---
 
 <Layout title="Book a Call — REDOPS Security" description="Book a 30-minute scoping call directly. Mutual NDA signed within 24h. All engagements invoiced through our EU-registered entity.">
@@ -98,7 +96,7 @@ const CALENDLY_EMBED = `${CALENDLY_URL}${CALENDLY_THEME}`;
           </div>
         </aside>
 
-        <!-- RIGHT: Calendly inline embed -->
+        <!-- RIGHT: Calendar CTA card -->
         <div class="lg:col-span-8">
           <div class="terminal-box overflow-hidden">
             <div class="flex items-center gap-2 px-4 py-3 border-b border-ash-lighter">
@@ -112,17 +110,63 @@ const CALENDLY_EMBED = `${CALENDLY_URL}${CALENDLY_THEME}`;
               </span>
             </div>
 
-            <div id="service-context" class="hidden mx-4 mt-4 p-3 border border-blood/30 bg-blood/5 font-mono text-xs text-blood">
+            <div id="service-context" class="hidden mx-6 mt-6 p-3 border border-blood/30 bg-blood/5 font-mono text-xs text-blood">
               Service of interest: <span id="service-label" class="text-bone font-bold"></span> — mention any specifics in the booking notes.
             </div>
 
-            <div
-              class="calendly-inline-widget"
-              data-url={CALENDLY_EMBED}
-              style="min-width:320px;height:780px;"
-            >
-              <div class="flex items-center justify-center h-full text-ghost font-mono text-xs">
-                <span class="cursor">Loading calendar</span>
+            <div class="px-6 sm:px-10 py-12 sm:py-16">
+              <!-- Calendar icon -->
+              <div class="flex justify-center mb-8">
+                <div class="relative w-20 h-20 border border-blood-dim flex items-center justify-center">
+                  <div class="absolute -top-px left-3 right-3 h-px bg-blood"></div>
+                  <div class="absolute -top-2 left-3 w-px h-3 bg-blood"></div>
+                  <div class="absolute -top-2 right-3 w-px h-3 bg-blood"></div>
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-blood">
+                    <rect x="3" y="5" width="18" height="16" rx="0"></rect>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                    <line x1="8" y1="3" x2="8" y2="7"></line>
+                    <line x1="16" y1="3" x2="16" y2="7"></line>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Headline -->
+              <h2 class="font-display text-3xl md:text-4xl font-bold text-center text-bone leading-tight mb-3">
+                Book a 30-min<br /><span class="text-blood">scoping call.</span>
+              </h2>
+              <p class="text-ghost-light text-center text-sm max-w-md mx-auto mb-10 leading-relaxed">
+                Live availability on Calendly. Pick a slot, get a calendar invite, mutual NDA arrives in your inbox before the call.
+              </p>
+
+              <!-- Primary CTA -->
+              <div class="flex justify-center mb-8">
+                <a
+                  id="calendly-link"
+                  href={CALENDLY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cta-primary text-base !py-4 !px-8"
+                >
+                  Open Calendar
+                  <span>→</span>
+                </a>
+              </div>
+
+              <!-- URL preview + meta -->
+              <div class="max-w-md mx-auto space-y-3">
+                <div class="font-mono text-[0.65rem] text-ghost uppercase tracking-widest text-center">
+                  // Booking endpoint
+                </div>
+                <div class="border border-ash-lighter bg-void/50 px-4 py-3 font-mono text-xs text-ghost-light text-center break-all">
+                  <span class="text-blood">$</span> open <span class="text-bone">calendly.com/asbarraninfor/redghostops-onboarding</span>
+                </div>
+                <div class="flex justify-between items-center font-mono text-[0.65rem] text-ghost uppercase tracking-widest pt-2">
+                  <span class="flex items-center gap-2">
+                    <span class="w-1 h-1 bg-phosphor rounded-full"></span>
+                    Opens in new tab
+                  </span>
+                  <span>~30s to book</span>
+                </div>
               </div>
             </div>
           </div>
@@ -204,10 +248,7 @@ const CALENDLY_EMBED = `${CALENDLY_URL}${CALENDLY_THEME}`;
     </div>
   </section>
 
-  <!-- Calendly external widget script -->
-  <script src="https://assets.calendly.com/assets/external/widget.js" is:inline async></script>
-
-  <!-- Service prefill: shows badge if ?service=X in URL -->
+  <!-- Service prefill: badge + appends ?utm_content=<service> to Calendly URL -->
   <script is:inline>
     (function () {
       const params = new URLSearchParams(window.location.search);
@@ -228,6 +269,12 @@ const CALENDLY_EMBED = `${CALENDLY_URL}${CALENDLY_THEME}`;
       if (labelEl && ctxEl) {
         labelEl.textContent = labels[service] || service;
         ctxEl.classList.remove('hidden');
+      }
+      const link = document.getElementById('calendly-link');
+      if (link) {
+        const url = new URL(link.href);
+        url.searchParams.set('utm_content', service);
+        link.href = url.toString();
       }
     })();
   </script>
