@@ -130,12 +130,236 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 
+  <!-- WHY REDOPS / VS BIG4 SECTION -->
+  <section class="py-32 border-t border-ash-lighter relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <!-- Header -->
+      <div class="grid md:grid-cols-12 gap-8 mb-16">
+        <div class="md:col-span-5">
+          <div class="num-label mb-4">[03] // POSITIONING</div>
+          <h2 class="font-display text-4xl md:text-5xl font-bold leading-tight">
+            Why teams pick us<br />
+            <span class="text-blood">over a Big4.</span>
+          </h2>
+        </div>
+        <div class="md:col-span-7 flex items-end">
+          <p class="text-ghost-light text-lg leading-relaxed">
+            Mid-market security teams get two bad options: Big4 consultancies at enterprise pricing with juniors doing the actual work, or unverified boutiques with no checkable credentials. We exist in the gap — senior delivery at fair pricing, with credentials you can verify before signing anything.
+          </p>
+        </div>
+      </div>
+
+      <!-- Pain cards -->
+      <div class="space-y-3">
+        <!-- 01 — TALENT -->
+        <article class="border border-ash-lighter bg-ash/20 hover:border-blood-dim transition-colors reveal">
+          <header class="px-6 py-4 border-b border-ash-lighter flex items-center justify-between flex-wrap gap-3">
+            <div class="flex items-center gap-4">
+              <span class="font-mono text-blood text-sm font-bold">01</span>
+              <h3 class="font-display text-lg md:text-xl font-bold text-bone">
+                Junior-led pentests at senior pricing.
+              </h3>
+            </div>
+            <span class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest">// Talent</span>
+          </header>
+          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ash-lighter">
+            <div class="p-6">
+              <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="text-blood font-bold text-base leading-none">−</span> Industry default
+              </div>
+              <p class="text-ghost-light text-sm leading-relaxed">
+                Big4 sells engagements at enterprise pricing. Actual testing is done by consultants with 0-3 years of experience, supervised remotely by a senior who is selling 5 other projects in parallel. You pay senior rates and get junior work.
+              </p>
+            </div>
+            <div class="p-6 bg-blood/[0.02]">
+              <div class="font-mono text-xs text-phosphor uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
+              </div>
+              <p class="text-bone text-sm leading-relaxed">
+                Every engagement executed 100% by a senior operator with 6+ years full-time offsec experience. OSEP-certified, 10 published CVEs. Same person from kickoff to remediation walkthrough. No juniors learning on your network.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 — REPORTING -->
+        <article class="border border-ash-lighter bg-ash/20 hover:border-blood-dim transition-colors reveal">
+          <header class="px-6 py-4 border-b border-ash-lighter flex items-center justify-between flex-wrap gap-3">
+            <div class="flex items-center gap-4">
+              <span class="font-mono text-blood text-sm font-bold">02</span>
+              <h3 class="font-display text-lg md:text-xl font-bold text-bone">
+                Reports that read like templates with your logo pasted in.
+              </h3>
+            </div>
+            <span class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest">// Reporting</span>
+          </header>
+          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ash-lighter">
+            <div class="p-6">
+              <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="text-blood font-bold text-base leading-none">−</span> Industry default
+              </div>
+              <p class="text-ghost-light text-sm leading-relaxed">
+                Large-consultancy reports are 80% reusable boilerplate optimized for vendor legal defense, with 20% actual findings. CVSS scores inflated to justify the engagement cost. Remediation reads "apply principle of least privilege" with no concrete steps for your stack.
+              </p>
+            </div>
+            <div class="p-6 bg-blood/[0.02]">
+              <div class="font-mono text-xs text-phosphor uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
+              </div>
+              <p class="text-bone text-sm leading-relaxed">
+                Reports written specifically for your environment. Reproduction steps that work against your actual setup. CVSS scored honestly, not inflated to justify the invoice. Remediation written for your tech stack — not generic auditor language.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 — COMMS -->
+        <article class="border border-ash-lighter bg-ash/20 hover:border-blood-dim transition-colors reveal">
+          <header class="px-6 py-4 border-b border-ash-lighter flex items-center justify-between flex-wrap gap-3">
+            <div class="flex items-center gap-4">
+              <span class="font-mono text-blood text-sm font-bold">03</span>
+              <h3 class="font-display text-lg md:text-xl font-bold text-bone">
+                Account managers between you and the pentester.
+              </h3>
+            </div>
+            <span class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest">// Comms</span>
+          </header>
+          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ash-lighter">
+            <div class="p-6">
+              <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="text-blood font-bold text-base leading-none">−</span> Industry default
+              </div>
+              <p class="text-ghost-light text-sm leading-relaxed">
+                You talk to a sales account manager. Technical questions take 2-3 days to traverse the chain (client → AM → engagement lead → junior tester → back up), arriving diluted. Scope changes require formal paperwork and a change-order fee.
+              </p>
+            </div>
+            <div class="p-6 bg-blood/[0.02]">
+              <div class="font-mono text-xs text-phosphor uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
+              </div>
+              <p class="text-bone text-sm leading-relaxed">
+                Direct Slack / Teams / WhatsApp channel with the actual operator during the engagement. Technical answers in under 2 hours. Interesting finding mid-test? 5-minute conversation to adjust scope. No middlemen, no change orders.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 04 — PROCUREMENT -->
+        <article class="border border-ash-lighter bg-ash/20 hover:border-blood-dim transition-colors reveal">
+          <header class="px-6 py-4 border-b border-ash-lighter flex items-center justify-between flex-wrap gap-3">
+            <div class="flex items-center gap-4">
+              <span class="font-mono text-blood text-sm font-bold">04</span>
+              <h3 class="font-display text-lg md:text-xl font-bold text-bone">
+                Vendor onboarding takes longer than the engagement itself.
+              </h3>
+            </div>
+            <span class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest">// Procurement</span>
+          </header>
+          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ash-lighter">
+            <div class="p-6">
+              <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="text-blood font-bold text-base leading-none">−</span> Industry default
+              </div>
+              <p class="text-ghost-light text-sm leading-relaxed">
+                40+ page MSAs, 4-8 weeks of vendor onboarding, 2-3 month RFP cycles, change requests with extra paperwork. By the time testing starts, the threat that triggered the request has already moved on.
+              </p>
+            </div>
+            <div class="p-6 bg-blood/[0.02]">
+              <div class="font-mono text-xs text-phosphor uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
+              </div>
+              <p class="text-bone text-sm leading-relaxed">
+                Mutual NDA within 24h of first contact. Proposal within 48h of the scoping call. Standard MSA + SOW signed in 5-10 business days. Kickoff 1-2 weeks after contract. Total: 2-3 weeks from first email to active testing.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 05 — PRICING / VERIFIABILITY -->
+        <article class="border border-ash-lighter bg-ash/20 hover:border-blood-dim transition-colors reveal">
+          <header class="px-6 py-4 border-b border-ash-lighter flex items-center justify-between flex-wrap gap-3">
+            <div class="flex items-center gap-4">
+              <span class="font-mono text-blood text-sm font-bold">05</span>
+              <h3 class="font-display text-lg md:text-xl font-bold text-bone">
+                Choose between Big4 prices or unknown-quality discount shops.
+              </h3>
+            </div>
+            <span class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest">// Market</span>
+          </header>
+          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ash-lighter">
+            <div class="p-6">
+              <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="text-blood font-bold text-base leading-none">−</span> Industry default
+              </div>
+              <p class="text-ghost-light text-sm leading-relaxed">
+                The market polarizes: Big4 (slow, junior-led, expensive) or unknown boutiques (unverifiable credentials, mixed quality, no published research). No middle option for companies that want senior delivery without enterprise overhead.
+              </p>
+            </div>
+            <div class="p-6 bg-blood/[0.02]">
+              <div class="font-mono text-xs text-phosphor uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
+              </div>
+              <p class="text-bone text-sm leading-relaxed">
+                Senior delivery at fair pricing on request, backed by credentials you can verify before signing: OSEP publicly verifiable on OffSec, 10 CVEs with MITRE / INCIBE IDs, technical research at <span class="text-blood">blog.redghostops.com</span>. Quality demonstrable, not just claimed on a logo.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 06 — OUTCOMES -->
+        <article class="border border-ash-lighter bg-ash/20 hover:border-blood-dim transition-colors reveal">
+          <header class="px-6 py-4 border-b border-ash-lighter flex items-center justify-between flex-wrap gap-3">
+            <div class="flex items-center gap-4">
+              <span class="font-mono text-blood text-sm font-bold">06</span>
+              <h3 class="font-display text-lg md:text-xl font-bold text-bone">
+                Reports that sit unread in a SharePoint folder.
+              </h3>
+            </div>
+            <span class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest">// Outcomes</span>
+          </header>
+          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ash-lighter">
+            <div class="p-6">
+              <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="text-blood font-bold text-base leading-none">−</span> Industry default
+              </div>
+              <p class="text-ghost-light text-sm leading-relaxed">
+                Big-consultancy reports are written for compliance auditors and the client board, not the technical team that has to fix the findings. Result: PDF lives in a folder, no remediation happens, next year's pentest finds the same issues.
+              </p>
+            </div>
+            <div class="p-6 bg-blood/[0.02]">
+              <div class="font-mono text-xs text-phosphor uppercase tracking-widest mb-3 flex items-center gap-2">
+                <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
+              </div>
+              <p class="text-bone text-sm leading-relaxed">
+                Two-layer reports: executive summary for compliance + technical detail written for the dev / IT team to action. Optional walkthrough call with the technical team. Free retest within 30 days to verify the fixes worked.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-16 pt-12 border-t border-ash-lighter flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div>
+          <div class="num-label mb-2">// Worth 30 minutes?</div>
+          <p class="font-display text-xl md:text-2xl font-bold text-bone leading-tight">
+            We'd rather show than explain. Pick a slot.
+          </p>
+        </div>
+        <a href={`${base}contact`} class="cta-primary whitespace-nowrap">
+          Book a Scoping Call
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- SERVICES SECTION -->
   <section class="py-32 border-t border-ash-lighter">
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
         <div>
-          <div class="num-label mb-4">[03] // CAPABILITIES</div>
+          <div class="num-label mb-4">[04] // CAPABILITIES</div>
           <h2 class="font-display text-4xl md:text-5xl font-bold">
             What we<br />
             <span class="text-blood">break, document, fix.</span>
@@ -251,7 +475,7 @@ const base = import.meta.env.BASE_URL;
     <div class="absolute inset-0 grid-bg opacity-30"></div>
 
     <div class="relative max-w-7xl mx-auto px-6">
-      <div class="num-label mb-4">[04] // CREDENTIALS</div>
+      <div class="num-label mb-4">[05] // CREDENTIALS</div>
       <h2 class="font-display text-4xl md:text-5xl font-bold mb-16 max-w-3xl">
         Verifiable expertise.<br />
         <span class="text-blood">Not LinkedIn fluff.</span>
@@ -358,7 +582,7 @@ const base = import.meta.env.BASE_URL;
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
         <div>
-          <div class="num-label mb-4">[05] // RESEARCH</div>
+          <div class="num-label mb-4">[06] // RESEARCH</div>
           <h2 class="font-display text-4xl md:text-5xl font-bold">
             Recent field<br />
             <span class="text-blood">notes & write-ups.</span>
@@ -436,7 +660,7 @@ const base = import.meta.env.BASE_URL;
     </div>
 
     <div class="relative max-w-5xl mx-auto px-6 text-center">
-      <div class="num-label mb-4">[06] // ENGAGE</div>
+      <div class="num-label mb-4">[07] // ENGAGE</div>
       <h2 class="font-display text-4xl md:text-6xl font-bold mb-8 leading-tight">
         Ready to find out<br />
         <span class="text-blood">what attackers will find?</span>
