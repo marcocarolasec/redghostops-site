@@ -2,8 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://marcocarolasec.github.io',
-  base: '/redghostops-site',
+  site: 'https://redghostops.com',
   integrations: [tailwind()],
   build: {
     inlineStylesheets: 'auto',
