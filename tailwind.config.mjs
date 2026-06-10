@@ -12,13 +12,13 @@ export default {
         'ash': '#1a1a1a',
         'ash-light': '#262626',
         'ash-lighter': '#404040',
-        'ghost': '#737373',
+        'ghost': '#909090',
         'ghost-light': '#a3a3a3',
         'phosphor': '#22c55e',
       },
       fontFamily: {
         'mono': ['JetBrains Mono', 'ui-monospace', 'monospace'],
-        'display': ['Space Mono', 'ui-monospace', 'monospace'],
+        'display': ['Inter Tight', 'system-ui', 'sans-serif'],
         'sans': ['Inter Tight', 'system-ui', 'sans-serif'],
       },
       animation: {
