@@ -17,11 +17,13 @@ RedGhostOps/
 │   ├── logo.png              # Your ghost logo
 │   └── asier-barranco-cv.pdf # Your CV (downloadable)
 ├── src/
+│   ├── data/
+│   │   └── pricing.ts        # Single source of truth for prices
 │   ├── layouts/
 │   │   └── Layout.astro      # Base layout with nav + footer
 │   ├── pages/
 │   │   ├── index.astro       # Homepage
-│   │   ├── services.astro    # Services + pricing
+│   │   ├── services.astro    # Services + published pricing
 │   │   ├── about.astro       # Operator profile
 │   │   └── contact.astro     # Contact form
 │   └── styles/
@@ -134,8 +136,11 @@ but the current single-page setup is English-only for premium B2B positioning.
 
 ## Pricing & content notes
 
-- Pricing on services page is *indicative* — designed to qualify leads but 
-  allow negotiation. Adjust as needed for your market positioning.
+- All published prices live in `src/data/pricing.ts`. Every number on the
+  services page, the home cards and the contact FAQ is read from there, so
+  adjust that file only. Prices are EUR excl. VAT (EU B2B reverse charge).
+- The positioning is "the price is the price": published packages are not
+  negotiated. Scope beyond a package is billed per day at `dayRate`.
 - "OPERATIONAL" status indicator in top bar is decorative.
 - All CVE numbers reference real published CVEs from Asier's research.
 
