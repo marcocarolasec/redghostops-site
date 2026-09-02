@@ -2,20 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Inter+Tight:wght@400;500;600;700;800;900&display=swap');
-
-:root {
-  --void: #000000;
-  --bone: #f5f0e8;
-  --blood: #dc2626;
-  --blood-dim: #991b1b;
-  --ash: #1a1a1a;
-  --ghost: #909090;
+/* Self-hosted. No Google Fonts call: the company is EU-registered and the
+   German rulings on fonts.gstatic.com make a third-party fetch a liability.
+   Note the previous @import lived below the @tailwind directives, so Vite
+   dropped it and the site shipped in system fallbacks for months. */
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('/fonts/newsreader-var.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* Display headlines: tight grotesk-style tracking for impact */
-.font-display {
-  letter-spacing: -0.02em;
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/jetbrains-mono-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/jetbrains-mono-700.woff2') format('woff2');
+}
+
+:root {
+  /* Ground: near-black with a little warmth, so the serif does not glare. */
+  --paper: #0d0d0f;
+  --paper-raised: #16161a;
+  --ink: #e8e6e1;
+  --muted: #8b8a86;
+  --rule: #2a2a2e;
+
+  /* Red is not decoration here. It is the severity scale from the reports:
+     --critical as a ground (white on it clears AA at 4.83:1),
+     --critical-text where a small red word is genuinely needed (5.16:1). */
+  --critical: #dc2626;
+  --critical-text: #ef4444;
+  --high: #ea8c3a;
 }
 
 * {
@@ -24,59 +55,82 @@
 }
 
 html {
-  background: var(--void);
-  color: var(--bone);
+  background: var(--paper);
+  color: var(--ink);
   scroll-behavior: smooth;
 }
 
 body {
-  background: var(--void);
-  color: var(--bone);
-  font-family: 'Inter Tight', system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
   overflow-x: hidden;
-  position: relative;
 }
 
-/* Subtle scanline overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(255, 255, 255, 0.015) 2px,
-    rgba(255, 255, 255, 0.015) 4px
-  );
-  pointer-events: none;
-  z-index: 100;
+/* Prose sits under 72 characters. Serif body wants the extra leading. */
+.measure {
+  max-width: 62ch;
 }
 
-/* Noise texture */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-  opacity: 0.025;
-  pointer-events: none;
-  z-index: 99;
-  mix-blend-mode: overlay;
+.measure-wide {
+  max-width: 74ch;
 }
+
+/* Mono means machine output: prices, identifiers, CVSS vectors, evidence.
+   It is never used for navigation, headings or running prose — if every
+   label is mono, mono stops carrying information. */
+.machine {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: -0.01em;
+}
+
+/* Severity marker: a rule down the left edge, the way a finding is flagged. */
+.sev {
+  border-left: 3px solid var(--rule);
+  padding-left: 1.25rem;
+}
+.sev-critical { border-left-color: var(--critical); }
+.sev-high { border-left-color: var(--high); }
 
 ::selection {
-  background: var(--blood);
-  color: var(--void);
+  background: var(--critical);
+  color: #ffffff;
 }
 
-/* Keyboard focus visibility */
 :focus-visible {
-  outline: 2px solid var(--blood);
+  outline: 2px solid var(--critical-text);
   outline-offset: 3px;
 }
 
-/* Respect reduced-motion + never hide reveal sections without motion */
+/* Skip link: visible only once it has focus. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--critical);
+  color: #ffffff;
+}
+
+/* One orchestrated moment on load, and nothing after it. No per-section
+   reveals, no flicker, no scanlines. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+.rise {
+  animation: rise 0.5s cubic-bezier(0.2, 0.6, 0.2, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -86,306 +140,21 @@ body::after {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .reveal {
+  .rise {
     opacity: 1 !important;
     transform: none !important;
   }
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
 }
-
 ::-webkit-scrollbar-track {
-  background: var(--void);
+  background: var(--paper);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--blood-dim);
-  border-radius: 0;
+  background: var(--rule);
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--blood);
-}
-
-/* Terminal cursor blink */
-.cursor::after {
-  content: '_';
-  animation: cursorBlink 1s step-end infinite;
-  color: var(--blood);
-}
-
-@keyframes cursorBlink {
-  50% { opacity: 0; }
-}
-
-/* Glitch effect */
-.glitch {
-  position: relative;
-  display: inline-block;
-}
-
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.glitch::before {
-  animation: glitch1 4s infinite;
-  color: var(--blood);
-  z-index: -1;
-}
-
-.glitch::after {
-  animation: glitch2 4s infinite;
-  color: #00ffff;
-  z-index: -2;
-}
-
-@keyframes glitch1 {
-  0%, 90%, 100% { transform: translate(0); }
-  92% { transform: translate(-2px, 1px); }
-  94% { transform: translate(2px, -1px); }
-}
-
-@keyframes glitch2 {
-  0%, 90%, 100% { transform: translate(0); }
-  92% { transform: translate(2px, -1px); }
-  94% { transform: translate(-2px, 1px); }
-}
-
-/* Section dividers */
-.divider-line {
-  position: relative;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--ash-lighter) 20%,
-    var(--ash-lighter) 80%,
-    transparent 100%
-  );
-}
-
-/* Hover underline */
-.hover-underline {
-  position: relative;
-  display: inline-block;
-}
-
-.hover-underline::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--blood);
-  transition: width 0.3s ease;
-}
-
-.hover-underline:hover::after {
-  width: 100%;
-}
-
-/* Reveal on scroll utility */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ASCII art container */
-.ascii {
-  font-family: 'JetBrains Mono', monospace;
-  white-space: pre;
-  line-height: 1;
-  font-size: 0.7rem;
-  color: var(--blood-dim);
-}
-
-/* Terminal box */
-.terminal-box {
-  border: 1px solid var(--ash-lighter);
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
-  position: relative;
-}
-
-.terminal-box::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: -1px;
-  right: -1px;
-  bottom: -1px;
-  background: linear-gradient(
-    135deg,
-    var(--blood-dim) 0%,
-    transparent 50%,
-    transparent 100%
-  );
-  opacity: 0.3;
-  z-index: -1;
-}
-
-/* Bracket decoration */
-.bracket-left::before {
-  content: '[';
-  color: var(--blood);
-  margin-right: 0.25rem;
-}
-
-.bracket-right::after {
-  content: ']';
-  color: var(--blood);
-  margin-left: 0.25rem;
-}
-
-/* Pill */
-.pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.75rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border: 1px solid var(--ash-lighter);
-  color: var(--ghost-light, #a3a3a3);
-}
-
-.pill-blood {
-  border-color: var(--blood-dim);
-  color: var(--blood);
-}
-
-/* Grid background pattern */
-.grid-bg {
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-/* CTA button */
-.cta-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.9rem 1.75rem;
-  background: var(--blood);
-  color: var(--void);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border: 1px solid var(--blood);
-  transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.cta-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: left 0.5s ease;
-}
-
-.cta-primary:hover::before {
-  left: 100%;
-}
-
-.cta-primary:hover {
-  background: var(--blood-bright, #ef4444);
-  box-shadow: 0 0 30px rgba(220, 38, 38, 0.4);
-}
-
-.cta-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.9rem 1.75rem;
-  background: transparent;
-  color: var(--bone);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border: 1px solid var(--ash-lighter);
-  transition: all 0.2s ease;
-}
-
-.cta-secondary:hover {
-  border-color: var(--blood);
-  color: var(--blood);
-}
-
-/* Service card */
-.service-card {
-  position: relative;
-  padding: 2rem;
-  background: rgba(26, 26, 26, 0.3);
-  border: 1px solid var(--ash-lighter, #404040);
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-.service-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--blood),
-    transparent
-  );
-  transform: translateX(-100%);
-  transition: transform 0.6s ease;
-}
-
-.service-card:hover::before {
-  transform: translateX(100%);
-}
-
-.service-card:hover {
-  border-color: var(--blood-dim);
-  background: rgba(26, 26, 26, 0.6);
-}
-
-/* Number labels */
-.num-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--blood);
-  letter-spacing: 0.15em;
+  background: #3a3a40;
 }

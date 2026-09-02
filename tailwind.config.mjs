@@ -4,53 +4,37 @@ export default {
   theme: {
     extend: {
       colors: {
-        'void': '#000000',
-        'bone': '#f5f0e8',
-        'blood': '#dc2626',
-        'blood-dim': '#991b1b',
-        'blood-bright': '#ef4444',
-        'ash': '#1a1a1a',
-        'ash-light': '#262626',
-        'ash-lighter': '#404040',
-        'ghost': '#909090',
-        'ghost-light': '#a3a3a3',
-        'phosphor': '#22c55e',
+        paper: '#0d0d0f',
+        'paper-raised': '#16161a',
+        ink: '#e8e6e1',
+        muted: '#8b8a86',
+        rule: '#2a2a2e',
+        // Severity, not decoration. See global.css.
+        critical: '#dc2626',
+        'critical-deep': '#991b1b',
+        'critical-text': '#ef4444',
+        high: '#ea8c3a',
       },
       fontFamily: {
-        'mono': ['JetBrains Mono', 'ui-monospace', 'monospace'],
-        'display': ['Inter Tight', 'system-ui', 'sans-serif'],
-        'sans': ['Inter Tight', 'system-ui', 'sans-serif'],
+        // Two families, two jobs. Serif carries everything a person reads;
+        // mono is reserved for machine output.
+        serif: ['Newsreader', 'Georgia', 'Times New Roman', 'serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
-      animation: {
-        'flicker': 'flicker 4s linear infinite',
-        'scan': 'scan 8s linear infinite',
-        'fade-up': 'fadeUp 0.8s ease-out forwards',
-        'fade-in': 'fadeIn 1.2s ease-out forwards',
-        'glow-pulse': 'glowPulse 3s ease-in-out infinite',
+      fontSize: {
+        // Modular scale, 1.25 from a 17px base.
+        'step--1': ['0.85rem', { lineHeight: '1.5' }],
+        'step-0': ['1.0625rem', { lineHeight: '1.65' }],
+        'step-1': ['1.33rem', { lineHeight: '1.5' }],
+        'step-2': ['1.66rem', { lineHeight: '1.35' }],
+        'step-3': ['2.07rem', { lineHeight: '1.2' }],
+        'step-4': ['2.59rem', { lineHeight: '1.12' }],
+        'step-5': ['3.24rem', { lineHeight: '1.05' }],
+        'step-6': ['4.05rem', { lineHeight: '1.0' }],
       },
-      keyframes: {
-        flicker: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.97' },
-          '52%': { opacity: '0.85' },
-          '54%': { opacity: '1' },
-        },
-        scan: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(100vh)' },
-        },
-        fadeUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        glowPulse: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(220, 38, 38, 0.15)' },
-          '50%': { boxShadow: '0 0 40px rgba(220, 38, 38, 0.3)' },
-        },
+      maxWidth: {
+        prose: '62ch',
+        'prose-wide': '74ch',
       },
     },
   },
