@@ -139,8 +139,11 @@ but the current single-page setup is English-only for premium B2B positioning.
 - All published prices live in `src/data/pricing.ts`. Every number on the
   services page, the home cards and the contact FAQ is read from there, so
   adjust that file only. Prices are EUR excl. VAT (EU B2B reverse charge).
-- The positioning is "the price is the price": published packages are not
-  negotiated. Scope beyond a package is billed per day at `dayRate`.
+- The site claims only what is true: the published price is what the described
+  scope costs, and the only discounts *on the site* are the published ones
+  (bundles, annual prepay). Discretionary discounts stay off the site as a sales
+  tool. Do not add copy that promises prices never move. Scope beyond a package
+  is billed per day at `dayRate`.
 - "OPERATIONAL" status indicator in top bar is decorative.
 - All CVE numbers reference real published CVEs from Asier's research.
 
