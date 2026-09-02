@@ -1,680 +1,143 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { eur, entry, fromPrice } from '../data/pricing';
-const base = import.meta.env.BASE_URL;
-const from = (key: string) => {
-  const p = fromPrice(key);
-  return p === null ? 'Quoted after scoping' : `from ${eur(p)}`;
-};
+import { services, entry, eur, fromPrice } from '../data/pricing';
+import { bookUrl, CTA_LABEL, EMAIL } from '../data/site';
+
+const catalog = [
+  { key: 'web-pentest', name: 'Web Application Pentest', line: 'Manual testing of web apps and APIs. Auth, business logic, authorization, injection chains.' },
+  { key: 'external-pentest', name: 'External Network Pentest', line: 'Your internet-facing infrastructure from an attacker’s seat. Recon, enumeration, exploit validation.' },
+  { key: 'ad-assessment', name: 'Active Directory Assessment', line: 'Assumed foothold to Domain Admin. Kerberos, ACL abuse, relay, lateral movement.' },
+  { key: 'red-team', name: 'Red Team Operations', line: 'Objective-based adversary simulation with EDR evasion. Tests prevention and detection together.' },
+  { key: 'cloud', name: 'Cloud Security Assessment', line: 'AWS, Azure, GCP. IAM escalation paths, exposed storage, hybrid cloud-to-on-prem routes.' },
+];
+
+const comparison = [
+  ['Who does the work', 'Juniors, supervised remotely by a senior selling five other projects', 'The same senior operator from kickoff to retest'],
+  ['The report', 'Mostly boilerplate, CVSS inflated to justify the invoice', 'Written for your environment, scored honestly, remediation for your stack'],
+  ['Communication', 'An account manager in the middle; answers take days', 'A direct channel to the operator; answers in hours'],
+  ['Procurement', 'Forty-page MSAs, weeks of onboarding, change-order fees', 'NDA in 24 hours, proposal in 48, testing within three weeks'],
+  ['Pricing', 'On request, then negotiated', 'Published, and it does not move'],
+  ['After delivery', 'A PDF in a shared folder', 'A walkthrough with your team and a free retest within 30 days'],
+];
 ---
 
-<Layout>
-  <!-- HERO SECTION -->
-  <section class="relative min-h-[90vh] flex items-center overflow-hidden grid-bg">
-    <!-- Animated background -->
-    <div class="absolute inset-0 opacity-30 pointer-events-none">
-      <div class="absolute top-1/4 -left-1/4 w-[600px] h-[600px] bg-blood/10 rounded-full blur-[120px]"></div>
-      <div class="absolute bottom-1/4 -right-1/4 w-[600px] h-[600px] bg-blood-dim/10 rounded-full blur-[120px]"></div>
-    </div>
-
-    <div class="relative max-w-7xl mx-auto px-6 py-20 w-full">
-      <!-- Top mini-badge -->
-      <div class="flex items-center gap-3 mb-8 font-mono text-xs animate-fade-in">
-        <span class="num-label">[01]</span>
-        <span class="h-px w-12 bg-blood"></span>
-        <span class="text-ghost-light uppercase tracking-widest">Offensive Security Consultancy</span>
-      </div>
-
-      <!-- Main headline -->
-      <h1 class="font-display font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.95] mb-8 animate-fade-up">
-        <span class="block text-bone">Adversary</span>
-        <span class="block text-bone">simulation,</span>
-        <span class="block text-blood">without the theatre.</span>
+<Layout path="/">
+  <section class="wrap pt-20 md:pt-28 pb-16">
+    <div class="rise">
+      <h1 class="text-step-5 md:text-step-6 font-medium tracking-tight max-w-[18ch]">
+        Adversary simulation, without the theatre.
       </h1>
-
-      <p class="text-ghost-light text-lg md:text-xl max-w-2xl mb-12 leading-relaxed font-light animate-fade-up" style="animation-delay: 0.2s">
-        Red team engagements, penetration testing, and adversary emulation for organizations that need real attack depth — not automated scanners with a logo on top.
+      <p class="lede measure mt-8">
+        Penetration testing and red team operations by one senior operator, start to finish. Fixed scope, published prices, and a report your engineers can act on.
       </p>
-
-      <!-- CTAs -->
-      <div class="flex flex-col sm:flex-row gap-4 mb-16 animate-fade-up" style="animation-delay: 0.4s">
-        <a href={`${base}contact`} class="cta-primary">
-          Request Engagement
-          <span>→</span>
-        </a>
-        <a href={`${base}services`} class="cta-secondary">
-          View Services
-        </a>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href={bookUrl()} target="_blank" rel="noopener" class="btn-primary">{CTA_LABEL}</a>
+        <a href="/services/" class="btn-secondary">See services and pricing</a>
       </div>
-
-      <!-- Stats row -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t border-ash-lighter animate-fade-up" style="animation-delay: 0.6s">
-        <div>
-          <div class="font-display text-3xl md:text-4xl text-blood font-bold">6+</div>
-          <div class="text-[0.7rem] font-mono uppercase tracking-widest text-ghost mt-2">Years in Offsec</div>
-        </div>
-        <div>
-          <div class="font-display text-3xl md:text-4xl text-blood font-bold">10</div>
-          <div class="text-[0.7rem] font-mono uppercase tracking-widest text-ghost mt-2">Published CVEs</div>
-        </div>
-        <div>
-          <div class="font-display text-3xl md:text-4xl text-blood font-bold">OSEP</div>
-          <div class="text-[0.7rem] font-mono uppercase tracking-widest text-ghost mt-2">+ OSCP / CRTP</div>
-        </div>
-        <div>
-          <div class="font-display text-3xl md:text-4xl text-blood font-bold">EU</div>
-          <div class="text-[0.7rem] font-mono uppercase tracking-widest text-ghost mt-2">Cyprus Ltd</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ETHOS SECTION -->
-  <section class="py-32 border-t border-ash-lighter relative">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-12 gap-8">
-        <div class="md:col-span-4">
-          <div class="sticky top-32">
-            <div class="num-label mb-4">[02] // ETHOS</div>
-            <h2 class="font-display text-4xl md:text-5xl font-bold leading-tight">
-              We don't run<br />
-              <span class="text-blood">checkbox audits.</span>
-            </h2>
-          </div>
-        </div>
-
-        <div class="md:col-span-8 space-y-12">
-          <div class="reveal">
-            <p class="text-xl md:text-2xl text-bone leading-relaxed font-light">
-              Most security assessments are theatre: a Nessus scan, a screenshot of CVE-2017-something, a 100-page PDF nobody reads. We do something different.
-            </p>
-          </div>
-
-          <div class="grid sm:grid-cols-2 gap-8 reveal">
-            <div class="border-l border-blood pl-6">
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">// Field-tested</div>
-              <p class="text-ghost-light leading-relaxed">
-                Real offensive operators with hands-on experience compromising production environments — not consultants reading runbooks.
-              </p>
-            </div>
-
-            <div class="border-l border-blood pl-6">
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">// Senior-only</div>
-              <p class="text-ghost-light leading-relaxed">
-                Every engagement led by OSEP-certified operators with 6+ years in offensive security. No juniors learning on your network.
-              </p>
-            </div>
-
-            <div class="border-l border-blood pl-6">
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">// Manual depth</div>
-              <p class="text-ghost-light leading-relaxed">
-                Custom tooling, business logic flaws, chained exploitation. The vulnerabilities scanners miss are the ones attackers find.
-              </p>
-            </div>
-
-            <div class="border-l border-blood pl-6">
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">// Actionable output</div>
-              <p class="text-ghost-light leading-relaxed">
-                Reports that satisfy compliance auditors and give your technical teams a real remediation path. No filler.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY REDOPS / VS BIG4 SECTION -->
-  <section class="py-32 border-t border-ash-lighter relative">
-    <div class="max-w-7xl mx-auto px-6">
-      <!-- Header -->
-      <div class="grid md:grid-cols-12 gap-8 mb-16">
-        <div class="md:col-span-5">
-          <div class="num-label mb-4">[03] // POSITIONING</div>
-          <h2 class="font-display text-4xl md:text-5xl font-bold leading-tight">
-            Why teams pick us<br />
-            <span class="text-blood">over a Big4.</span>
-          </h2>
-        </div>
-        <div class="md:col-span-7 flex items-end">
-          <p class="text-ghost-light text-lg leading-relaxed">
-            Mid-market security teams get two bad options: Big4 consultancies at enterprise pricing with juniors doing the actual work, or unverified boutiques with no checkable credentials. We exist in the gap — senior delivery at fair pricing, with credentials you can verify before signing anything.
-          </p>
-        </div>
-      </div>
-
-      <!-- Pain cards -->
-      <div class="space-y-3">
-        <!-- 01 — TALENT -->
-        <article class="border border-ash-lighter bg-ash/20 hover:border-blood-dim transition-colors reveal">
-          <header class="px-6 py-4 border-b border-ash-lighter flex items-center justify-between flex-wrap gap-3">
-            <div class="flex items-center gap-4">
-              <span class="font-mono text-blood text-sm font-bold">01</span>
-              <h3 class="font-display text-lg md:text-xl font-bold text-bone">
-                Junior-led pentests at senior pricing.
-              </h3>
-            </div>
-            <span class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest">// Talent</span>
-          </header>
-          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ash-lighter">
-            <div class="p-6">
-              <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span class="text-blood font-bold text-base leading-none">−</span> Industry default
-              </div>
-              <p class="text-ghost-light text-sm leading-relaxed">
-                Big4 sells engagements at enterprise pricing. Actual testing is done by consultants with 0-3 years of experience, supervised remotely by a senior who is selling 5 other projects in parallel. You pay senior rates and get junior work.
-              </p>
-            </div>
-            <div class="p-6 bg-blood/[0.02]">
-              <div class="font-mono text-xs text-phosphor uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
-              </div>
-              <p class="text-bone text-sm leading-relaxed">
-                Every engagement executed 100% by a senior operator with 6+ years full-time offsec experience. OSEP-certified, 10 published CVEs. Same person from kickoff to remediation walkthrough. No juniors learning on your network.
-              </p>
-            </div>
-          </div>
-        </article>
-
-        <!-- 02 — REPORTING -->
-        <article class="border border-ash-lighter bg-ash/20 hover:border-blood-dim transition-colors reveal">
-          <header class="px-6 py-4 border-b border-ash-lighter flex items-center justify-between flex-wrap gap-3">
-            <div class="flex items-center gap-4">
-              <span class="font-mono text-blood text-sm font-bold">02</span>
-              <h3 class="font-display text-lg md:text-xl font-bold text-bone">
-                Reports that read like templates with your logo pasted in.
-              </h3>
-            </div>
-            <span class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest">// Reporting</span>
-          </header>
-          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ash-lighter">
-            <div class="p-6">
-              <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span class="text-blood font-bold text-base leading-none">−</span> Industry default
-              </div>
-              <p class="text-ghost-light text-sm leading-relaxed">
-                Large-consultancy reports are 80% reusable boilerplate optimized for vendor legal defense, with 20% actual findings. CVSS scores inflated to justify the engagement cost. Remediation reads "apply principle of least privilege" with no concrete steps for your stack.
-              </p>
-            </div>
-            <div class="p-6 bg-blood/[0.02]">
-              <div class="font-mono text-xs text-phosphor uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
-              </div>
-              <p class="text-bone text-sm leading-relaxed">
-                Reports written specifically for your environment. Reproduction steps that work against your actual setup. CVSS scored honestly, not inflated to justify the invoice. Remediation written for your tech stack — not generic auditor language.
-              </p>
-            </div>
-          </div>
-        </article>
-
-        <!-- 03 — COMMS -->
-        <article class="border border-ash-lighter bg-ash/20 hover:border-blood-dim transition-colors reveal">
-          <header class="px-6 py-4 border-b border-ash-lighter flex items-center justify-between flex-wrap gap-3">
-            <div class="flex items-center gap-4">
-              <span class="font-mono text-blood text-sm font-bold">03</span>
-              <h3 class="font-display text-lg md:text-xl font-bold text-bone">
-                Account managers between you and the pentester.
-              </h3>
-            </div>
-            <span class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest">// Comms</span>
-          </header>
-          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ash-lighter">
-            <div class="p-6">
-              <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span class="text-blood font-bold text-base leading-none">−</span> Industry default
-              </div>
-              <p class="text-ghost-light text-sm leading-relaxed">
-                You talk to a sales account manager. Technical questions take 2-3 days to traverse the chain (client → AM → engagement lead → junior tester → back up), arriving diluted. Scope changes require formal paperwork and a change-order fee.
-              </p>
-            </div>
-            <div class="p-6 bg-blood/[0.02]">
-              <div class="font-mono text-xs text-phosphor uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
-              </div>
-              <p class="text-bone text-sm leading-relaxed">
-                Direct Slack / Teams / WhatsApp channel with the actual operator during the engagement. Technical answers in under 2 hours. Interesting finding mid-test? 5-minute conversation to adjust scope. No middlemen, no change orders.
-              </p>
-            </div>
-          </div>
-        </article>
-
-        <!-- 04 — PROCUREMENT -->
-        <article class="border border-ash-lighter bg-ash/20 hover:border-blood-dim transition-colors reveal">
-          <header class="px-6 py-4 border-b border-ash-lighter flex items-center justify-between flex-wrap gap-3">
-            <div class="flex items-center gap-4">
-              <span class="font-mono text-blood text-sm font-bold">04</span>
-              <h3 class="font-display text-lg md:text-xl font-bold text-bone">
-                Vendor onboarding takes longer than the engagement itself.
-              </h3>
-            </div>
-            <span class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest">// Procurement</span>
-          </header>
-          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ash-lighter">
-            <div class="p-6">
-              <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span class="text-blood font-bold text-base leading-none">−</span> Industry default
-              </div>
-              <p class="text-ghost-light text-sm leading-relaxed">
-                40+ page MSAs, 4-8 weeks of vendor onboarding, 2-3 month RFP cycles, change requests with extra paperwork. By the time testing starts, the threat that triggered the request has already moved on.
-              </p>
-            </div>
-            <div class="p-6 bg-blood/[0.02]">
-              <div class="font-mono text-xs text-phosphor uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
-              </div>
-              <p class="text-bone text-sm leading-relaxed">
-                Mutual NDA within 24h of first contact. Proposal within 48h of the scoping call. Standard MSA + SOW signed in 5-10 business days. Kickoff 1-2 weeks after contract. Total: 2-3 weeks from first email to active testing.
-              </p>
-            </div>
-          </div>
-        </article>
-
-        <!-- 05 — PRICING / VERIFIABILITY -->
-        <article class="border border-ash-lighter bg-ash/20 hover:border-blood-dim transition-colors reveal">
-          <header class="px-6 py-4 border-b border-ash-lighter flex items-center justify-between flex-wrap gap-3">
-            <div class="flex items-center gap-4">
-              <span class="font-mono text-blood text-sm font-bold">05</span>
-              <h3 class="font-display text-lg md:text-xl font-bold text-bone">
-                Choose between Big4 prices or unknown-quality discount shops.
-              </h3>
-            </div>
-            <span class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest">// Market</span>
-          </header>
-          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ash-lighter">
-            <div class="p-6">
-              <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span class="text-blood font-bold text-base leading-none">−</span> Industry default
-              </div>
-              <p class="text-ghost-light text-sm leading-relaxed">
-                The market polarizes: Big4 (slow, junior-led, expensive) or unknown boutiques (unverifiable credentials, mixed quality, no published research). No middle option for companies that want senior delivery without enterprise overhead.
-              </p>
-            </div>
-            <div class="p-6 bg-blood/[0.02]">
-              <div class="font-mono text-xs text-phosphor uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
-              </div>
-              <p class="text-bone text-sm leading-relaxed">
-                Senior delivery at published prices, backed by credentials you can verify before signing: OSEP publicly verifiable on OffSec, 10 CVEs with MITRE / INCIBE IDs, technical research at <span class="text-blood">blog.redghostops.com</span>. Quality demonstrable, not just claimed on a logo. Price visible before the first call, not after the third.
-              </p>
-            </div>
-          </div>
-        </article>
-
-        <!-- 06 — OUTCOMES -->
-        <article class="border border-ash-lighter bg-ash/20 hover:border-blood-dim transition-colors reveal">
-          <header class="px-6 py-4 border-b border-ash-lighter flex items-center justify-between flex-wrap gap-3">
-            <div class="flex items-center gap-4">
-              <span class="font-mono text-blood text-sm font-bold">06</span>
-              <h3 class="font-display text-lg md:text-xl font-bold text-bone">
-                Reports that sit unread in a SharePoint folder.
-              </h3>
-            </div>
-            <span class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest">// Outcomes</span>
-          </header>
-          <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ash-lighter">
-            <div class="p-6">
-              <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span class="text-blood font-bold text-base leading-none">−</span> Industry default
-              </div>
-              <p class="text-ghost-light text-sm leading-relaxed">
-                Big-consultancy reports are written for compliance auditors and the client board, not the technical team that has to fix the findings. Result: PDF lives in a folder, no remediation happens, next year's pentest finds the same issues.
-              </p>
-            </div>
-            <div class="p-6 bg-blood/[0.02]">
-              <div class="font-mono text-xs text-phosphor uppercase tracking-widest mb-3 flex items-center gap-2">
-                <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
-              </div>
-              <p class="text-bone text-sm leading-relaxed">
-                Two-layer reports: executive summary for compliance + technical detail written for the dev / IT team to action. Optional walkthrough call with the technical team. Free retest within 30 days to verify the fixes worked.
-              </p>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <!-- CTA -->
-      <div class="mt-16 pt-12 border-t border-ash-lighter flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div>
-          <div class="num-label mb-2">// Worth 30 minutes?</div>
-          <p class="font-display text-xl md:text-2xl font-bold text-bone leading-tight">
-            We'd rather show than explain. Pick a slot.
-          </p>
-        </div>
-        <a href={`${base}contact`} class="cta-primary whitespace-nowrap">
-          Book a Scoping Call
-          <span>→</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES SECTION -->
-  <section class="py-32 border-t border-ash-lighter">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
-        <div>
-          <div class="num-label mb-4">[04] // CAPABILITIES</div>
-          <h2 class="font-display text-4xl md:text-5xl font-bold">
-            What we<br />
-            <span class="text-blood">break, document, fix.</span>
-          </h2>
-        </div>
-        <a href={`${base}services#pricing`} class="cta-secondary">
-          Catalog & Pricing →
-        </a>
-      </div>
-
-      <!-- Entry product hook -->
-      <a href={`${base}services#pricing`} class="reveal flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 border border-blood-dim bg-blood/[0.03] hover:bg-blood/[0.06] transition-colors px-6 py-4 mb-6 group">
-        <span class="pill pill-blood whitespace-nowrap">Start here</span>
-        <span class="text-bone text-sm md:text-base leading-snug">
-          <span class="font-bold">{entry.name}</span> · {entry.days} days · <span class="text-blood font-mono font-bold">{eur(entry.price)}</span> excl. VAT. {entry.scope}. Credited in full against a full engagement within {entry.creditWindowDays} days.
-        </span>
-        <span class="text-blood font-mono text-xs whitespace-nowrap sm:ml-auto group-hover:translate-x-1 transition">Details →</span>
-      </a>
-
-      <div class="grid md:grid-cols-2 gap-6">
-        <!-- Service 1 -->
-        <a href={`${base}services`} class="service-card group reveal">
-          <div class="flex justify-between items-start mb-6">
-            <div class="num-label">02 / 07</div>
-            <span class="pill pill-blood">Web / API</span>
-          </div>
-          <h3 class="font-display text-2xl font-bold mb-3 text-bone group-hover:text-blood transition">
-            Web Application Pentest
-          </h3>
-          <p class="text-ghost-light text-sm leading-relaxed mb-6">
-            Deep manual testing beyond OWASP Top 10. Business logic, auth bypass, race conditions, API abuse. Reports your dev team will actually use.
-          </p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="pill">OWASP</span>
-            <span class="pill">API/REST</span>
-            <span class="pill">GraphQL</span>
-            <span class="pill">Business Logic</span>
-          </div>
-          <div class="flex flex-wrap justify-between items-center gap-x-4 gap-y-2 pt-6 border-t border-ash-lighter">
-            <span class="font-mono text-xs text-ghost uppercase tracking-widest whitespace-nowrap">5-7 days · <span class="text-bone">{from('web-pentest')}</span></span>
-            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition whitespace-nowrap">View details →</span>
-          </div>
-        </a>
-
-        <!-- Service 2 -->
-        <a href={`${base}services`} class="service-card group reveal">
-          <div class="flex justify-between items-start mb-6">
-            <div class="num-label">03 / 07</div>
-            <span class="pill pill-blood">Internal AD</span>
-          </div>
-          <h3 class="font-display text-2xl font-bold mb-3 text-bone group-hover:text-blood transition">
-            Active Directory Assessment
-          </h3>
-          <p class="text-ghost-light text-sm leading-relaxed mb-6">
-            Full AD attack chain from initial access to Domain Admin. Kerberoasting, ACL abuse, GPO weaknesses, LSA secrets, lateral movement.
-          </p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="pill">Kerberos</span>
-            <span class="pill">BloodHound</span>
-            <span class="pill">CRTP-grade</span>
-            <span class="pill">LSA / NTDS</span>
-          </div>
-          <div class="flex flex-wrap justify-between items-center gap-x-4 gap-y-2 pt-6 border-t border-ash-lighter">
-            <span class="font-mono text-xs text-ghost uppercase tracking-widest whitespace-nowrap">7-10 days · <span class="text-bone">{from('ad-assessment')}</span></span>
-            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition whitespace-nowrap">View details →</span>
-          </div>
-        </a>
-
-        <!-- Service 3 -->
-        <a href={`${base}services`} class="service-card group reveal">
-          <div class="flex justify-between items-start mb-6">
-            <div class="num-label">04 / 07</div>
-            <span class="pill pill-blood">External</span>
-          </div>
-          <h3 class="font-display text-2xl font-bold mb-3 text-bone group-hover:text-blood transition">
-            External Network Pentest
-          </h3>
-          <p class="text-ghost-light text-sm leading-relaxed mb-6">
-            Internet-facing infrastructure assessment. OSINT, active enumeration, exploitation validation, post-exploitation chains.
-          </p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="pill">OSINT</span>
-            <span class="pill">Recon</span>
-            <span class="pill">CVE Exploitation</span>
-            <span class="pill">Validation</span>
-          </div>
-          <div class="flex flex-wrap justify-between items-center gap-x-4 gap-y-2 pt-6 border-t border-ash-lighter">
-            <span class="font-mono text-xs text-ghost uppercase tracking-widest whitespace-nowrap">5-7 days · <span class="text-bone">{from('external-pentest')}</span></span>
-            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition whitespace-nowrap">View details →</span>
-          </div>
-        </a>
-
-        <!-- Service 4 -->
-        <a href={`${base}services`} class="service-card group reveal">
-          <div class="flex justify-between items-start mb-6">
-            <div class="num-label">05 / 07</div>
-            <span class="pill pill-blood">Red Team</span>
-          </div>
-          <h3 class="font-display text-2xl font-bold mb-3 text-bone group-hover:text-blood transition">
-            Red Team Operations
-          </h3>
-          <p class="text-ghost-light text-sm leading-relaxed mb-6">
-            Full-spectrum adversary simulation. Initial access via phishing/exploits, EDR evasion, lateral movement, objective-driven exfiltration.
-          </p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="pill">EDR Evasion</span>
-            <span class="pill">C2 Ops</span>
-            <span class="pill">Phishing</span>
-            <span class="pill">Custom Tooling</span>
-          </div>
-          <div class="flex flex-wrap justify-between items-center gap-x-4 gap-y-2 pt-6 border-t border-ash-lighter">
-            <span class="font-mono text-xs text-ghost uppercase tracking-widest whitespace-nowrap">2-4 weeks · <span class="text-bone">{from('red-team')}</span></span>
-            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition whitespace-nowrap">View details →</span>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CREDENTIALS / TRUST SECTION -->
-  <section class="py-32 border-t border-ash-lighter relative overflow-hidden">
-    <div class="absolute inset-0 grid-bg opacity-30"></div>
-
-    <div class="relative max-w-7xl mx-auto px-6">
-      <div class="num-label mb-4">[05] // CREDENTIALS</div>
-      <h2 class="font-display text-4xl md:text-5xl font-bold mb-16 max-w-3xl">
-        Verifiable expertise.<br />
-        <span class="text-blood">Not LinkedIn fluff.</span>
-      </h2>
-
-      <div class="grid md:grid-cols-2 gap-16">
-        <!-- Certifications -->
-        <div class="reveal">
-          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-6">// Certifications</div>
-          <ul class="space-y-4">
-            <li class="flex items-center justify-between pb-4 border-b border-ash-lighter">
-              <div>
-                <div class="font-mono text-bone font-bold">OSEP</div>
-                <div class="text-xs text-ghost-light mt-1">Offensive Security Experienced Penetration Tester</div>
-              </div>
-              <div class="font-mono text-xs text-ghost">2026</div>
-            </li>
-            <li class="flex items-center justify-between pb-4 border-b border-ash-lighter">
-              <div>
-                <div class="font-mono text-bone font-bold">OSCP</div>
-                <div class="text-xs text-ghost-light mt-1">Offensive Security Certified Professional</div>
-              </div>
-              <div class="font-mono text-xs text-ghost">2023</div>
-            </li>
-            <li class="flex items-center justify-between pb-4 border-b border-ash-lighter">
-              <div>
-                <div class="font-mono text-bone font-bold">OSWP</div>
-                <div class="text-xs text-ghost-light mt-1">Offensive Security Wireless Professional</div>
-              </div>
-              <div class="font-mono text-xs text-ghost">2023</div>
-            </li>
-            <li class="flex items-center justify-between pb-4 border-b border-ash-lighter">
-              <div>
-                <div class="font-mono text-bone font-bold">CRTP</div>
-                <div class="text-xs text-ghost-light mt-1">Certified Red Team Professional</div>
-              </div>
-              <div class="font-mono text-xs text-ghost">2022</div>
-            </li>
-            <li class="flex items-center justify-between pb-4 border-b border-ash-lighter">
-              <div>
-                <div class="font-mono text-bone font-bold">CEH</div>
-                <div class="text-xs text-ghost-light mt-1">Certified Ethical Hacker (EC-Council)</div>
-              </div>
-              <div class="font-mono text-xs text-ghost">2022</div>
-            </li>
-          </ul>
-        </div>
-
-        <!-- CVEs and research -->
-        <div class="reveal">
-          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-6">// Published Research</div>
-          <div class="terminal-box p-6 mb-6">
-            <div class="flex items-center gap-2 mb-4 pb-4 border-b border-ash-lighter">
-              <span class="w-3 h-3 rounded-full bg-blood-dim"></span>
-              <span class="w-3 h-3 rounded-full bg-ash-lighter"></span>
-              <span class="w-3 h-3 rounded-full bg-ash-lighter"></span>
-              <span class="font-mono text-xs text-ghost ml-2">cve_database.log</span>
-            </div>
-            <pre class="font-mono text-xs text-ghost-light leading-relaxed whitespace-pre-wrap">
-<span class="text-blood">$</span> grep -r "asier" /cve/published/
-
-<span class="text-blood">CVE-2024-8161</span>  SQL Injection · ATISolutions CIGESv2
-<span class="text-blood">CVE-2024-29723</span> Security Research · MITRE
-<span class="text-blood">CVE-2024-29724</span> Security Research · MITRE
-<span class="text-blood">CVE-2024-29725</span> Security Research · MITRE
-<span class="text-blood">CVE-2024-29726</span> Security Research · MITRE
-<span class="text-blood">CVE-2024-29727</span> Security Research · MITRE
-<span class="text-blood">CVE-2024-29728</span> Security Research · MITRE
-<span class="text-blood">CVE-2024-29729</span> Security Research · MITRE
-<span class="text-blood">CVE-2024-29730</span> Security Research · MITRE
-<span class="text-blood">CVE-2024-29731</span> Security Research · INCIBE
-
-<span class="text-phosphor">10 vulnerabilities · MITRE/INCIBE assigned</span>
-<span class="cursor"></span>
-            </pre>
-          </div>
-
-          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-4 mt-8">// Background</div>
-          <ul class="space-y-3 text-sm text-ghost-light">
-            <li class="flex gap-3">
-              <span class="text-blood font-mono">▸</span>
-              <span><span class="text-bone font-medium">Telefónica Tech</span> · Senior Offensive Security Engineer · 4 years</span>
-            </li>
-            <li class="flex gap-3">
-              <span class="text-blood font-mono">▸</span>
-              <span><span class="text-bone font-medium">Assured Clarity (UK)</span> · Offensive Security Instructor</span>
-            </li>
-            <li class="flex gap-3">
-              <span class="text-blood font-mono">▸</span>
-              <span><span class="text-bone font-medium">Bullhost Cloud Services</span> · Offensive Security Engineer · 3 years</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RESEARCH BLOG PREVIEW -->
-  <section class="py-32 border-t border-ash-lighter">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
-        <div>
-          <div class="num-label mb-4">[06] // RESEARCH</div>
-          <h2 class="font-display text-4xl md:text-5xl font-bold">
-            Recent field<br />
-            <span class="text-blood">notes & write-ups.</span>
-          </h2>
-        </div>
-        <a href="https://blog.redghostops.com" class="cta-secondary">
-          All Research →
-        </a>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
-        <a href="https://blog.redghostops.com/sam-exfil-credential-extraction-via-raw-ntfs-volume-reads" class="service-card group reveal block">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="pill pill-blood">Post-Exploitation</span>
-            <span class="font-mono text-xs text-ghost">May 2026</span>
-          </div>
-          <h3 class="font-display text-xl font-bold mb-3 text-bone group-hover:text-blood transition leading-tight">
-            SAM-EXFIL: Credential Extraction via Raw NTFS Volume Reads
-          </h3>
-          <p class="text-ghost-light text-sm leading-relaxed mb-6">
-            Bypassing EDR monitoring of Windows credential hive files at the API level by reading the raw NTFS volume directly.
-          </p>
-          <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition inline-block">Read article →</span>
-        </a>
-
-        <a href="https://blog.redghostops.com/rexldr-anatom-a-de-un-shellcode-loader-moderno-t-cnicas-evidencia-y-perspectiva-dual" class="service-card group reveal block">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="pill pill-blood">EDR Evasion</span>
-            <span class="font-mono text-xs text-ghost">Apr 2026</span>
-          </div>
-          <h3 class="font-display text-xl font-bold mb-3 text-bone group-hover:text-blood transition leading-tight">
-            RexLDR: Anatomía de un Shellcode Loader Moderno
-          </h3>
-          <p class="text-ghost-light text-sm leading-relaxed mb-6">
-            Deep dive into modern shellcode loader techniques: RC4 encryption via SystemFunction032, EDR evasion against Sophos and CrowdStrike.
-          </p>
-          <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition inline-block">Read article →</span>
-        </a>
-
-        <a href="https://blog.redghostops.com/windows-anti-forensics-erasing-tracks-to-evade-blue-team-in-red-team-ops" class="service-card group reveal block">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="pill pill-blood">Anti-Forensics</span>
-            <span class="font-mono text-xs text-ghost">Nov 2025</span>
-          </div>
-          <h3 class="font-display text-xl font-bold mb-3 text-bone group-hover:text-blood transition leading-tight">
-            Windows Anti-Forensics: Erasing Tracks to Evade Blue Team
-          </h3>
-          <p class="text-ghost-light text-sm leading-relaxed mb-6">
-            Practical anti-forensics techniques for red team operations: log clearing, DNS cache evasion, deleted file recovery prevention.
-          </p>
-          <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition inline-block">Read article →</span>
-        </a>
-
-        <a href="https://blog.redghostops.com/living-in-the-run-key-practical-persistence-for-red-team-ops" class="service-card group reveal block">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="pill pill-blood">Persistence</span>
-            <span class="font-mono text-xs text-ghost">Nov 2025</span>
-          </div>
-          <h3 class="font-display text-xl font-bold mb-3 text-bone group-hover:text-blood transition leading-tight">
-            Living in the Run Key: Practical Persistence for Red Team Ops
-          </h3>
-          <p class="text-ghost-light text-sm leading-relaxed mb-6">
-            Registry Run Keys and Startup Folder persistence techniques for modern red team operations. MITRE T1547.001 deep dive.
-          </p>
-          <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition inline-block">Read article →</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FINAL CTA -->
-  <section class="py-32 border-t border-ash-lighter relative overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blood/5 rounded-full blur-[150px]"></div>
-    </div>
-
-    <div class="relative max-w-5xl mx-auto px-6 text-center">
-      <div class="num-label mb-4">[07] // ENGAGE</div>
-      <h2 class="font-display text-4xl md:text-6xl font-bold mb-8 leading-tight">
-        Ready to find out<br />
-        <span class="text-blood">what attackers will find?</span>
-      </h2>
-      <p class="text-ghost-light text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-        Engagements typically scoped within 48 hours. NDAs signed before scope discussion. All work invoiced through our EU-registered entity.
+      <p class="mt-8 text-step--1 text-muted measure">
+        OSEP and OSCP certified. Ten published CVEs. Six years of full-time offensive work. Registered in Cyprus, EU.
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href={`${base}contact`} class="cta-primary">
-          Request Engagement
-          <span>→</span>
-        </a>
-        <a href={`${base}asier-barranco-cv.pdf`} class="cta-secondary" target="_blank">
-          Download Profile (PDF)
-        </a>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-3 font-medium tracking-tight max-w-[24ch]">
+        The person you talk to is the person who tests.
+      </h2>
+      <div class="mt-12 grid md:grid-cols-3 gap-10">
+        <div class="measure">
+          <p class="font-semibold">Senior only.</p>
+          <p class="mt-2 text-muted">Every engagement is executed end to end by the same OSEP-certified operator. No juniors learning on your network.</p>
+        </div>
+        <div class="measure">
+          <p class="font-semibold">Manual depth.</p>
+          <p class="mt-2 text-muted">Business logic, chained exploitation, custom tooling. The vulnerabilities scanners miss are the ones attackers find.</p>
+        </div>
+        <div class="measure">
+          <p class="font-semibold">A report you can act on.</p>
+          <p class="mt-2 text-muted">Reproduction steps that work against your setup, CVSS scored honestly, remediation written for your stack. Free retest within 30 days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-3 font-medium tracking-tight">Fixed scope. Published prices.</h2>
+      <p class="lede measure mt-4">Every package includes the scoping call, execution, a written report, and a remediation walkthrough. Prices in EUR, excluding VAT.</p>
+
+      <div class="mt-12 sev sev-critical py-1">
+        <div class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+          <div>
+            <h3 class="text-step-1 font-medium">Start here: {entry.name}</h3>
+            <p class="text-muted mt-1 measure">{entry.scope}. Two days. What is exposed, outdated, misconfigured, or leaked, validated and prioritized. Full amount credited against a full engagement within {entry.creditWindowDays} days.</p>
+          </div>
+          <div class="machine text-step-2">{eur(entry.price)}</div>
+        </div>
+        <a href={bookUrl(entry.key)} target="_blank" rel="noopener" class="btn-primary mt-5">{CTA_LABEL}</a>
+      </div>
+
+      <ul class="mt-12 divide-y divide-rule border-t border-b border-rule">
+        {catalog.map((s) => {
+          const from = fromPrice(s.key);
+          return (
+            <li class="py-5 grid md:grid-cols-[1fr_auto] gap-x-8 gap-y-1 items-baseline">
+              <div>
+                <a href={`/services/#${s.key}`} class="font-medium hover:text-critical-text transition-colors">{s.name}</a>
+                <p class="text-muted text-step--1 mt-1 measure-wide">{s.line}</p>
+              </div>
+              <div class="machine text-step-0 text-muted md:text-right">
+                {from ? `from ${eur(from)}` : 'quoted after scoping'}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+      <p class="mt-6"><a href="/services/" class="link-quiet">Full catalog, tiers, retainers, and terms</a></p>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-3 font-medium tracking-tight max-w-[22ch]">Why teams pick this over a Big4.</h2>
+      <p class="lede measure mt-4">Mid-market teams usually get two options: enterprise pricing with juniors doing the work, or boutiques with nothing to verify. This is the third.</p>
+
+      <div class="mt-12 overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-[640px]">
+          <thead>
+            <tr class="border-b border-rule text-step--1 text-muted">
+              <th scope="col" class="py-3 pr-6 font-normal w-[18%]"></th>
+              <th scope="col" class="py-3 pr-6 font-normal w-[41%]">Industry default</th>
+              <th scope="col" class="py-3 font-normal w-[41%]">REDOPS</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-rule">
+            {comparison.map(([row, them, us]) => (
+              <tr class="align-top">
+                <th scope="row" class="py-4 pr-6 font-medium">{row}</th>
+                <td class="py-4 pr-6 text-muted">{them}</td>
+                <td class="py-4">{us}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-6 text-step--1 text-muted measure-wide">
+        Credentials you can check before signing anything: OSEP on the OffSec verification page, CVEs with MITRE and INCIBE identifiers, research at <a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="link-quiet">blog.redghostops.com</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-4 font-medium tracking-tight max-w-[18ch]">Thirty minutes is enough to scope it.</h2>
+      <p class="lede measure mt-6">
+        Pick a slot. A mutual NDA goes out before the call, so we can talk about your actual environment. You get a written proposal within 48 hours, and only if you ask for one.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-6">
+        <a href={bookUrl()} target="_blank" rel="noopener" class="btn-primary text-step-0">{CTA_LABEL}</a>
+        <span class="text-muted text-step--1">Prefer email? <a href={`mailto:${EMAIL}`} class="link-quiet machine">{EMAIL}</a></span>
       </div>
     </div>
   </section>

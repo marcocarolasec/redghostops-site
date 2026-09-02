@@ -1,265 +1,110 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { eur, dayRate, terms } from '../data/pricing';
+import { dayRate, terms, eur } from '../data/pricing';
+import { CALENDLY_URL, CTA_LABEL, EMAIL } from '../data/site';
 
-const CALENDLY_URL = 'https://calendly.com/asbarraninfor/redghostops-onboarding';
+const steps = [
+  'Pick a slot in the calendar.',
+  'A mutual NDA reaches your inbox within 24 hours.',
+  'Thirty-minute call on Zoom, Meet, or Teams.',
+  'Written proposal within 48 hours, if you ask for one.',
+  'MSA and SOW signed. 50% at signature.',
+  'Kickoff, usually one to two weeks after signature.',
+];
+
+const faq = [
+  ['How quickly can an engagement start?', 'Earliest calendar availability is usually the same week. Proposal within 48 hours of the call, contract in five to ten business days depending on your procurement, kickoff one to two weeks after signature.'],
+  ['Do you sign an NDA before discussing scope?', 'Always. No technical detail about your environment is discussed without a mutual NDA in place. There is a standard template ready, or we use yours.'],
+  ['Are the published prices final?', `Yes. The price on the services page is the price for the scope described, excluding VAT. Larger scope adds days at ${eur(dayRate)}. Two services in the same quarter get ${terms.bundle[0].pct}% off, three get ${terms.bundle[1].pct}%. Nothing else moves, in either direction.`],
+  ['How is it invoiced?', 'Through REDOPS Security Ltd., registered in Cyprus, EU. EUR, USD, or stablecoin. 50% at signature, 50% on delivery. NET-30 for established clients.'],
+  ['What is in the report?', 'An executive summary, technical findings with CVSS v3.1 scores, step-by-step reproduction with evidence, business impact, and prioritized remediation written for your stack. It satisfies auditors and it is usable by the team that has to fix things.'],
+  ['Is the free retest really free?', 'Yes. Within 30 days of delivery, remediation of all High and Critical findings is re-verified at no cost, on every assessment-style service.'],
+  ['Do you work outside the EU?', 'Yes. Clients across the EU, UK, USA, and Latin America. Documentation in English and Spanish. Remote is standard; on-site is available for Active Directory and red team work where logistics make sense.'],
+];
 ---
 
-<Layout title="Book a Call — REDOPS Security" description="Book a 30-minute scoping call directly. Mutual NDA signed within 24h. All engagements invoiced through our EU-registered entity.">
-  <!-- HERO -->
-  <section class="pt-20 pb-16 border-b border-ash-lighter grid-bg">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="num-label mb-4 animate-fade-in">[ CONTACT ] // SECURE CHANNEL</div>
-      <h1 class="font-display text-5xl md:text-7xl font-bold mb-6 leading-[0.95] animate-fade-up">
-        Book a<br />
-        <span class="text-blood">scoping call.</span>
-      </h1>
-      <p class="text-ghost-light text-lg md:text-xl max-w-2xl leading-relaxed animate-fade-up" style="animation-delay: 0.2s">
-        Pick a 30-minute slot directly in the calendar below. Mutual NDA exchanged in the 24 hours before the call. No technical details discussed before the NDA is in place.
+<Layout
+  title="Book a scoping call — REDOPS Security"
+  description="Book a thirty-minute scoping call with the operator. Mutual NDA before the call, written proposal within 48 hours."
+  path="/contact/"
+>
+  <section class="wrap pt-20 md:pt-28 pb-16">
+    <div class="rise">
+      <h1 class="text-step-5 font-medium tracking-tight max-w-[16ch]">Book a scoping call.</h1>
+      <p class="lede measure mt-8">
+        Thirty minutes with the person who will do the testing. A mutual NDA goes out before the call, so we can talk about your actual environment.
       </p>
-    </div>
-  </section>
 
-  <!-- BOOKING GRID -->
-  <section class="py-20">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid lg:grid-cols-12 gap-8">
-        <!-- LEFT: Context column -->
-        <aside class="lg:col-span-4 space-y-6">
-          <div>
-            <div class="num-label mb-4">// HOW IT WORKS</div>
-            <div class="terminal-box p-6">
-              <div class="flex items-center gap-2 mb-4 pb-4 border-b border-ash-lighter">
-                <span class="w-3 h-3 rounded-full bg-blood-dim"></span>
-                <span class="w-3 h-3 rounded-full bg-ash-lighter"></span>
-                <span class="w-3 h-3 rounded-full bg-ash-lighter"></span>
-                <span class="font-mono text-xs text-ghost ml-2">engagement.flow</span>
-              </div>
-              <ol class="space-y-3 text-sm">
-                <li class="flex gap-3">
-                  <span class="font-mono text-blood">01.</span>
-                  <span class="text-ghost-light">Pick a slot in the calendar</span>
-                </li>
-                <li class="flex gap-3">
-                  <span class="font-mono text-blood">02.</span>
-                  <span class="text-ghost-light">Mutual NDA exchanged within 24h</span>
-                </li>
-                <li class="flex gap-3">
-                  <span class="font-mono text-blood">03.</span>
-                  <span class="text-ghost-light">30-min discovery call (Zoom / Meet / Teams)</span>
-                </li>
-                <li class="flex gap-3">
-                  <span class="font-mono text-blood">04.</span>
-                  <span class="text-ghost-light">Written proposal within 48h</span>
-                </li>
-                <li class="flex gap-3">
-                  <span class="font-mono text-blood">05.</span>
-                  <span class="text-ghost-light">MSA + SOW signing</span>
-                </li>
-                <li class="flex gap-3">
-                  <span class="font-mono text-blood">06.</span>
-                  <span class="text-ghost-light">Engagement kickoff</span>
-                </li>
-              </ol>
-            </div>
-          </div>
+      <div id="service-context" class="hidden mt-6 sev sev-critical py-1 text-step--1">
+        <span class="text-muted">Service of interest:</span> <span id="service-label" class="font-medium"></span>
+      </div>
 
-          <div>
-            <div class="num-label mb-4">// CAN'T USE THE CALENDAR?</div>
-            <div class="space-y-3">
-              <a href="mailto:engagements@redghostops.com?subject=Scoping%20call%20request" class="block service-card !p-5 group">
-                <div class="font-mono text-xs text-blood uppercase tracking-widest mb-1">// Email</div>
-                <div class="text-bone font-mono text-sm group-hover:text-blood transition break-all">
-                  engagements@redghostops.com
-                </div>
-                <div class="text-ghost-light text-xs mt-2">
-                  Reply within 24h. Preferred if you need procurement sign-off first.
-                </div>
-              </a>
-
-              <a href="https://www.linkedin.com/in/asierbarranco-66b05a187/" target="_blank" rel="noopener" class="block service-card !p-5 group">
-                <div class="font-mono text-xs text-blood uppercase tracking-widest mb-1">// LinkedIn</div>
-                <div class="text-bone font-mono text-sm group-hover:text-blood transition">
-                  /in/asierbarranco
-                </div>
-                <div class="text-ghost-light text-xs mt-2">
-                  Direct messages welcome for B2B inquiries.
-                </div>
-              </a>
-            </div>
-          </div>
-
-          <div class="border-l border-blood pl-4">
-            <div class="font-mono text-xs text-blood uppercase tracking-widest mb-2">// Privacy</div>
-            <p class="text-ghost-light text-xs leading-relaxed">
-              Bookings handled via Calendly (GDPR-compliant). No technical scope discussed before mutual NDA. Data never shared with third parties.
-            </p>
-          </div>
-        </aside>
-
-        <!-- RIGHT: Calendar CTA card -->
-        <div class="lg:col-span-8">
-          <div class="terminal-box overflow-hidden">
-            <div class="flex items-center gap-2 px-4 py-3 border-b border-ash-lighter">
-              <span class="w-3 h-3 rounded-full bg-blood-dim"></span>
-              <span class="w-3 h-3 rounded-full bg-ash-lighter"></span>
-              <span class="w-3 h-3 rounded-full bg-ash-lighter"></span>
-              <span class="font-mono text-xs text-ghost ml-2">scoping_call.book</span>
-              <span class="ml-auto font-mono text-[0.65rem] text-phosphor tracking-widest uppercase flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-phosphor rounded-full animate-pulse"></span>
-                Live
-              </span>
-            </div>
-
-            <div id="service-context" class="hidden mx-6 mt-6 p-3 border border-blood/30 bg-blood/5 font-mono text-xs text-blood">
-              Service of interest: <span id="service-label" class="text-bone font-bold"></span> — mention any specifics in the booking notes.
-            </div>
-
-            <div class="px-6 sm:px-10 py-12 sm:py-16">
-              <!-- Calendar icon -->
-              <div class="flex justify-center mb-8">
-                <div class="relative w-20 h-20 border border-blood-dim flex items-center justify-center">
-                  <div class="absolute -top-px left-3 right-3 h-px bg-blood"></div>
-                  <div class="absolute -top-2 left-3 w-px h-3 bg-blood"></div>
-                  <div class="absolute -top-2 right-3 w-px h-3 bg-blood"></div>
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-blood">
-                    <rect x="3" y="5" width="18" height="16" rx="0"></rect>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                    <line x1="8" y1="3" x2="8" y2="7"></line>
-                    <line x1="16" y1="3" x2="16" y2="7"></line>
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Headline -->
-              <h2 class="font-display text-3xl md:text-4xl font-bold text-center text-bone leading-tight mb-3">
-                Book a 30-min<br /><span class="text-blood">scoping call.</span>
-              </h2>
-              <p class="text-ghost-light text-center text-sm max-w-md mx-auto mb-10 leading-relaxed">
-                Live availability on Calendly. Pick a slot, get a calendar invite, mutual NDA arrives in your inbox before the call.
-              </p>
-
-              <!-- Primary CTA -->
-              <div class="flex justify-center mb-8">
-                <a
-                  id="calendly-link"
-                  href={CALENDLY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="cta-primary text-base !py-4 !px-8"
-                >
-                  Open Calendar
-                  <span>→</span>
-                </a>
-              </div>
-
-              <!-- URL preview + meta -->
-              <div class="max-w-md mx-auto space-y-3">
-                <div class="font-mono text-[0.65rem] text-ghost uppercase tracking-widest text-center">
-                  // Booking endpoint
-                </div>
-                <div class="border border-ash-lighter bg-void/50 px-4 py-3 font-mono text-xs text-ghost-light text-center break-all">
-                  <span class="text-blood">$</span> open <span class="text-bone">calendly.com/asbarraninfor/redghostops-onboarding</span>
-                </div>
-                <div class="flex justify-between items-center font-mono text-[0.65rem] text-ghost uppercase tracking-widest pt-2">
-                  <span class="flex items-center gap-2">
-                    <span class="w-1 h-1 bg-phosphor rounded-full"></span>
-                    Opens in new tab
-                  </span>
-                  <span>~30s to book</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="mt-10 flex flex-wrap items-center gap-6">
+        <a id="calendly-link" href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" class="btn-primary text-step-0">{CTA_LABEL}</a>
+        <span class="text-step--1 text-muted">Opens Calendly in a new tab. Earliest slots are usually this week.</span>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="py-32 border-t border-ash-lighter">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="num-label mb-4">// FAQ</div>
-      <h2 class="font-display text-4xl md:text-5xl font-bold mb-12">
-        Common<br />
-        <span class="text-blood">questions.</span>
-      </h2>
-
-      <div class="space-y-4">
-        <details class="service-card !p-6 group">
-          <summary class="cursor-pointer font-display text-lg font-bold flex justify-between items-center">
-            <span>How quickly can engagements start?</span>
-            <span class="text-blood text-2xl group-open:rotate-45 transition-transform">+</span>
-          </summary>
-          <p class="text-ghost-light mt-4 leading-relaxed">
-            You book a slot directly in the calendar — earliest availability is usually same week. NDA exchanged in the 24h before the call. Written proposal within 48h of the call. Contract execution typically 5-10 business days depending on your procurement. Engagement kickoff usually 1-2 weeks after contract signing.
-          </p>
-        </details>
-
-        <details class="service-card !p-6 group">
-          <summary class="cursor-pointer font-display text-lg font-bold flex justify-between items-center">
-            <span>Do you sign NDAs before scope discussion?</span>
-            <span class="text-blood text-2xl group-open:rotate-45 transition-transform">+</span>
-          </summary>
-          <p class="text-ghost-light mt-4 leading-relaxed">
-            Yes — always. No technical details about your environment are discussed without a mutual NDA in place. We have a standard NDA template ready, or we work with yours.
-          </p>
-        </details>
-
-        <details class="service-card !p-6 group">
-          <summary class="cursor-pointer font-display text-lg font-bold flex justify-between items-center">
-            <span>How are engagements invoiced?</span>
-            <span class="text-blood text-2xl group-open:rotate-45 transition-transform">+</span>
-          </summary>
-          <p class="text-ghost-light mt-4 leading-relaxed">
-            All engagements are invoiced through REDOPS Security Ltd., our Cyprus EU-registered entity (HE 491541). Invoicing in EUR, USD, or stablecoin upon agreement. Standard terms: 50% upfront, 50% on delivery. NET-30 available for established clients.
-          </p>
-        </details>
-
-        <details class="service-card !p-6 group">
-          <summary class="cursor-pointer font-display text-lg font-bold flex justify-between items-center">
-            <span>Are the published prices final?</span>
-            <span class="text-blood text-2xl group-open:rotate-45 transition-transform">+</span>
-          </summary>
-          <p class="text-ghost-light mt-4 leading-relaxed">
-            Yes. The price on the services page is the price for the scope described, excluding VAT. Larger scope adds days at {eur(dayRate)}/day. Two services in the same quarter get {terms.bundle[0].pct}% off, three get {terms.bundle[1].pct}%. Nothing else moves, in either direction.
-          </p>
-        </details>
-
-        <details class="service-card !p-6 group">
-          <summary class="cursor-pointer font-display text-lg font-bold flex justify-between items-center">
-            <span>What's included in the report?</span>
-            <span class="text-blood text-2xl group-open:rotate-45 transition-transform">+</span>
-          </summary>
-          <p class="text-ghost-light mt-4 leading-relaxed">
-            All reports include: executive summary (non-technical), detailed technical findings with CVSS v3.1 scoring, step-by-step reproduction with evidence, business impact analysis, and prioritized remediation recommendations. Standard format suitable for compliance auditors and dev teams.
-          </p>
-        </details>
-
-        <details class="service-card !p-6 group">
-          <summary class="cursor-pointer font-display text-lg font-bold flex justify-between items-center">
-            <span>Is the free retest really free?</span>
-            <span class="text-blood text-2xl group-open:rotate-45 transition-transform">+</span>
-          </summary>
-          <p class="text-ghost-light mt-4 leading-relaxed">
-            Yes. Within 30 days of report delivery, we verify your remediation of all High/Critical findings at no additional cost. This is included in the engagement price for all assessment-style services.
-          </p>
-        </details>
-
-        <details class="service-card !p-6 group">
-          <summary class="cursor-pointer font-display text-lg font-bold flex justify-between items-center">
-            <span>Do you work with clients outside the EU?</span>
-            <span class="text-blood text-2xl group-open:rotate-45 transition-transform">+</span>
-          </summary>
-          <p class="text-ghost-light mt-4 leading-relaxed">
-            Yes. We work with clients across the EU, UK, USA, and Latin America. Documentation available in English and Spanish. Remote engagements are standard; on-site available for AD assessments and red team operations where logistics make sense.
-          </p>
-        </details>
+  <section class="section border-t border-rule">
+    <div class="wrap grid md:grid-cols-2 gap-x-16 gap-y-12">
+      <div>
+        <h2 class="text-step-2 font-medium tracking-tight">What happens next.</h2>
+        <ol class="mt-6 space-y-3">
+          {steps.map((s, i) => (
+            <li class="grid grid-cols-[2.5rem_1fr] gap-3">
+              <span class="machine text-muted">{String(i + 1).padStart(2, '0')}</span>
+              <span>{s}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div>
+        <h2 class="text-step-2 font-medium tracking-tight">Prefer another channel?</h2>
+        <dl class="mt-6 space-y-5 text-step--1">
+          <div>
+            <dt class="font-medium">Email</dt>
+            <dd class="mt-1"><a href={`mailto:${EMAIL}?subject=Scoping%20call%20request`} class="machine link-quiet">{EMAIL}</a></dd>
+            <dd class="mt-1 text-muted">Reply within 24 hours. Best if you need procurement sign-off before booking.</dd>
+          </div>
+          <div>
+            <dt class="font-medium">LinkedIn</dt>
+            <dd class="mt-1"><a href="https://www.linkedin.com/in/asierbarranco-66b05a187/" target="_blank" rel="noopener" class="machine link-quiet">/in/asierbarranco</a></dd>
+            <dd class="mt-1 text-muted">Direct messages welcome for B2B enquiries.</dd>
+          </div>
+        </dl>
+        <p class="mt-8 text-step--1 text-muted measure">
+          Bookings run through Calendly. Nothing you share is passed to third parties, and no technical scope is discussed before the NDA.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- Service prefill: badge + appends ?utm_content=<service> to Calendly URL -->
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-3 font-medium tracking-tight">Common questions.</h2>
+      <div class="mt-8 divide-y divide-rule border-t border-b border-rule max-w-4xl">
+        {faq.map(([q, a]) => (
+          <details class="group py-5">
+            <summary class="cursor-pointer list-none flex items-baseline justify-between gap-6 font-medium hover:text-critical-text transition-colors">
+              <span>{q}</span>
+              <span class="machine text-muted group-open:hidden" aria-hidden="true">+</span>
+              <span class="machine text-muted hidden group-open:inline" aria-hidden="true">−</span>
+            </summary>
+            <p class="mt-3 text-muted measure-wide">{a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-4 font-medium tracking-tight max-w-[18ch]">Pick a slot.</h2>
+      <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" class="btn-primary mt-8 text-step-0">{CTA_LABEL}</a>
+    </div>
+  </section>
+
   <script is:inline>
     (function () {
       const params = new URLSearchParams(window.location.search);
@@ -273,10 +118,8 @@ const CALENDLY_URL = 'https://calendly.com/asbarraninfor/redghostops-onboarding'
         'red-team': 'Red Team Operations',
         'cloud': 'Cloud Security Assessment',
         'watch': 'Watch (continuous monitoring)',
-        'watch-verify': 'Watch + Verify (continuous monitoring + quarterly retest)',
-        'retainer': 'Continuous Offensive Testing',
+        'watch-verify': 'Watch + Verify (continuous monitoring and quarterly retest)',
         'custom': 'Custom engagement',
-        'unsure': 'Consultation',
       };
       const labelEl = document.getElementById('service-label');
       const ctxEl = document.getElementById('service-context');

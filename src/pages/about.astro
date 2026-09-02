@@ -1,304 +1,128 @@
 ---
 import Layout from '../layouts/Layout.astro';
-const base = import.meta.env.BASE_URL;
+import { bookUrl, CTA_LABEL } from '../data/site';
+
+const certs = [
+  ['OSEP', 'Offensive Security Experienced Penetration Tester', 'OffSec, 2026'],
+  ['OSCP', 'Offensive Security Certified Professional', 'OffSec, 2023'],
+  ['OSWP', 'Offensive Security Wireless Professional', 'OffSec, 2023'],
+  ['CRTP', 'Certified Red Team Professional', 'Pentester Academy, 2022'],
+  ['CEH', 'Certified Ethical Hacker', 'EC-Council, 2022'],
+];
+
+const career = [
+  ['2026 – present', 'REDOPS Security Ltd.', 'Founder and lead consultant', 'Red team operations, Active Directory testing, web application security, and infrastructure assessments for international clients.'],
+  ['2022 – 2026', 'Telefónica Tech', 'Senior offensive security engineer', 'Full-spectrum pentesting across Active Directory, web, API, cloud, mobile, IoT, wireless, and infrastructure. LLM security testing and social engineering campaigns.'],
+  ['2021 – 2022', 'Assured Clarity Limited, UK', 'Offensive security instructor', 'Hands-on training: penetration testing with Burp Suite, AWS security assessment, OSINT, threat modeling.'],
+  ['2019 – 2022', 'Bullhost Cloud Services', 'Offensive security engineer', 'Pentesting, web and API audits, vulnerability management, incident response, and SOC monitoring.'],
+];
 ---
 
-<Layout title="About — REDOPS Security" description="REDOPS Security is a boutique offensive security consultancy founded by senior offensive security operators. EU-registered in Cyprus.">
-  <!-- HERO -->
-  <section class="pt-20 pb-16 border-b border-ash-lighter grid-bg">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="num-label mb-4 animate-fade-in">[ ABOUT ] // OPERATOR PROFILE</div>
-      <h1 class="font-display text-5xl md:text-7xl font-bold mb-6 leading-[0.95] animate-fade-up">
-        Built by operators,<br />
-        <span class="text-blood">not auditors.</span>
-      </h1>
-      <p class="text-ghost-light text-lg md:text-xl max-w-2xl leading-relaxed animate-fade-up" style="animation-delay: 0.2s">
-        REDOPS Security is a boutique offensive security consultancy registered in Cyprus EU. We do focused, technically deep engagements — and nothing else.
+<Layout
+  title="About — REDOPS Security"
+  description="REDOPS Security is a one-operator offensive security consultancy registered in Cyprus, EU. Six years of full-time offensive work, OSEP and OSCP, ten published CVEs."
+  path="/about/"
+>
+  <section class="wrap pt-20 md:pt-28 pb-16">
+    <div class="rise">
+      <h1 class="text-step-5 font-medium tracking-tight max-w-[16ch]">Built by an operator, not an auditor.</h1>
+      <p class="lede measure mt-8">
+        REDOPS Security is a one-person offensive security consultancy registered in Cyprus, EU. Focused, technically deep engagements, and nothing else.
       </p>
     </div>
   </section>
 
-  <!-- OPERATOR PROFILE -->
-  <section class="py-20">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-12 gap-12">
-        <div class="md:col-span-4">
-          <div class="terminal-box p-6 sticky top-32">
-            <div class="flex items-center gap-2 mb-4 pb-4 border-b border-ash-lighter">
-              <span class="w-3 h-3 rounded-full bg-blood-dim"></span>
-              <span class="w-3 h-3 rounded-full bg-ash-lighter"></span>
-              <span class="w-3 h-3 rounded-full bg-ash-lighter"></span>
-              <span class="font-mono text-xs text-ghost ml-2">operator.profile</span>
-            </div>
-            <div class="space-y-4 font-mono text-xs">
-              <div>
-                <div class="text-ghost mb-1">// NAME</div>
-                <div class="text-bone">Asier Barranco</div>
-              </div>
-              <div>
-                <div class="text-ghost mb-1">// ROLE</div>
-                <div class="text-bone">Founder & Lead Consultant</div>
-              </div>
-              <div>
-                <div class="text-ghost mb-1">// EXPERIENCE</div>
-                <div class="text-bone">6+ years offensive security</div>
-              </div>
-              <div>
-                <div class="text-ghost mb-1">// SPECIALTY</div>
-                <div class="text-bone">AD pentesting, EDR evasion, web/API</div>
-              </div>
-              <div>
-                <div class="text-ghost mb-1">// LOCATION</div>
-                <div class="text-bone">EU / Remote</div>
-              </div>
-              <div>
-                <div class="text-ghost mb-1">// LANGUAGES</div>
-                <div class="text-bone">English · Spanish</div>
-              </div>
-              <div class="pt-4 border-t border-ash-lighter">
-                <a href={`${base}asier-barranco-cv.pdf`} target="_blank" class="text-blood hover:underline">
-                  → Download Full CV (PDF)
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="md:col-span-8 space-y-12">
-          <div class="reveal">
-            <div class="num-label mb-4">// BACKGROUND</div>
-            <h2 class="font-display text-3xl font-bold mb-6">From the trenches.</h2>
-            <div class="space-y-4 text-bone leading-relaxed">
-              <p>
-                Asier Barranco is a senior offensive security operator with over 6 years of full-time experience in the field. His background spans Spanish telecom security (Telefónica Tech), boutique consultancies, and international red team engagements.
-              </p>
-              <p>
-                Previously Senior Offensive Security Engineer at Telefónica Tech, where he led penetration tests across Active Directory, web applications, cloud (AWS/Azure/GCP), mobile, IoT, and infrastructure assessments for international clients.
-              </p>
-              <p>
-                Specializations include modern Active Directory attack chains, EDR evasion against mature solutions (Sophos, CrowdStrike, SentinelOne), custom shellcode loader development, and web application security at depth.
-              </p>
-            </div>
-          </div>
-
-          <div class="reveal">
-            <div class="num-label mb-4">// CERTIFICATIONS</div>
-            <h2 class="font-display text-3xl font-bold mb-6">Verifiable expertise.</h2>
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div class="service-card !p-5">
-                <div class="font-mono text-blood font-bold text-lg mb-1">OSEP</div>
-                <div class="text-xs text-ghost-light mb-2">Offensive Security Experienced Penetration Tester</div>
-                <div class="font-mono text-xs text-ghost">OffSec · Feb 2026</div>
-              </div>
-              <div class="service-card !p-5">
-                <div class="font-mono text-blood font-bold text-lg mb-1">OSCP</div>
-                <div class="text-xs text-ghost-light mb-2">Offensive Security Certified Professional</div>
-                <div class="font-mono text-xs text-ghost">OffSec · Jun 2023</div>
-              </div>
-              <div class="service-card !p-5">
-                <div class="font-mono text-blood font-bold text-lg mb-1">OSWP</div>
-                <div class="text-xs text-ghost-light mb-2">Offensive Security Wireless Professional</div>
-                <div class="font-mono text-xs text-ghost">OffSec · Oct 2023</div>
-              </div>
-              <div class="service-card !p-5">
-                <div class="font-mono text-blood font-bold text-lg mb-1">CRTP</div>
-                <div class="text-xs text-ghost-light mb-2">Certified Red Team Professional</div>
-                <div class="font-mono text-xs text-ghost">Pentester Academy · 2022</div>
-              </div>
-              <div class="service-card !p-5">
-                <div class="font-mono text-blood font-bold text-lg mb-1">CEH</div>
-                <div class="text-xs text-ghost-light mb-2">Certified Ethical Hacker</div>
-                <div class="font-mono text-xs text-ghost">EC-Council · 2022/2025</div>
-              </div>
-              <div class="service-card !p-5 !border-blood-dim">
-                <div class="font-mono text-blood font-bold text-lg mb-1">10 CVEs</div>
-                <div class="text-xs text-ghost-light mb-2">MITRE / INCIBE assigned</div>
-                <div class="font-mono text-xs text-ghost">CVE-2024-8161 + 9 more</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="reveal">
-            <div class="num-label mb-4">// CAREER</div>
-            <h2 class="font-display text-3xl font-bold mb-6">Field history.</h2>
-            <div class="space-y-6">
-              <div class="border-l border-blood pl-6">
-                <div class="font-mono text-xs text-blood uppercase tracking-widest mb-1">2026 — Present</div>
-                <div class="font-bold text-bone text-lg">REDOPS Security Ltd.</div>
-                <div class="text-ghost-light text-sm mt-1">Founder & Lead Consultant</div>
-                <p class="text-ghost-light text-sm mt-2 leading-relaxed">
-                  Red team operations, Active Directory penetration testing, web application security, and infrastructure assessments for international clients.
-                </p>
-              </div>
-              <div class="border-l border-ash-lighter pl-6">
-                <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-1">Mar 2022 — Apr 2026 · 4 years</div>
-                <div class="font-bold text-bone text-lg">Telefónica Tech</div>
-                <div class="text-ghost-light text-sm mt-1">Senior Offensive Security Engineer</div>
-                <p class="text-ghost-light text-sm mt-2 leading-relaxed">
-                  Full-spectrum pentesting across Active Directory, web, API, cloud (Azure/AWS/GCP), mobile, IoT, wireless, and infrastructure. LLM/AI security testing, social engineering campaigns.
-                </p>
-              </div>
-              <div class="border-l border-ash-lighter pl-6">
-                <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-1">Sep 2021 — Dec 2022</div>
-                <div class="font-bold text-bone text-lg">Assured Clarity Limited (UK)</div>
-                <div class="text-ghost-light text-sm mt-1">Offensive Security Instructor</div>
-                <p class="text-ghost-light text-sm mt-2 leading-relaxed">
-                  Hands-on offensive security training: ethical hacking, penetration testing with Burp Suite, AWS security assessments, OSINT, threat modeling.
-                </p>
-              </div>
-              <div class="border-l border-ash-lighter pl-6">
-                <div class="font-mono text-xs text-ghost uppercase tracking-widest mb-1">Mar 2019 — Mar 2022 · 3 years</div>
-                <div class="font-bold text-bone text-lg">Bullhost Cloud Services</div>
-                <div class="text-ghost-light text-sm mt-1">Offensive Security Engineer</div>
-                <p class="text-ghost-light text-sm mt-2 leading-relaxed">
-                  Pentesting, web and API audits, vulnerability management, incident response. Both offensive and defensive operations including SOC monitoring.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+  <section class="section border-t border-rule">
+    <div class="wrap grid md:grid-cols-[1fr_1fr] gap-x-16 gap-y-10">
+      <div>
+        <h2 class="text-step-3 font-medium tracking-tight">Asier Barranco</h2>
+        <p class="text-muted mt-1">Founder and lead consultant</p>
+        <p class="mt-6 measure">
+          Six years of full-time offensive security across Spanish telecom, boutique consultancies, and international red team engagements. Most recently senior offensive security engineer at Telefónica Tech, leading penetration tests across Active Directory, web applications, cloud, mobile, and infrastructure for international clients.
+        </p>
+        <p class="mt-4 measure text-muted">
+          Specialties: modern Active Directory attack chains, EDR evasion against Sophos, CrowdStrike, and SentinelOne, custom loader development, and web application security at depth. Works in English and Spanish.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-step-1 font-medium">Verifiable, before you sign anything.</h2>
+        <ul class="mt-5 divide-y divide-rule border-t border-b border-rule text-step--1">
+          {certs.map(([code, name, issuer]) => (
+            <li class="py-3 grid grid-cols-[4.5rem_1fr] gap-4">
+              <span class="machine">{code}</span>
+              <span>{name}<span class="text-muted"> · {issuer}</span></span>
+            </li>
+          ))}
+          <li class="py-3 grid grid-cols-[4.5rem_1fr] gap-4">
+            <span class="machine">10 CVEs</span>
+            <span>MITRE and INCIBE assigned<span class="text-muted"> · CVE-2024-8161 and nine more</span></span>
+          </li>
+        </ul>
+        <p class="mt-4 text-step--1 text-muted">
+          OSEP is verifiable on the OffSec certification page. Research at <a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="link-quiet">blog.redghostops.com</a>.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- COMPANY -->
-  <section class="py-32 border-t border-ash-lighter bg-ash/20">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="num-label mb-4">// ENTITY</div>
-      <h2 class="font-display text-4xl md:text-5xl font-bold mb-12">
-        REDOPS Security Ltd.<br />
-        <span class="text-blood">EU-registered, Cyprus.</span>
-      </h2>
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-3 font-medium tracking-tight">Field history.</h2>
+      <ol class="mt-10 divide-y divide-rule border-t border-b border-rule max-w-4xl">
+        {career.map(([when, org, role, body]) => (
+          <li class="py-6 grid md:grid-cols-[9rem_1fr] gap-x-8 gap-y-1">
+            <span class="machine text-step--1 text-muted pt-1">{when}</span>
+            <div>
+              <p class="font-medium">{org}<span class="text-muted font-normal"> — {role}</span></p>
+              <p class="mt-1 text-muted text-step--1 measure-wide">{body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
 
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="terminal-box p-6">
-          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-4">// Legal</div>
-          <div class="space-y-3 font-mono text-sm">
-            <div class="flex justify-between border-b border-ash-lighter pb-2">
-              <span class="text-ghost">Entity</span>
-              <span class="text-bone">REDOPS Security Ltd.</span>
-            </div>
-            <div class="flex justify-between border-b border-ash-lighter pb-2">
-              <span class="text-ghost">Registration</span>
-              <span class="text-bone">HE 491541</span>
-            </div>
-            <div class="flex justify-between border-b border-ash-lighter pb-2">
-              <span class="text-ghost">Jurisdiction</span>
-              <span class="text-bone">Cyprus (EU)</span>
-            </div>
-            <div class="flex justify-between border-b border-ash-lighter pb-2">
-              <span class="text-ghost">Invoicing</span>
-              <span class="text-bone">EUR / USD / Stablecoin</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-ghost">Compliance</span>
-              <span class="text-bone">GDPR / EU DPA</span>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <p class="text-bone leading-relaxed mb-4">
-            REDOPS Security operates as a clean B2B entity registered in the European Union. All engagements are invoiced through the Cyprus Ltd., with standard MSA + SOW agreements available in English and Spanish.
-          </p>
-          <p class="text-ghost-light leading-relaxed">
-            We work with clients across the EU, UK, USA, and Latin America. NDAs are signed before any technical scope discussion. Standard payment terms are 50% upfront, 50% on delivery.
-          </p>
-        </div>
+  <section class="section border-t border-rule">
+    <div class="wrap grid md:grid-cols-2 gap-x-16 gap-y-12">
+      <div>
+        <h2 class="text-step-2 font-medium tracking-tight">Who this is for.</h2>
+        <ul class="mt-6 space-y-4 text-muted measure">
+          <li><span class="text-ink font-medium">SaaS and fintech</span> with real attack surface and customer data to protect.</li>
+          <li><span class="text-ink font-medium">Regulated industries</span> that need actual security as well as the compliance evidence.</li>
+          <li><span class="text-ink font-medium">Mid-market teams</span> of 50 to 2,000 people with in-house IT or security, and boutique consultancies subcontracting senior capacity.</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-step-2 font-medium tracking-tight">What this is not.</h2>
+        <ul class="mt-6 space-y-4 text-muted measure">
+          <li><span class="text-ink font-medium">Scanner reports.</span> If a Nessus license can do it, this is the wrong vendor.</li>
+          <li><span class="text-ink font-medium">Junior-led engagements.</span> The same senior operator does every hour of the work.</li>
+          <li><span class="text-ink font-medium">Grey-zone work.</span> Nothing runs without written authorization.</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- VALUES / WHO WE WORK WITH -->
-  <section class="py-32 border-t border-ash-lighter">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-16">
-        <div>
-          <div class="num-label mb-4">// WE WORK WITH</div>
-          <h3 class="font-display text-3xl font-bold mb-8">Serious organizations.</h3>
-          <ul class="space-y-4">
-            <li class="flex gap-4">
-              <span class="text-blood font-mono mt-1">▸</span>
-              <div>
-                <div class="text-bone font-medium">SaaS & Fintech</div>
-                <div class="text-ghost-light text-sm mt-1">Companies with real attack surface and customer data to protect.</div>
-              </div>
-            </li>
-            <li class="flex gap-4">
-              <span class="text-blood font-mono mt-1">▸</span>
-              <div>
-                <div class="text-bone font-medium">Regulated industries</div>
-                <div class="text-ghost-light text-sm mt-1">Finance, healthcare, energy — compliance + actual security.</div>
-              </div>
-            </li>
-            <li class="flex gap-4">
-              <span class="text-blood font-mono mt-1">▸</span>
-              <div>
-                <div class="text-bone font-medium">Mid-market enterprises</div>
-                <div class="text-ghost-light text-sm mt-1">50–2000 employees with internal IT/security teams.</div>
-              </div>
-            </li>
-            <li class="flex gap-4">
-              <span class="text-blood font-mono mt-1">▸</span>
-              <div>
-                <div class="text-bone font-medium">Boutique consultancies</div>
-                <div class="text-ghost-light text-sm mt-1">Subcontracting senior capacity for client engagements.</div>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <div class="num-label mb-4">// WE DON'T DO</div>
-          <h3 class="font-display text-3xl font-bold mb-8">A few things.</h3>
-          <ul class="space-y-4">
-            <li class="flex gap-4">
-              <span class="text-blood font-mono mt-1">✗</span>
-              <div>
-                <div class="text-bone font-medium">Automated scan reports</div>
-                <div class="text-ghost-light text-sm mt-1">If a Nessus license can do it, we're not the right vendor.</div>
-              </div>
-            </li>
-            <li class="flex gap-4">
-              <span class="text-blood font-mono mt-1">✗</span>
-              <div>
-                <div class="text-bone font-medium">Mass compliance tickboxes</div>
-                <div class="text-ghost-light text-sm mt-1">We work with organizations that want depth, not checkboxes.</div>
-              </div>
-            </li>
-            <li class="flex gap-4">
-              <span class="text-blood font-mono mt-1">✗</span>
-              <div>
-                <div class="text-bone font-medium">Junior-led engagements</div>
-                <div class="text-ghost-light text-sm mt-1">Every engagement is led by senior operators only.</div>
-              </div>
-            </li>
-            <li class="flex gap-4">
-              <span class="text-blood font-mono mt-1">✗</span>
-              <div>
-                <div class="text-bone font-medium">Unethical scope</div>
-                <div class="text-ghost-light text-sm mt-1">No work without proper authorization. No grey-zone engagements.</div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="py-32 border-t border-ash-lighter">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-      <h2 class="font-display text-4xl md:text-6xl font-bold mb-8 leading-tight">
-        Want to talk<br />
-        <span class="text-blood">scope?</span>
-      </h2>
-      <p class="text-ghost-light text-lg max-w-xl mx-auto mb-12">
-        Engagements scoped within 48 hours. NDAs signed before technical discussion.
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-3 font-medium tracking-tight">The entity.</h2>
+      <dl class="mt-8 grid sm:grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-6 max-w-4xl text-step--1">
+        <div><dt class="text-muted">Company</dt><dd class="mt-1">REDOPS Security Ltd.</dd></div>
+        <div><dt class="text-muted">Registration</dt><dd class="mt-1 machine">HE 491541</dd></div>
+        <div><dt class="text-muted">Jurisdiction</dt><dd class="mt-1">Cyprus, EU. GDPR applies.</dd></div>
+        <div><dt class="text-muted">Invoicing</dt><dd class="mt-1">EUR, USD, or stablecoin</dd></div>
+      </dl>
+      <p class="mt-8 text-muted measure-wide">
+        Clients across the EU, UK, USA, and Latin America. Standard MSA and SOW in English and Spanish. NDA signed before any technical discussion. 50% at signature, 50% on delivery.
       </p>
-      <a href={`${base}contact`} class="cta-primary">
-        Request Engagement →
-      </a>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-4 font-medium tracking-tight max-w-[18ch]">Want to talk scope?</h2>
+      <p class="lede measure mt-6">Thirty minutes, NDA first. You talk to the operator, not a salesperson.</p>
+      <a href={bookUrl()} target="_blank" rel="noopener" class="btn-primary mt-10 text-step-0">{CTA_LABEL}</a>
     </div>
   </section>
 </Layout>

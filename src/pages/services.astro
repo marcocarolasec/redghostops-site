@@ -1,671 +1,237 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { eur, dayRate, entry, services, addons, recurring, terms } from '../data/pricing';
-const base = import.meta.env.BASE_URL;
+import { services, entry, addons, recurring, terms, dayRate, eur } from '../data/pricing';
+import { bookUrl, CTA_LABEL } from '../data/site';
 
-const tiers = (key: string) => services.find((s) => s.key === key)?.tiers ?? [];
-const label = (t: { days: number | null; price: number | null }) =>
-  t.price === null ? 'Quoted after scoping' : eur(t.price);
+const detail = {
+  'web-pentest': {
+    summary: 'Manual testing of web applications and APIs. Authentication and session flows, business logic, authorization (IDOR/BOLA), race conditions, server-side injection chains. REST, GraphQL, and WebSocket.',
+    covers: ['OWASP Top 10 and ASVS', 'Authentication, session, and authorization', 'Business logic and chained exploitation'],
+    delivers: ['Findings with CVSS scores and reproduction steps', 'Remediation written for your stack', 'Free retest within 30 days'],
+    format: 'Remote',
+  },
+  'external-pentest': {
+    summary: 'Your internet-facing infrastructure from an external attacker’s position. OSINT-driven recon, active enumeration, exploit validation, and post-exploitation where scope allows.',
+    covers: ['Subdomain and service enumeration', 'CVE validation and exploitation', 'Cloud asset and credential exposure'],
+    delivers: ['Attack surface inventory', 'Verified findings and exposed credentials', 'Free retest within 30 days'],
+    format: 'Remote',
+  },
+  'ad-assessment': {
+    summary: 'Internal assessment from an assumed foothold, with the goal of Domain Admin and Tier-0 assets. Maps the paths a real attacker would take, not a list of theoretical weaknesses.',
+    covers: ['Kerberos attacks, roasting, delegation abuse', 'ACL and GPO abuse chains', 'Relay attacks, lateral movement, privilege escalation'],
+    delivers: ['Attack path documentation with BloodHound graphs', 'Prioritized remediation roadmap and detection hints', 'Free retest within 30 days'],
+    format: 'Remote or on-site',
+  },
+  'red-team': {
+    summary: 'Objective-based adversary simulation. Initial access by phishing or external exploitation, EDR evasion with custom tooling, lateral movement, and objective-driven exfiltration. Tests prevention and detection together.',
+    covers: ['Phishing, custom C2, custom loaders', 'EDR evasion against Sophos, CrowdStrike, SentinelOne', 'Persistence, lateral movement, exfiltration'],
+    delivers: ['Full operation narrative mapped to MITRE ATT&CK', 'IOCs and detection gap analysis for your SOC', 'Executive briefing and technical debrief'],
+    format: 'Remote or on-site, 2–4 weeks',
+  },
+  'cloud': {
+    summary: 'Offensive assessment of AWS, Azure, and GCP environments. Privilege escalation through IAM, exposed storage and serverless surface, and lateral paths between cloud and on-premises.',
+    covers: ['IAM misconfiguration and escalation chains', 'Storage, serverless, and Kubernetes exposure', 'Hybrid cloud-to-on-prem paths'],
+    delivers: ['Cloud attack surface map and IAM privilege graph', 'Exploitable misconfigurations with a hardening playbook', 'Free retest within 30 days'],
+    format: 'Remote, 5–10 days',
+  },
+} as const;
+
+const process = [
+  ['Scoping call', 'Thirty minutes to understand objectives, scope, and constraints. Mutual NDA in place before any technical detail.'],
+  ['Proposal and contract', 'Fixed-price proposal matching the published package. Standard MSA and SOW. 50% at signature, 50% on delivery.'],
+  ['Execution', 'Active testing with same-day notice of critical findings and a direct channel to the operator throughout.'],
+  ['Delivery', 'Written report and a walkthrough call with your technical team. Free retest of High and Critical findings within 30 days.'],
+];
 ---
 
-<Layout title="Services & Pricing — REDOPS Security" description="Fixed-scope offensive security engagements with published prices: attack surface review, web application pentest, Active Directory assessment, external network pentest, red team operations, continuous monitoring. Excl. VAT.">
-  <!-- HERO -->
-  <section class="pt-20 pb-16 border-b border-ash-lighter grid-bg">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="num-label mb-4 animate-fade-in">[ SERVICES ] // CATALOG</div>
-      <h1 class="font-display text-5xl md:text-7xl font-bold mb-6 leading-[0.95] animate-fade-up">
-        Fixed scope,<br />
-        <span class="text-blood">published price.</span>
-      </h1>
-      <p class="text-ghost-light text-lg md:text-xl max-w-2xl leading-relaxed animate-fade-up" style="animation-delay: 0.2s">
-        Every package includes the scoping call, execution, written report, and remediation walkthrough. Scope beyond a package adds days at the same rate for everyone. All prices in EUR, excluding VAT.
+<Layout
+  title="Services and pricing — REDOPS Security"
+  description="Penetration testing, Active Directory assessment, red team operations, and cloud security assessment. Fixed scope, published prices in EUR."
+  path="/services/"
+>
+  <section class="wrap pt-20 md:pt-28 pb-16">
+    <div class="rise">
+      <h1 class="text-step-5 font-medium tracking-tight max-w-[16ch]">Services and pricing.</h1>
+      <p class="lede measure mt-8">
+        Every package includes the scoping call, execution, a written report, and a remediation walkthrough. Scope beyond a package adds days at {eur(dayRate)}, for everyone. Prices in EUR, excluding VAT.
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 mt-10 animate-fade-up" style="animation-delay: 0.4s">
-        <a href="#pricing" class="cta-primary">
-          See Pricing
-          <span>→</span>
-        </a>
-        <a href={`${base}contact?service=${entry.key}`} class="cta-secondary">
-          Start with an {entry.name}
-        </a>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href={bookUrl()} target="_blank" rel="noopener" class="btn-primary">{CTA_LABEL}</a>
+        <a href="#pricing" class="btn-secondary">Jump to the price list</a>
       </div>
     </div>
   </section>
 
-  <!-- PRICING -->
-  <section id="pricing" class="py-20 border-b border-ash-lighter scroll-mt-24">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-12 gap-8 mb-12">
-        <div class="md:col-span-5">
-          <div class="num-label mb-4">// PRICING</div>
-          <h2 class="font-display text-4xl md:text-5xl font-bold leading-tight">
-            The price<br />
-            <span class="text-blood">is the price.</span>
-          </h2>
+  <section class="section border-t border-rule" id="start">
+    <div class="wrap">
+      <div class="sev sev-critical py-1 max-w-4xl">
+        <p class="text-step--1 text-muted">Start here</p>
+        <div class="mt-2 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+          <h2 class="text-step-3 font-medium tracking-tight">{entry.name}</h2>
+          <div class="machine text-step-3">{eur(entry.price)}</div>
         </div>
-        <div class="md:col-span-7 flex items-end">
-          <p class="text-ghost-light text-lg leading-relaxed">
-            What is published is what you pay for the scope described. Larger scope adds days at {eur(dayRate)}/day. There is no discount conversation, because a price that moves when you push is the opaque model we exist to replace.
-          </p>
-        </div>
+        <p class="mt-4 measure-wide">
+          Two days on your external perimeter, up to three root domains. What is exposed, outdated, misconfigured, or leaked. Validation only, no exploitation. The output is the prioritized list you would otherwise get from the first two days of a full external pentest.
+        </p>
+        <p class="mt-3 text-muted measure-wide">
+          Priced so a CTO can sign it without a procurement cycle. If you contract a full engagement within {entry.creditWindowDays} days, the full amount is credited against it.
+        </p>
+        <a href={bookUrl(entry.key)} target="_blank" rel="noopener" class="btn-primary mt-6">{CTA_LABEL}</a>
       </div>
+    </div>
+  </section>
 
-      <!-- Entry product -->
-      <div class="terminal-box p-6 md:p-8 mb-10 border-blood-dim">
-        <div class="grid md:grid-cols-12 gap-6 items-center">
-          <div class="md:col-span-8">
-            <div class="flex items-center gap-3 mb-3">
-              <span class="pill pill-blood">Entry point</span>
-              <span class="font-mono text-xs text-ghost uppercase tracking-widest">{entry.days} days</span>
-            </div>
-            <h3 class="font-display text-2xl md:text-3xl font-bold text-bone mb-2">{entry.name}</h3>
-            <p class="text-ghost-light leading-relaxed">
-              {entry.scope}. Enumeration, exposure validation, prioritized inventory of what an attacker sees from the outside. Priced so a CTO can sign it without a procurement cycle. If you contract a full engagement within {entry.creditWindowDays} days, the full amount is credited against it.
-            </p>
-          </div>
-          <div class="md:col-span-4 md:text-right">
-            <div class="font-display text-4xl md:text-5xl font-bold text-blood">{eur(entry.price)}</div>
-            <div class="font-mono text-[0.65rem] text-ghost uppercase tracking-widest mt-1 mb-5">excl. VAT · fixed</div>
-            <a href={`${base}contact?service=${entry.key}`} class="cta-primary !text-xs">
-              Book the Review →
-            </a>
-          </div>
-        </div>
-      </div>
+  <section class="section border-t border-rule" id="pricing">
+    <div class="wrap">
+      <h2 class="text-step-3 font-medium tracking-tight">The price is the price.</h2>
+      <p class="lede measure mt-4">What is published is what you pay for the scope described. A price that moves when you push is the opaque model this replaces.</p>
 
-      <!-- Price list (mobile) -->
-      <ul class="md:hidden border border-ash-lighter divide-y divide-ash-lighter">
-        <li class="p-5 bg-blood/[0.03]">
-          <div class="flex justify-between items-baseline gap-4">
-            <span class="text-bone font-medium">{entry.name}</span>
-            <span class="font-mono text-blood font-bold whitespace-nowrap">{eur(entry.price)}</span>
-          </div>
-          <div class="text-ghost-light text-sm mt-1">{entry.scope} · {entry.days} days</div>
-        </li>
-        {services.flatMap((s) =>
-          s.tiers.map((t) => (
-            <li class="p-5">
-              <div class="flex justify-between items-baseline gap-4">
-                <span class="text-bone font-medium">
-                  {s.name}{t.label && <span class="text-ghost font-mono text-xs ml-2">· {t.label}</span>}
-                </span>
-                <span class:list={['font-mono whitespace-nowrap', t.price === null ? 'text-ghost text-[0.6rem] uppercase tracking-widest' : 'text-bone font-bold']}>{t.price === null ? 'Quoted' : eur(t.price)}</span>
-              </div>
-              <div class="text-ghost-light text-sm mt-1">{t.scope}{t.days !== null && ` · ${t.days} days`}</div>
-            </li>
-          ))
-        )}
-        {addons.map((a) => (
-          <li class="p-5">
-            <div class="flex justify-between items-baseline gap-4">
-              <span class="text-bone font-medium">{a.name}</span>
-              <span class="font-mono text-bone font-bold whitespace-nowrap">{eur(a.price)}</span>
-            </div>
-            <div class="text-ghost-light text-sm mt-1">{a.scope} · {a.days} {a.days === '1' ? 'day' : 'days'}</div>
-          </li>
-        ))}
-      </ul>
-
-      <!-- Price table (desktop) -->
-      <div class="hidden md:block overflow-x-auto border border-ash-lighter">
-        <table class="w-full text-sm">
+      <div class="mt-12 overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-[640px]">
           <thead>
-            <tr class="border-b border-ash-lighter font-mono text-[0.65rem] uppercase tracking-widest text-ghost text-left">
-              <th scope="col" class="px-5 py-3 font-medium">Engagement</th>
-              <th scope="col" class="px-5 py-3 font-medium">Scope</th>
-              <th scope="col" class="px-5 py-3 font-medium whitespace-nowrap">Days</th>
-              <th scope="col" class="px-5 py-3 font-medium text-right whitespace-nowrap">Price (excl. VAT)</th>
+            <tr class="border-b border-rule text-step--1 text-muted">
+              <th scope="col" class="py-3 pr-6 font-normal">Engagement</th>
+              <th scope="col" class="py-3 pr-6 font-normal">Scope</th>
+              <th scope="col" class="py-3 pr-6 font-normal text-right">Days</th>
+              <th scope="col" class="py-3 font-normal text-right">Price</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-ash-lighter">
-            <tr class="bg-blood/[0.03]">
-              <td class="px-5 py-4 text-bone font-medium">{entry.name}</td>
-              <td class="px-5 py-4 text-ghost-light">{entry.scope}</td>
-              <td class="px-5 py-4 font-mono text-ghost-light">{entry.days}</td>
-              <td class="px-5 py-4 font-mono text-blood font-bold text-right whitespace-nowrap">{eur(entry.price)}</td>
+          <tbody class="divide-y divide-rule">
+            <tr class="align-top">
+              <th scope="row" class="py-4 pr-6 font-medium">{entry.name}</th>
+              <td class="py-4 pr-6 text-muted">{entry.scope}</td>
+              <td class="py-4 pr-6 machine text-right">{entry.days}</td>
+              <td class="py-4 machine text-right">{eur(entry.price)}</td>
             </tr>
             {services.flatMap((s) =>
-              s.tiers.map((t, i) => (
-                <tr>
-                  <td class="px-5 py-4 text-bone font-medium">
-                    {s.name}{t.label && <span class="text-ghost font-mono text-xs ml-2">· {t.label}</span>}
-                  </td>
-                  <td class="px-5 py-4 text-ghost-light">{t.scope}</td>
-                  <td class="px-5 py-4 font-mono text-ghost-light">{t.days ?? '—'}</td>
-                  <td class:list={['px-5 py-4 font-mono text-right whitespace-nowrap', t.price === null ? 'text-ghost text-xs uppercase tracking-widest' : 'text-bone font-bold']}>{label(t)}</td>
+              s.tiers.map((t) => (
+                <tr class="align-top">
+                  <th scope="row" class="py-4 pr-6 font-medium">
+                    <a href={`#${s.key}`} class="hover:text-critical-text transition-colors">{s.name}</a>
+                    {t.label && <span class="text-muted font-normal"> — {t.label}</span>}
+                  </th>
+                  <td class="py-4 pr-6 text-muted">{t.scope}</td>
+                  <td class="py-4 pr-6 machine text-right">{t.days ?? '—'}</td>
+                  <td class="py-4 machine text-right">{t.price === null ? <span class="text-muted">after scoping</span> : eur(t.price)}</td>
                 </tr>
               ))
             )}
             {addons.map((a) => (
-              <tr>
-                <td class="px-5 py-4 text-bone font-medium">{a.name}</td>
-                <td class="px-5 py-4 text-ghost-light">{a.scope}</td>
-                <td class="px-5 py-4 font-mono text-ghost-light">{a.days}</td>
-                <td class="px-5 py-4 font-mono text-bone font-bold text-right whitespace-nowrap">{eur(a.price)}</td>
+              <tr class="align-top">
+                <th scope="row" class="py-4 pr-6 font-medium">{a.name}</th>
+                <td class="py-4 pr-6 text-muted">{a.scope}</td>
+                <td class="py-4 pr-6 machine text-right">{a.days}</td>
+                <td class="py-4 machine text-right">{eur(a.price)}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <!-- Terms -->
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-        <div class="border-l border-blood pl-5">
-          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-2">// Payment</div>
-          <p class="text-ghost-light text-sm leading-relaxed">50% at signature, 50% on delivery for new clients. NET-30 for established clients. EUR, USD, or stablecoin.</p>
+      <dl class="mt-12 grid md:grid-cols-2 gap-x-12 gap-y-6 max-w-4xl text-step--1">
+        <div>
+          <dt class="font-medium">Payment</dt>
+          <dd class="text-muted mt-1">50% at signature, 50% on delivery for new clients. NET-30 for established clients. EUR, USD, or stablecoin.</dd>
         </div>
-        <div class="border-l border-blood pl-5">
-          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-2">// Bundles</div>
-          <p class="text-ghost-light text-sm leading-relaxed">
-            {terms.bundle[0].pct}% off when two services are contracted in the same quarter. {terms.bundle[1].pct}% off for three. Published, so nobody has to ask.
-          </p>
+        <div>
+          <dt class="font-medium">Bundles</dt>
+          <dd class="text-muted mt-1">{terms.bundle[0].pct}% off two services contracted in the same quarter, {terms.bundle[1].pct}% off three. Published, so nobody has to ask.</dd>
         </div>
-        <div class="border-l border-blood pl-5">
-          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-2">// Retest</div>
-          <p class="text-ghost-light text-sm leading-relaxed">Free retest of High and Critical findings within 30 days of delivery, on every assessment. After the window, {eur(addons[0].price)}.</p>
+        <div>
+          <dt class="font-medium">Retest</dt>
+          <dd class="text-muted mt-1">High and Critical findings re-verified free within 30 days of delivery, on every assessment.</dd>
         </div>
-        <div class="border-l border-blood pl-5">
-          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-2">// VAT</div>
-          <p class="text-ghost-light text-sm leading-relaxed">Invoiced by REDOPS Security Ltd. (Cyprus, EU). EU B2B clients: reverse charge, no VAT added. Outside the EU: no VAT.</p>
+        <div>
+          <dt class="font-medium">VAT</dt>
+          <dd class="text-muted mt-1">Invoiced by REDOPS Security Ltd., Cyprus. EU B2B clients: reverse charge, no VAT added. Outside the EU: no VAT.</dd>
         </div>
-      </div>
+      </dl>
     </div>
   </section>
 
-  <!-- SERVICES DETAIL -->
-  <section class="py-20">
-    <div class="max-w-7xl mx-auto px-6 space-y-16">
+  {services.map((s) => {
+    const d = detail[s.key as keyof typeof detail];
+    return (
+      <section class="section border-t border-rule" id={s.key}>
+        <div class="wrap grid md:grid-cols-[1fr_1fr] gap-x-16 gap-y-8">
+          <div>
+            <h2 class="text-step-3 font-medium tracking-tight">{s.name}</h2>
+            <p class="text-muted text-step--1 mt-2">{d.format}</p>
+            <p class="mt-6 measure">{d.summary}</p>
+            <div class="mt-6 flex flex-wrap items-center gap-6">
+              <a href={bookUrl(s.key)} target="_blank" rel="noopener" class="btn-primary">{CTA_LABEL}</a>
+              <a href="#pricing" class="link-quiet text-step--1">Price list</a>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-8 text-step--1">
+            <div>
+              <p class="font-medium">Covers</p>
+              <ul class="mt-2 space-y-1.5 text-muted">
+                {d.covers.map((c) => <li>{c}</li>)}
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium">You get</p>
+              <ul class="mt-2 space-y-1.5 text-muted">
+                {d.delivers.map((c) => <li>{c}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  })}
 
-      <!-- Service 1: Attack Surface Review -->
-      <div class="grid md:grid-cols-12 gap-8 reveal">
-        <div class="md:col-span-4">
-          <div class="num-label mb-2">01 / 07</div>
-          <h2 class="font-display text-3xl font-bold mb-4">{entry.name}</h2>
-          <div class="terminal-box p-4 mb-4">
-            <div class="font-mono text-xs space-y-2">
-              <div class="flex justify-between">
-                <span class="text-ghost">Duration</span>
-                <span class="text-bone">{entry.days} days</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-ghost">Format</span>
-                <span class="text-bone">Remote</span>
-              </div>
-              <div class="flex justify-between pt-2 border-t border-ash-lighter">
-                <span class="text-ghost">Price</span>
-                <span class="text-blood font-bold">{eur(entry.price)}</span>
-              </div>
+  <section class="section border-t border-rule" id="continuous">
+    <div class="wrap">
+      <h2 class="text-step-3 font-medium tracking-tight">Continuous offensive testing.</h2>
+      <p class="lede measure mt-4">For teams shipping every week. The perimeter changes faster than an annual pentest can see, so the operator keeps watching it.</p>
+
+      <div class="mt-12 grid md:grid-cols-2 gap-8 max-w-4xl">
+        {recurring.map((plan) => (
+          <div class="border border-rule p-7">
+            <div class="flex items-baseline justify-between gap-6">
+              <h3 class="text-step-1 font-medium">{plan.name}</h3>
+              <div class="machine text-step-1">{eur(plan.monthly)}<span class="text-muted text-step--1"> /month</span></div>
             </div>
+            <ul class="mt-5 space-y-2 text-step--1 text-muted">
+              {plan.includes.map((i) => <li>{i}</li>)}
+            </ul>
+            <a href={bookUrl(plan.key)} target="_blank" rel="noopener" class="btn-secondary mt-7 w-full">{CTA_LABEL}</a>
           </div>
-          <a href={`${base}contact?service=${entry.key}`} class="cta-primary !text-xs w-full justify-center">
-            Book the Review →
-          </a>
-        </div>
-        <div class="md:col-span-8 service-card !p-8">
-          <p class="text-bone mb-6 leading-relaxed">
-            Two days on your external perimeter, up to three root domains. What is exposed, what is outdated, what is misconfigured, what leaked. Validation only, no exploitation. The output is the prioritized list you would otherwise get from the first two days of a full external pentest, at a price that does not need a procurement cycle.
-          </p>
-          <div class="grid sm:grid-cols-2 gap-4 mb-6">
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Coverage</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· Subdomain & DNS enumeration</li>
-                <li>· Exposed services & versions</li>
-                <li>· TLS & certificate hygiene</li>
-                <li>· Cloud asset discovery</li>
-                <li>· Leaked credentials & secrets</li>
-                <li>· Quick-win validation (no exploitation)</li>
-              </ul>
-            </div>
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Deliverables</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· Attack surface inventory</li>
-                <li>· Prioritized exposure list</li>
-                <li>· One-page executive brief</li>
-                <li>· Scoping proposal for follow-up</li>
-                <li>· Full amount credited within {entry.creditWindowDays} days</li>
-              </ul>
-            </div>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="pill">OSINT</span>
-            <span class="pill">Recon</span>
-            <span class="pill">Fixed Price</span>
-            <span class="pill">No Procurement Cycle</span>
-          </div>
-        </div>
+        ))}
       </div>
-
-      <!-- Service 2: Web App Pentest -->
-      <div class="grid md:grid-cols-12 gap-8 reveal">
-        <div class="md:col-span-4">
-          <div class="num-label mb-2">02 / 07</div>
-          <h2 class="font-display text-3xl font-bold mb-4">Web Application Pentest</h2>
-          <div class="terminal-box p-4 mb-4">
-            <div class="font-mono text-xs space-y-2">
-              <div class="flex justify-between">
-                <span class="text-ghost">Format</span>
-                <span class="text-bone">Remote</span>
-              </div>
-              {tiers('web-pentest').map((t) => (
-                <div class="flex justify-between pt-2 border-t border-ash-lighter">
-                  <span class="text-ghost">{t.label} · {t.scope}</span>
-                  <span class:list={[t.price === null ? 'text-ghost-light' : 'text-blood font-bold', 'whitespace-nowrap ml-3']}>
-                    {t.price === null ? 'Custom' : `${t.days}d · ${eur(t.price)}`}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <a href={`${base}contact?service=web-pentest`} class="cta-primary !text-xs w-full justify-center">
-            Request Scope →
-          </a>
-        </div>
-        <div class="md:col-span-8 service-card !p-8">
-          <p class="text-bone mb-6 leading-relaxed">
-            Manual penetration testing of web applications and APIs. Goes far beyond automated scanners — authentication bypass, business logic flaws, race conditions, IDOR/BOLA, server-side template injection, and chained exploitation.
-          </p>
-          <div class="grid sm:grid-cols-2 gap-4 mb-6">
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Coverage</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· OWASP Top 10 + ASVS</li>
-                <li>· REST/GraphQL/WebSocket APIs</li>
-                <li>· Authentication & session flows</li>
-                <li>· Business logic attacks</li>
-                <li>· Authorization (IDOR/BOLA)</li>
-                <li>· Server-side injection chains</li>
-              </ul>
-            </div>
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Deliverables</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· Executive summary report</li>
-                <li>· Technical findings (CVSS scored)</li>
-                <li>· Reproduction steps + evidence</li>
-                <li>· Remediation recommendations</li>
-                <li>· Free retest within 30 days</li>
-                <li>· Optional dev team walkthrough</li>
-              </ul>
-            </div>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="pill">OWASP</span>
-            <span class="pill">PortSwigger BSCP-grade</span>
-            <span class="pill">Burp Suite Pro</span>
-            <span class="pill">Custom Tooling</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Service 3: AD Assessment -->
-      <div class="grid md:grid-cols-12 gap-8 reveal">
-        <div class="md:col-span-4">
-          <div class="num-label mb-2">03 / 07</div>
-          <h2 class="font-display text-3xl font-bold mb-4">Active Directory Assessment</h2>
-          <div class="terminal-box p-4 mb-4">
-            <div class="font-mono text-xs space-y-2">
-              <div class="flex justify-between">
-                <span class="text-ghost">Format</span>
-                <span class="text-bone">Remote / On-site</span>
-              </div>
-              {tiers('ad-assessment').map((t) => (
-                <div class="flex justify-between pt-2 border-t border-ash-lighter">
-                  <span class="text-ghost">{t.scope}</span>
-                  <span class="text-blood font-bold whitespace-nowrap ml-3">{t.days}d · {eur(t.price!)}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <a href={`${base}contact?service=ad-assessment`} class="cta-primary !text-xs w-full justify-center">
-            Request Scope →
-          </a>
-        </div>
-        <div class="md:col-span-8 service-card !p-8">
-          <p class="text-bone mb-6 leading-relaxed">
-            Full Active Directory attack chain assessment. Internal pentest assuming initial foothold, with the goal of identifying paths to Domain Admin and Tier-0 assets. Maps real attacker behavior, not theoretical vulnerabilities.
-          </p>
-          <div class="grid sm:grid-cols-2 gap-4 mb-6">
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Coverage</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· Kerberos attacks (AS-REP, S4U2)</li>
-                <li>· Kerberoasting & ASREPRoasting</li>
-                <li>· ACL/ACE abuse chains</li>
-                <li>· GPO weaknesses</li>
-                <li>· LSA secrets / NTDS extraction</li>
-                <li>· Lateral movement & privesc</li>
-                <li>· LDAP signing & relay attacks</li>
-              </ul>
-            </div>
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Deliverables</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· Attack path documentation</li>
-                <li>· BloodHound graph artifacts</li>
-                <li>· CVSS-scored findings</li>
-                <li>· Prioritized remediation roadmap</li>
-                <li>· Detection engineering hints</li>
-                <li>· Free retest within 30 days</li>
-              </ul>
-            </div>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="pill">BloodHound</span>
-            <span class="pill">Impacket</span>
-            <span class="pill">Rubeus</span>
-            <span class="pill">CRTP-grade</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Service 4: External Network -->
-      <div class="grid md:grid-cols-12 gap-8 reveal">
-        <div class="md:col-span-4">
-          <div class="num-label mb-2">04 / 07</div>
-          <h2 class="font-display text-3xl font-bold mb-4">External Network Pentest</h2>
-          <div class="terminal-box p-4 mb-4">
-            <div class="font-mono text-xs space-y-2">
-              <div class="flex justify-between">
-                <span class="text-ghost">Duration</span>
-                <span class="text-bone">{tiers('external-pentest')[0].days} days</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-ghost">Format</span>
-                <span class="text-bone">Remote</span>
-              </div>
-              <div class="flex justify-between pt-2 border-t border-ash-lighter">
-                <span class="text-ghost">{tiers('external-pentest')[0].scope}</span>
-                <span class="text-blood font-bold whitespace-nowrap ml-3">{eur(tiers('external-pentest')[0].price!)}</span>
-              </div>
-            </div>
-          </div>
-          <a href={`${base}contact?service=external-pentest`} class="cta-primary !text-xs w-full justify-center">
-            Request Scope →
-          </a>
-        </div>
-        <div class="md:col-span-8 service-card !p-8">
-          <p class="text-bone mb-6 leading-relaxed">
-            Internet-facing infrastructure assessment from an external attacker's perspective. OSINT-driven recon, active enumeration, exploit validation, and post-exploitation chains.
-          </p>
-          <div class="grid sm:grid-cols-2 gap-4 mb-6">
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Coverage</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· OSINT & passive recon</li>
-                <li>· Subdomain enumeration</li>
-                <li>· Service fingerprinting</li>
-                <li>· CVE validation & exploitation</li>
-                <li>· Cloud asset discovery</li>
-                <li>· Email/credential exposure</li>
-              </ul>
-            </div>
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Deliverables</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· Attack surface inventory</li>
-                <li>· Verified vulnerability findings</li>
-                <li>· Exposed credentials report</li>
-                <li>· Hardening recommendations</li>
-                <li>· Free retest within 30 days</li>
-              </ul>
-            </div>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="pill">OSINT</span>
-            <span class="pill">Nuclei</span>
-            <span class="pill">Custom Recon</span>
-            <span class="pill">CVE Validation</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Service 5: Red Team -->
-      <div class="grid md:grid-cols-12 gap-8 reveal">
-        <div class="md:col-span-4">
-          <div class="num-label mb-2">05 / 07</div>
-          <h2 class="font-display text-3xl font-bold mb-4">Red Team Operations</h2>
-          <div class="terminal-box p-4 mb-4">
-            <div class="font-mono text-xs space-y-2">
-              <div class="flex justify-between">
-                <span class="text-ghost">Duration</span>
-                <span class="text-bone">2–4 weeks</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-ghost">Format</span>
-                <span class="text-bone">Remote / On-site</span>
-              </div>
-              <div class="flex justify-between pt-2 border-t border-ash-lighter">
-                <span class="text-ghost">Price</span>
-                <span class="text-bone whitespace-nowrap ml-3">Quoted after scoping · {eur(dayRate)}/day basis</span>
-              </div>
-            </div>
-          </div>
-          <a href={`${base}contact?service=red-team`} class="cta-primary !text-xs w-full justify-center">
-            Request Scope →
-          </a>
-        </div>
-        <div class="md:col-span-8 service-card !p-8">
-          <p class="text-bone mb-6 leading-relaxed">
-            Full-spectrum adversary simulation against agreed objectives. Initial access via phishing or external exploitation, EDR evasion with custom tooling, lateral movement, and objective-driven exfiltration. Tests both prevention and detection.
-          </p>
-          <div class="grid sm:grid-cols-2 gap-4 mb-6">
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Coverage</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· Phishing campaigns (mature)</li>
-                <li>· EDR evasion (Sophos/CrowdStrike/SentinelOne)</li>
-                <li>· Custom C2 infrastructure</li>
-                <li>· Custom shellcode loaders</li>
-                <li>· Lateral movement & persistence</li>
-                <li>· Objective exfiltration</li>
-                <li>· Blue team detection mapping</li>
-              </ul>
-            </div>
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Deliverables</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· Full operation narrative</li>
-                <li>· MITRE ATT&amp;CK mapping</li>
-                <li>· IOCs for blue team replay</li>
-                <li>· Detection gap analysis</li>
-                <li>· Executive briefing session</li>
-                <li>· Technical debrief with SOC</li>
-              </ul>
-            </div>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="pill">OSEP-grade</span>
-            <span class="pill">Custom Loaders</span>
-            <span class="pill">MITRE ATT&amp;CK</span>
-            <span class="pill">Purple Team Optional</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Service 6: Cloud Assessment -->
-      <div class="grid md:grid-cols-12 gap-8 reveal">
-        <div class="md:col-span-4">
-          <div class="num-label mb-2">06 / 07</div>
-          <h2 class="font-display text-3xl font-bold mb-4">Cloud Security Assessment</h2>
-          <div class="terminal-box p-4 mb-4">
-            <div class="font-mono text-xs space-y-2">
-              <div class="flex justify-between">
-                <span class="text-ghost">Duration</span>
-                <span class="text-bone">5–10 days</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-ghost">Format</span>
-                <span class="text-bone">Remote</span>
-              </div>
-              <div class="flex justify-between pt-2 border-t border-ash-lighter">
-                <span class="text-ghost">Price</span>
-                <span class="text-bone whitespace-nowrap ml-3">Quoted after scoping · {eur(dayRate)}/day basis</span>
-              </div>
-            </div>
-          </div>
-          <a href={`${base}contact?service=cloud`} class="cta-primary !text-xs w-full justify-center">
-            Request Scope →
-          </a>
-        </div>
-        <div class="md:col-span-8 service-card !p-8">
-          <p class="text-bone mb-6 leading-relaxed">
-            Offensive assessment of cloud environments (AWS, Azure, GCP). Privilege escalation paths, misconfigured IAM, exposed services, and lateral movement between cloud and on-premises infrastructure.
-          </p>
-          <div class="grid sm:grid-cols-2 gap-4 mb-6">
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Coverage</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· IAM misconfigurations</li>
-                <li>· Privilege escalation chains</li>
-                <li>· Storage exposure (S3/Blob/GCS)</li>
-                <li>· Serverless attack surface</li>
-                <li>· Hybrid cloud-on-prem paths</li>
-                <li>· Container/K8s security</li>
-              </ul>
-            </div>
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Deliverables</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· Cloud attack surface map</li>
-                <li>· IAM privilege graph</li>
-                <li>· Exploitable misconfigurations</li>
-                <li>· Hardening playbook</li>
-                <li>· Free retest within 30 days</li>
-              </ul>
-            </div>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="pill">AWS</span>
-            <span class="pill">Azure</span>
-            <span class="pill">GCP</span>
-            <span class="pill">K8s</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Service 7: Continuous / recurring -->
-      <div class="grid md:grid-cols-12 gap-8 reveal">
-        <div class="md:col-span-4">
-          <div class="num-label mb-2">07 / 07</div>
-          <h2 class="font-display text-3xl font-bold mb-4">Continuous Offensive Testing</h2>
-          <div class="terminal-box p-4 mb-4">
-            <div class="font-mono text-xs space-y-2">
-              <div class="flex justify-between">
-                <span class="text-ghost">Term</span>
-                <span class="text-bone">{terms.commitmentMonths}-month commitment</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-ghost">Billing</span>
-                <span class="text-bone">Monthly</span>
-              </div>
-              <div class="flex justify-between pt-2 border-t border-ash-lighter">
-                <span class="text-ghost">Annual prepay</span>
-                <span class="text-blood font-bold">−{terms.annualPrepayDiscount}%</span>
-              </div>
-            </div>
-          </div>
-          <p class="text-ghost-light text-sm leading-relaxed">
-            For teams shipping every week. The perimeter changes faster than an annual pentest can see, so the operator keeps watching it.
-          </p>
-        </div>
-        <div class="md:col-span-8 grid sm:grid-cols-2 gap-4">
-          {recurring.map((plan) => (
-            <div class="service-card !p-6 flex flex-col">
-              <div class="flex items-baseline justify-between mb-4">
-                <h3 class="font-display text-2xl font-bold text-bone">{plan.name}</h3>
-                <div class="text-right">
-                  <div class="font-mono text-blood font-bold text-xl">{eur(plan.monthly)}</div>
-                  <div class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest whitespace-nowrap">/ month · excl. VAT</div>
-                </div>
-              </div>
-              <ul class="space-y-2 text-sm text-ghost-light mb-6 flex-1">
-                {plan.includes.map((line) => <li>· {line}</li>)}
-              </ul>
-              <a href={`${base}contact?service=${plan.key}`} class="cta-secondary !text-xs justify-center">
-                Start {plan.name} →
-              </a>
-            </div>
-          ))}
-          <p class="sm:col-span-2 text-ghost text-xs font-mono leading-relaxed">
-            Need a quarterly deep engagement on retainer instead? Custom retainer, quoted after scoping.
-          </p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- CUSTOM ENGAGEMENT -->
-  <section class="py-32 border-t border-ash-lighter">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-      <div class="num-label mb-4">// CUSTOM</div>
-      <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">
-        Don't see what<br />
-        <span class="text-blood">you need?</span>
-      </h2>
-      <p class="text-ghost-light text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-        Mobile app pentest, source code review, phishing simulations, IoT/embedded testing, social engineering campaigns, M&amp;A cyber due diligence, vCISO advisory. Scoped in days at {eur(dayRate)}/day.
+      <p class="mt-6 text-step--1 text-muted measure-wide">
+        {terms.commitmentMonths}-month commitment, billed monthly. {terms.annualPrepayDiscount}% off for annual prepayment. Excluding VAT.
       </p>
-      <a href={`${base}contact?service=custom`} class="cta-primary">
-        Discuss Custom Engagement →
-      </a>
     </div>
   </section>
 
-  <!-- PROCESS -->
-  <section class="py-32 border-t border-ash-lighter">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="num-label mb-4">// PROCESS</div>
-      <h2 class="font-display text-4xl md:text-5xl font-bold mb-16 max-w-3xl">
-        How engagements<br />
-        <span class="text-blood">flow.</span>
-      </h2>
-
-      <div class="grid md:grid-cols-4 gap-6">
-        <div class="reveal">
-          <div class="font-mono text-blood text-3xl font-bold mb-4">01</div>
-          <h3 class="font-display text-lg font-bold mb-3">Scoping Call</h3>
-          <p class="text-ghost-light text-sm leading-relaxed">
-            30-min discovery to understand objectives, scope, constraints. NDA signed before any technical details discussed.
-          </p>
-        </div>
-        <div class="reveal">
-          <div class="font-mono text-blood text-3xl font-bold mb-4">02</div>
-          <h3 class="font-display text-lg font-bold mb-3">Proposal & Contract</h3>
-          <p class="text-ghost-light text-sm leading-relaxed">
-            Fixed-price proposal matching the published package, with scope, timeline, and deliverables. Standard MSA + SOW. 50% upfront, 50% on delivery.
-          </p>
-        </div>
-        <div class="reveal">
-          <div class="font-mono text-blood text-3xl font-bold mb-4">03</div>
-          <h3 class="font-display text-lg font-bold mb-3">Execution</h3>
-          <p class="text-ghost-light text-sm leading-relaxed">
-            Active testing with daily status updates on critical findings. Live channel for coordination during engagement.
-          </p>
-        </div>
-        <div class="reveal">
-          <div class="font-mono text-blood text-3xl font-bold mb-4">04</div>
-          <h3 class="font-display text-lg font-bold mb-3">Delivery</h3>
-          <p class="text-ghost-light text-sm leading-relaxed">
-            Written report + technical walkthrough call. Free retest within 30 days to verify remediation.
-          </p>
-        </div>
-      </div>
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-3 font-medium tracking-tight">How an engagement runs.</h2>
+      <ol class="mt-12 grid md:grid-cols-2 gap-x-12 gap-y-10 max-w-4xl">
+        {process.map(([title, body], i) => (
+          <li class="grid grid-cols-[2.5rem_1fr] gap-4">
+            <span class="machine text-muted pt-1">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <p class="font-medium">{title}</p>
+              <p class="mt-1 text-muted text-step--1">{body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="mt-10 text-muted measure-wide">
+        Something not on this page? Mobile, source code review, phishing simulation, IoT, M&amp;A due diligence, and vCISO advisory are scoped in days at {eur(dayRate)} a day. Bring it to the call.
+      </p>
     </div>
   </section>
 
-  <!-- FINAL CTA -->
-  <section class="py-32 border-t border-ash-lighter">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-      <h2 class="font-display text-4xl md:text-6xl font-bold mb-8 leading-tight">
-        Engagement starts<br />
-        <span class="text-blood">with a 30-min call.</span>
-      </h2>
-      <a href={`${base}contact`} class="cta-primary">
-        Request Scoping Call →
-      </a>
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-4 font-medium tracking-tight max-w-[18ch]">Every engagement starts with the same call.</h2>
+      <p class="lede measure mt-6">Thirty minutes, NDA first, written proposal within 48 hours if you want one.</p>
+      <a href={bookUrl()} target="_blank" rel="noopener" class="btn-primary mt-10 text-step-0">{CTA_LABEL}</a>
     </div>
   </section>
 </Layout>

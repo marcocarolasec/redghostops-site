@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { CALENDLY_URL, CTA_LABEL } from '../data/site';
 
 export interface Props {
   title?: string;
@@ -54,10 +55,10 @@ const nav = [
   <a href="#main" class="skip-link">Skip to content</a>
 
   <nav class="sticky top-0 z-50 border-b border-rule bg-paper/95 backdrop-blur-sm">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center gap-6">
-      <a href="/" class="flex items-center gap-3">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center gap-4 md:gap-6">
+      <a href="/" class="flex items-center gap-3 shrink-0">
         <img src="/logo.png" alt="" width="32" height="32" class="w-8 h-8" />
-        <span class="text-step-0 font-semibold tracking-tight">REDOPS Security</span>
+        <span class="text-step--1 md:text-step-0 font-semibold tracking-tight whitespace-nowrap">REDOPS Security</span>
       </a>
 
       <div class="hidden md:flex items-center gap-7 text-step--1">
@@ -68,14 +69,18 @@ const nav = [
             {...(item.external ? { rel: 'noopener', target: '_blank' } : {})}
           >{item.label}</a>
         ))}
-        <a href="/contact/" class="bg-critical text-white px-4 py-2 hover:bg-critical-deep transition-colors">
-          Book a scoping call
+        <a href={CALENDLY_URL} target="_blank" rel="noopener" class="btn-primary !px-4 !py-2 text-step--1">
+          {CTA_LABEL}
         </a>
       </div>
 
+      <div class="md:hidden flex items-center gap-2">
+        <a href={CALENDLY_URL} target="_blank" rel="noopener" class="btn-primary !px-3 !py-1.5 text-step--1 whitespace-nowrap">
+          Book a call
+        </a>
       <button
         id="menu-btn"
-        class="md:hidden p-2 -mr-2 text-ink"
+        class="p-2 -mr-2 text-ink"
         aria-label="Open menu"
         aria-expanded="false"
         aria-controls="mobile-menu"
@@ -86,6 +91,7 @@ const nav = [
           <line x1="3" y1="17" x2="21" y2="17"></line>
         </svg>
       </button>
+      </div>
     </div>
 
     <div id="mobile-menu" class="md:hidden hidden border-t border-rule">
@@ -97,8 +103,8 @@ const nav = [
             {...(item.external ? { rel: 'noopener', target: '_blank' } : {})}
           >{item.label}</a>
         ))}
-        <a href="/contact/" class="bg-critical text-white px-4 py-2.5 text-center">
-          Book a scoping call
+        <a href={CALENDLY_URL} target="_blank" rel="noopener" class="btn-primary">
+          {CTA_LABEL}
         </a>
       </div>
     </div>
