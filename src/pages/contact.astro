@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { eur, dayRate, terms } from '../data/pricing';
 
 const CALENDLY_URL = 'https://calendly.com/asbarraninfor/redghostops-onboarding';
 ---
@@ -217,6 +218,16 @@ const CALENDLY_URL = 'https://calendly.com/asbarraninfor/redghostops-onboarding'
 
         <details class="service-card !p-6 group">
           <summary class="cursor-pointer font-display text-lg font-bold flex justify-between items-center">
+            <span>Are the published prices final?</span>
+            <span class="text-blood text-2xl group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="text-ghost-light mt-4 leading-relaxed">
+            Yes. The price on the services page is the price for the scope described, excluding VAT. Larger scope adds days at {eur(dayRate)}/day. Two services in the same quarter get {terms.bundle[0].pct}% off, three get {terms.bundle[1].pct}%. Nothing else moves, in either direction.
+          </p>
+        </details>
+
+        <details class="service-card !p-6 group">
+          <summary class="cursor-pointer font-display text-lg font-bold flex justify-between items-center">
             <span>What's included in the report?</span>
             <span class="text-blood text-2xl group-open:rotate-45 transition-transform">+</span>
           </summary>
@@ -255,11 +266,14 @@ const CALENDLY_URL = 'https://calendly.com/asbarraninfor/redghostops-onboarding'
       const service = params.get('service');
       if (!service) return;
       const labels = {
+        'attack-surface-review': 'Attack Surface Review',
         'web-pentest': 'Web Application Pentest',
         'ad-assessment': 'Active Directory Assessment',
         'external-pentest': 'External Network Pentest',
         'red-team': 'Red Team Operations',
         'cloud': 'Cloud Security Assessment',
+        'watch': 'Watch (continuous monitoring)',
+        'watch-verify': 'Watch + Verify (continuous monitoring + quarterly retest)',
         'retainer': 'Continuous Offensive Testing',
         'custom': 'Custom engagement',
         'unsure': 'Consultation',

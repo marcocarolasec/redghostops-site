@@ -1,6 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { eur, entry, fromPrice } from '../data/pricing';
 const base = import.meta.env.BASE_URL;
+const from = (key: string) => {
+  const p = fromPrice(key);
+  return p === null ? 'Quoted after scoping' : `from ${eur(p)}`;
+};
 ---
 
 <Layout>
@@ -300,7 +305,7 @@ const base = import.meta.env.BASE_URL;
                 <span class="text-phosphor font-bold text-base leading-none">+</span> REDOPS
               </div>
               <p class="text-bone text-sm leading-relaxed">
-                Senior delivery at fair pricing on request, backed by credentials you can verify before signing: OSEP publicly verifiable on OffSec, 10 CVEs with MITRE / INCIBE IDs, technical research at <span class="text-blood">blog.redghostops.com</span>. Quality demonstrable, not just claimed on a logo.
+                Senior delivery at published prices, backed by credentials you can verify before signing: OSEP publicly verifiable on OffSec, 10 CVEs with MITRE / INCIBE IDs, technical research at <span class="text-blood">blog.redghostops.com</span>. Quality demonstrable, not just claimed on a logo. Price visible before the first call, not after the third.
               </p>
             </div>
           </div>
@@ -365,16 +370,25 @@ const base = import.meta.env.BASE_URL;
             <span class="text-blood">break, document, fix.</span>
           </h2>
         </div>
-        <a href={`${base}services`} class="cta-secondary">
-          Full Service Catalog →
+        <a href={`${base}services#pricing`} class="cta-secondary">
+          Catalog & Pricing →
         </a>
       </div>
+
+      <!-- Entry product hook -->
+      <a href={`${base}services#pricing`} class="reveal flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 border border-blood-dim bg-blood/[0.03] hover:bg-blood/[0.06] transition-colors px-6 py-4 mb-6 group">
+        <span class="pill pill-blood whitespace-nowrap">Start here</span>
+        <span class="text-bone text-sm md:text-base leading-snug">
+          <span class="font-bold">{entry.name}</span> · {entry.days} days · <span class="text-blood font-mono font-bold">{eur(entry.price)}</span> excl. VAT. {entry.scope}. Credited in full against a full engagement within {entry.creditWindowDays} days.
+        </span>
+        <span class="text-blood font-mono text-xs whitespace-nowrap sm:ml-auto group-hover:translate-x-1 transition">Details →</span>
+      </a>
 
       <div class="grid md:grid-cols-2 gap-6">
         <!-- Service 1 -->
         <a href={`${base}services`} class="service-card group reveal">
           <div class="flex justify-between items-start mb-6">
-            <div class="num-label">01 / 06</div>
+            <div class="num-label">02 / 07</div>
             <span class="pill pill-blood">Web / API</span>
           </div>
           <h3 class="font-display text-2xl font-bold mb-3 text-bone group-hover:text-blood transition">
@@ -389,16 +403,16 @@ const base = import.meta.env.BASE_URL;
             <span class="pill">GraphQL</span>
             <span class="pill">Business Logic</span>
           </div>
-          <div class="flex justify-between items-center pt-6 border-t border-ash-lighter">
-            <span class="font-mono text-xs text-ghost uppercase tracking-widest">5-7 days</span>
-            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition">View details →</span>
+          <div class="flex flex-wrap justify-between items-center gap-x-4 gap-y-2 pt-6 border-t border-ash-lighter">
+            <span class="font-mono text-xs text-ghost uppercase tracking-widest whitespace-nowrap">5-7 days · <span class="text-bone">{from('web-pentest')}</span></span>
+            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition whitespace-nowrap">View details →</span>
           </div>
         </a>
 
         <!-- Service 2 -->
         <a href={`${base}services`} class="service-card group reveal">
           <div class="flex justify-between items-start mb-6">
-            <div class="num-label">02 / 06</div>
+            <div class="num-label">03 / 07</div>
             <span class="pill pill-blood">Internal AD</span>
           </div>
           <h3 class="font-display text-2xl font-bold mb-3 text-bone group-hover:text-blood transition">
@@ -413,16 +427,16 @@ const base = import.meta.env.BASE_URL;
             <span class="pill">CRTP-grade</span>
             <span class="pill">LSA / NTDS</span>
           </div>
-          <div class="flex justify-between items-center pt-6 border-t border-ash-lighter">
-            <span class="font-mono text-xs text-ghost uppercase tracking-widest">7-10 days</span>
-            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition">View details →</span>
+          <div class="flex flex-wrap justify-between items-center gap-x-4 gap-y-2 pt-6 border-t border-ash-lighter">
+            <span class="font-mono text-xs text-ghost uppercase tracking-widest whitespace-nowrap">7-10 days · <span class="text-bone">{from('ad-assessment')}</span></span>
+            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition whitespace-nowrap">View details →</span>
           </div>
         </a>
 
         <!-- Service 3 -->
         <a href={`${base}services`} class="service-card group reveal">
           <div class="flex justify-between items-start mb-6">
-            <div class="num-label">03 / 06</div>
+            <div class="num-label">04 / 07</div>
             <span class="pill pill-blood">External</span>
           </div>
           <h3 class="font-display text-2xl font-bold mb-3 text-bone group-hover:text-blood transition">
@@ -437,16 +451,16 @@ const base = import.meta.env.BASE_URL;
             <span class="pill">CVE Exploitation</span>
             <span class="pill">Validation</span>
           </div>
-          <div class="flex justify-between items-center pt-6 border-t border-ash-lighter">
-            <span class="font-mono text-xs text-ghost uppercase tracking-widest">5-7 days</span>
-            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition">View details →</span>
+          <div class="flex flex-wrap justify-between items-center gap-x-4 gap-y-2 pt-6 border-t border-ash-lighter">
+            <span class="font-mono text-xs text-ghost uppercase tracking-widest whitespace-nowrap">5-7 days · <span class="text-bone">{from('external-pentest')}</span></span>
+            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition whitespace-nowrap">View details →</span>
           </div>
         </a>
 
         <!-- Service 4 -->
         <a href={`${base}services`} class="service-card group reveal">
           <div class="flex justify-between items-start mb-6">
-            <div class="num-label">04 / 06</div>
+            <div class="num-label">05 / 07</div>
             <span class="pill pill-blood">Red Team</span>
           </div>
           <h3 class="font-display text-2xl font-bold mb-3 text-bone group-hover:text-blood transition">
@@ -461,9 +475,9 @@ const base = import.meta.env.BASE_URL;
             <span class="pill">Phishing</span>
             <span class="pill">Custom Tooling</span>
           </div>
-          <div class="flex justify-between items-center pt-6 border-t border-ash-lighter">
-            <span class="font-mono text-xs text-ghost uppercase tracking-widest">2-4 weeks</span>
-            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition">View details →</span>
+          <div class="flex flex-wrap justify-between items-center gap-x-4 gap-y-2 pt-6 border-t border-ash-lighter">
+            <span class="font-mono text-xs text-ghost uppercase tracking-widest whitespace-nowrap">2-4 weeks · <span class="text-bone">{from('red-team')}</span></span>
+            <span class="text-blood font-mono text-xs group-hover:translate-x-1 transition whitespace-nowrap">View details →</span>
           </div>
         </a>
       </div>
