@@ -30,7 +30,7 @@ const faq = [
 >
   <section class="wrap pt-20 md:pt-28 pb-16">
     <div class="rise">
-      <h1 class="text-step-5 font-medium tracking-tight max-w-[16ch]">Book a scoping call.</h1>
+      <h1 class="text-step-5 display max-w-[16ch]">Book a scoping call.</h1>
       <p class="lede measure mt-8">
         Thirty minutes with the person who will do the testing. A mutual NDA goes out before the call, so we can talk about your actual environment.
       </p>
@@ -49,7 +49,7 @@ const faq = [
   <section class="section border-t border-rule">
     <div class="wrap grid md:grid-cols-2 gap-x-16 gap-y-12">
       <div>
-        <h2 class="text-step-2 font-medium tracking-tight">What happens next.</h2>
+        <h2 class="text-step-2 display">What happens next.</h2>
         <ol class="mt-6 space-y-3">
           {steps.map((s, i) => (
             <li class="grid grid-cols-[2.5rem_1fr] gap-3">
@@ -60,7 +60,7 @@ const faq = [
         </ol>
       </div>
       <div>
-        <h2 class="text-step-2 font-medium tracking-tight">Prefer another channel?</h2>
+        <h2 class="text-step-2 display">Prefer another channel?</h2>
         <dl class="mt-6 space-y-5 text-step--1">
           <div>
             <dt class="font-medium">Email</dt>
@@ -82,7 +82,7 @@ const faq = [
 
   <section class="section border-t border-rule">
     <div class="wrap">
-      <h2 class="text-step-3 font-medium tracking-tight">Common questions.</h2>
+      <h2 class="text-step-3 display">Common questions.</h2>
       <div class="mt-8 divide-y divide-rule border-t border-b border-rule max-w-4xl">
         {faq.map(([q, a]) => (
           <details class="group py-5">
@@ -100,7 +100,7 @@ const faq = [
 
   <section class="section border-t border-rule">
     <div class="wrap">
-      <h2 class="text-step-4 font-medium tracking-tight max-w-[18ch]">Pick a slot.</h2>
+      <h2 class="text-step-4 display max-w-[18ch]">Pick a slot.</h2>
       <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" class="btn-primary mt-8 text-step-0">{CTA_LABEL}</a>
     </div>
   </section>

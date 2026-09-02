@@ -51,7 +51,7 @@ const process = [
 >
   <section class="wrap pt-20 md:pt-28 pb-16">
     <div class="rise">
-      <h1 class="text-step-5 font-medium tracking-tight max-w-[16ch]">Services and pricing.</h1>
+      <h1 class="text-step-5 display max-w-[16ch]">Services and pricing.</h1>
       <p class="lede measure mt-8">
         Every package includes the scoping call, execution, a written report, and a remediation walkthrough. Scope beyond a package adds days at {eur(dayRate)}, for everyone. Prices in EUR, excluding VAT.
       </p>
@@ -67,7 +67,7 @@ const process = [
       <div class="sev sev-critical py-1 max-w-4xl">
         <p class="text-step--1 text-muted">Start here</p>
         <div class="mt-2 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
-          <h2 class="text-step-3 font-medium tracking-tight">{entry.name}</h2>
+          <h2 class="text-step-3 display">{entry.name}</h2>
           <div class="machine text-step-3">{eur(entry.price)}</div>
         </div>
         <p class="mt-4 measure-wide">
@@ -83,7 +83,7 @@ const process = [
 
   <section class="section border-t border-rule" id="pricing">
     <div class="wrap">
-      <h2 class="text-step-3 font-medium tracking-tight">The price is the price.</h2>
+      <h2 class="text-step-3 display">The price is the price.</h2>
       <p class="lede measure mt-4">What is published is what you pay for the scope described. A price that moves when you push is the opaque model this replaces.</p>
 
       <div class="mt-12 overflow-x-auto">
@@ -155,7 +155,7 @@ const process = [
       <section class="section border-t border-rule" id={s.key}>
         <div class="wrap grid md:grid-cols-[1fr_1fr] gap-x-16 gap-y-8">
           <div>
-            <h2 class="text-step-3 font-medium tracking-tight">{s.name}</h2>
+            <h2 class="text-step-3 display">{s.name}</h2>
             <p class="text-muted text-step--1 mt-2">{d.format}</p>
             <p class="mt-6 measure">{d.summary}</p>
             <div class="mt-6 flex flex-wrap items-center gap-6">
@@ -184,7 +184,7 @@ const process = [
 
   <section class="section border-t border-rule" id="continuous">
     <div class="wrap">
-      <h2 class="text-step-3 font-medium tracking-tight">Continuous offensive testing.</h2>
+      <h2 class="text-step-3 display">Continuous offensive testing.</h2>
       <p class="lede measure mt-4">For teams shipping every week. The perimeter changes faster than an annual pentest can see, so the operator keeps watching it.</p>
 
       <div class="mt-12 grid md:grid-cols-2 gap-8 max-w-4xl">
@@ -209,7 +209,7 @@ const process = [
 
   <section class="section border-t border-rule">
     <div class="wrap">
-      <h2 class="text-step-3 font-medium tracking-tight">How an engagement runs.</h2>
+      <h2 class="text-step-3 display">How an engagement runs.</h2>
       <ol class="mt-12 grid md:grid-cols-2 gap-x-12 gap-y-10 max-w-4xl">
         {process.map(([title, body], i) => (
           <li class="grid grid-cols-[2.5rem_1fr] gap-4">
@@ -229,7 +229,7 @@ const process = [
 
   <section class="section border-t border-rule">
     <div class="wrap">
-      <h2 class="text-step-4 font-medium tracking-tight max-w-[18ch]">Every engagement starts with the same call.</h2>
+      <h2 class="text-step-4 display max-w-[18ch]">Every engagement starts with the same call.</h2>
       <p class="lede measure mt-6">Thirty minutes, NDA first, written proposal within 48 hours if you want one.</p>
       <a href={bookUrl()} target="_blank" rel="noopener" class="btn-primary mt-10 text-step-0">{CTA_LABEL}</a>
     </div>

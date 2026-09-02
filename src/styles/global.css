@@ -7,11 +7,11 @@
    Note the previous @import lived below the @tailwind directives, so Vite
    dropped it and the site shipped in system fallbacks for months. */
 @font-face {
-  font-family: 'Newsreader';
+  font-family: 'Bricolage Grotesque';
   font-style: normal;
-  font-weight: 400 600;
+  font-weight: 200 800;
   font-display: swap;
-  src: url('/fonts/newsreader-var.woff2') format('woff2-variations');
+  src: url('/fonts/bricolage-var.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
     U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
     U+2212, U+2215, U+FEFF, U+FFFD;
@@ -34,16 +34,16 @@
 }
 
 :root {
-  /* Ground: near-black with a little warmth, so the serif does not glare. */
-  --paper: #0d0d0f;
-  --paper-raised: #16161a;
-  --ink: #e8e6e1;
-  --muted: #8b8a86;
-  --rule: #2a2a2e;
+  --paper: #0b0b0d;
+  --paper-raised: #111114;
+  --ink: #ece9e3;
+  --soft: #b9b5ad;
+  --muted: #8a8780;
+  --rule: #26262b;
 
   /* Red is not decoration here. It is the severity scale from the reports:
      --critical as a ground (white on it clears AA at 4.83:1),
-     --critical-text where a small red word is genuinely needed (5.16:1). */
+     --critical-text where a small red word is genuinely needed (5.23:1). */
   --critical: #dc2626;
   --critical-deep: #991b1b;
   --critical-text: #ef4444;
@@ -64,13 +64,24 @@ html {
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-family: 'Bricolage Grotesque', system-ui, -apple-system, sans-serif;
+  font-optical-sizing: auto;
   font-size: 1.0625rem;
-  line-height: 1.65;
+  line-height: 1.55;
   overflow-x: hidden;
 }
 
-/* Prose sits under 72 characters. Serif body wants the extra leading. */
+/* Display type: the one place the page spends its boldness. Bricolage at
+   its largest optical size, heavy, set tight. */
+.display {
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  font-variation-settings: 'opsz' 96;
+  text-wrap: balance;
+}
+
+/* Prose stays under 72 characters. */
 .measure {
   max-width: 62ch;
 }
@@ -88,6 +99,50 @@ body {
   letter-spacing: -0.01em;
 }
 
+/* The signature: a redaction block. Text is hidden until hover or focus,
+   the way a client name is blacked out in a delivered report. */
+.redact {
+  display: inline-block;
+  min-width: 4.6ch;
+  text-align: center;
+  background: var(--critical);
+  color: transparent;
+  padding: 0 0.1em;
+  border-radius: 2px;
+  white-space: nowrap;
+  transition: color 0.2s;
+  cursor: help;
+}
+.redact:hover,
+.redact:focus-visible {
+  color: #ffffff;
+}
+
+/* Inline redaction inside evidence: a solid bar in ink. */
+.bar-r {
+  display: inline-block;
+  background: var(--ink);
+  color: transparent;
+  border-radius: 1px;
+  vertical-align: -0.1em;
+  height: 0.95em;
+}
+
+/* A finding, the way it appears in a delivered report. */
+.finding {
+  border: 1px solid var(--rule);
+  background: var(--paper-raised);
+  padding: 1.5rem;
+  box-shadow: 0 40px 80px -40px #000000;
+}
+.finding code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.82em;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 0.1em 0.35em;
+}
+
 @layer components {
   /* One primary action on the whole site: book the call. White on
      --critical clears AA at 4.83:1; the old near-black on red did not. */
@@ -95,7 +150,7 @@ body {
     @apply inline-flex items-center justify-center bg-critical text-white px-6 py-3 font-medium transition-colors;
   }
   .btn-primary:hover {
-    background: var(--critical-deep, #991b1b);
+    background: var(--critical-deep);
   }
   .btn-secondary {
     @apply inline-flex items-center justify-center border border-rule text-ink px-6 py-3 font-medium transition-colors;
@@ -110,7 +165,6 @@ body {
     color: var(--ink);
     text-decoration-color: var(--muted);
   }
-  /* Content column. Prose stays under 62ch; tables and rows may go wider. */
   .wrap {
     @apply max-w-6xl mx-auto px-6;
   }
@@ -118,7 +172,7 @@ body {
     @apply py-20 md:py-28;
   }
   .lede {
-    @apply text-step-1 text-muted;
+    @apply text-step-1 text-soft;
   }
 }
 
@@ -140,7 +194,6 @@ body {
   outline-offset: 3px;
 }
 
-/* Skip link: visible only once it has focus. */
 .skip-link {
   position: absolute;
   left: -9999px;
@@ -155,15 +208,16 @@ body {
   color: #ffffff;
 }
 
-/* One orchestrated moment on load, and nothing after it. No per-section
-   reveals, no flicker, no scanlines. */
+/* One orchestrated moment on load, and nothing after it. */
 @keyframes rise {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: none; }
 }
-
 .rise {
   animation: rise 0.5s cubic-bezier(0.2, 0.6, 0.2, 1) both;
+}
+.rise-late {
+  animation-delay: 0.15s;
 }
 
 @media (prefers-reduced-motion: reduce) {

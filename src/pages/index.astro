@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { services, entry, eur, fromPrice } from '../data/pricing';
+import { entry, eur, fromPrice } from '../data/pricing';
 import { bookUrl, CTA_LABEL, EMAIL } from '../data/site';
 
 const catalog = [
@@ -22,10 +22,10 @@ const comparison = [
 ---
 
 <Layout path="/">
-  <section class="wrap pt-20 md:pt-28 pb-16">
+  <section class="wrap pt-16 md:pt-24 pb-16 grid md:grid-cols-[1.15fr_0.85fr] gap-x-12 gap-y-14 items-center">
     <div class="rise">
-      <h1 class="text-step-5 md:text-step-6 font-medium tracking-tight max-w-[18ch]">
-        Adversary simulation, without the theatre.
+      <h1 class="display text-step-6 md:text-step-7 max-w-[11ch]">
+        Adversary simulation for <span class="redact" tabindex="0" title="Hover to reveal">you</span>.
       </h1>
       <p class="lede measure mt-8">
         Penetration testing and red team operations by one senior operator, start to finish. Fixed scope, published prices, and a report your engineers can act on.
@@ -34,29 +34,52 @@ const comparison = [
         <a href={bookUrl()} target="_blank" rel="noopener" class="btn-primary">{CTA_LABEL}</a>
         <a href="/services/" class="btn-secondary">See services and pricing</a>
       </div>
-      <p class="mt-8 text-step--1 text-muted measure">
+      <p class="mt-6 text-step--1 text-muted">
+        Start small: {entry.name}, <span class="machine text-ink">{eur(entry.price)}</span>, two days, credited against a full engagement.
+      </p>
+      <p class="mt-6 text-step--1 text-muted measure">
         OSEP and OSCP certified. Ten published CVEs. Six years of full-time offensive work. Registered in Cyprus, EU.
       </p>
     </div>
+
+    <figure class="rise rise-late m-0">
+      <div class="finding text-step--1 leading-relaxed">
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 machine text-[0.72rem] text-muted mb-4">
+          <span class="bg-critical text-white font-bold px-2 py-1 tracking-wider">CRITICAL</span>
+          <span>CVSS 9.8</span>
+          <span>AV:N/AC:L/PR:N/UI:N</span>
+        </div>
+        <p class="text-step-1 font-medium leading-tight tracking-tight mb-4">Authentication bypass on the customer portal via unsigned session token</p>
+        <p class="mb-3"><span class="text-muted">Host</span>&nbsp; <span class="machine">portal.<span class="bar-r">redactedclient</span>.com</span></p>
+        <p class="mb-3 text-soft"><span class="text-muted">Impact</span>&nbsp; Any unauthenticated user can mint a valid session for any account, including administrators.</p>
+        <p class="text-muted mb-1">Reproduction</p>
+        <ol class="list-decimal pl-5 space-y-1 text-soft">
+          <li>Request <code>/api/v2/session</code> with an empty <code>Authorization</code> header.</li>
+          <li>Set <code>alg</code> to <code>none</code> in the returned token and re-sign nothing.</li>
+          <li>Replay against <code>/admin</code>. The response is <code>200</code> and the admin dashboard renders.</li>
+        </ol>
+      </div>
+      <figcaption class="mt-3 text-[0.72rem] machine text-muted">Illustrative finding, in the format every report uses.</figcaption>
+    </figure>
   </section>
 
   <section class="section border-t border-rule">
     <div class="wrap">
-      <h2 class="text-step-3 font-medium tracking-tight max-w-[24ch]">
+      <h2 class="display text-step-4 md:text-step-5 max-w-[16ch]">
         The person you talk to is the person who tests.
       </h2>
       <div class="mt-12 grid md:grid-cols-3 gap-10">
         <div class="measure">
           <p class="font-semibold">Senior only.</p>
-          <p class="mt-2 text-muted">Every engagement is executed end to end by the same OSEP-certified operator. No juniors learning on your network.</p>
+          <p class="mt-2 text-soft">Every engagement is executed end to end by the same OSEP-certified operator. No juniors learning on your network.</p>
         </div>
         <div class="measure">
           <p class="font-semibold">Manual depth.</p>
-          <p class="mt-2 text-muted">Business logic, chained exploitation, custom tooling. The vulnerabilities scanners miss are the ones attackers find.</p>
+          <p class="mt-2 text-soft">Business logic, chained exploitation, custom tooling. The vulnerabilities scanners miss are the ones attackers find.</p>
         </div>
         <div class="measure">
           <p class="font-semibold">A report you can act on.</p>
-          <p class="mt-2 text-muted">Reproduction steps that work against your setup, CVSS scored honestly, remediation written for your stack. Free retest within 30 days.</p>
+          <p class="mt-2 text-soft">Reproduction steps that work against your setup, CVSS scored honestly, remediation written for your stack. Free retest within 30 days.</p>
         </div>
       </div>
     </div>
@@ -64,14 +87,14 @@ const comparison = [
 
   <section class="section border-t border-rule">
     <div class="wrap">
-      <h2 class="text-step-3 font-medium tracking-tight">Fixed scope. Published prices.</h2>
-      <p class="lede measure mt-4">Every package includes the scoping call, execution, a written report, and a remediation walkthrough. Prices in EUR, excluding VAT.</p>
+      <h2 class="display text-step-4 md:text-step-5">Fixed scope. Published prices.</h2>
+      <p class="lede measure mt-5">Every package includes the scoping call, execution, a written report, and a remediation walkthrough. Prices in EUR, excluding VAT.</p>
 
       <div class="mt-12 sev sev-critical py-1">
         <div class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
           <div>
-            <h3 class="text-step-1 font-medium">Start here: {entry.name}</h3>
-            <p class="text-muted mt-1 measure">{entry.scope}. Two days. What is exposed, outdated, misconfigured, or leaked, validated and prioritized. Full amount credited against a full engagement within {entry.creditWindowDays} days.</p>
+            <h3 class="text-step-1 font-semibold tracking-tight">Start here: {entry.name}</h3>
+            <p class="text-soft mt-1 measure">{entry.scope}. Two days. What is exposed, outdated, misconfigured, or leaked, validated and prioritized. Full amount credited against a full engagement within {entry.creditWindowDays} days.</p>
           </div>
           <div class="machine text-step-2">{eur(entry.price)}</div>
         </div>
@@ -84,8 +107,8 @@ const comparison = [
           return (
             <li class="py-5 grid md:grid-cols-[1fr_auto] gap-x-8 gap-y-1 items-baseline">
               <div>
-                <a href={`/services/#${s.key}`} class="font-medium hover:text-critical-text transition-colors">{s.name}</a>
-                <p class="text-muted text-step--1 mt-1 measure-wide">{s.line}</p>
+                <a href={`/services/#${s.key}`} class="font-semibold tracking-tight hover:text-critical-text transition-colors">{s.name}</a>
+                <p class="text-soft text-step--1 mt-1 measure-wide">{s.line}</p>
               </div>
               <div class="machine text-step-0 text-muted md:text-right">
                 {from ? `from ${eur(from)}` : 'quoted after scoping'}
@@ -100,8 +123,8 @@ const comparison = [
 
   <section class="section border-t border-rule">
     <div class="wrap">
-      <h2 class="text-step-3 font-medium tracking-tight max-w-[22ch]">Why teams pick this over a Big4.</h2>
-      <p class="lede measure mt-4">Mid-market teams usually get two options: enterprise pricing with juniors doing the work, or boutiques with nothing to verify. This is the third.</p>
+      <h2 class="display text-step-4 md:text-step-5 max-w-[14ch]">Why teams pick this over a Big4.</h2>
+      <p class="lede measure mt-5">Mid-market teams usually get two options: enterprise pricing with juniors doing the work, or boutiques with nothing to verify. This is the third.</p>
 
       <div class="mt-12 overflow-x-auto">
         <table class="w-full text-left border-collapse min-w-[640px]">
@@ -115,9 +138,9 @@ const comparison = [
           <tbody class="divide-y divide-rule">
             {comparison.map(([row, them, us]) => (
               <tr class="align-top">
-                <th scope="row" class="py-4 pr-6 font-medium">{row}</th>
+                <th scope="row" class="py-4 pr-6 font-semibold">{row}</th>
                 <td class="py-4 pr-6 text-muted">{them}</td>
-                <td class="py-4">{us}</td>
+                <td class="py-4 text-soft">{us}</td>
               </tr>
             ))}
           </tbody>
@@ -131,8 +154,8 @@ const comparison = [
 
   <section class="section border-t border-rule">
     <div class="wrap">
-      <h2 class="text-step-4 font-medium tracking-tight max-w-[18ch]">Thirty minutes is enough to scope it.</h2>
-      <p class="lede measure mt-6">
+      <h2 class="display text-step-5 md:text-step-6 max-w-[12ch]">Thirty minutes is enough to scope it.</h2>
+      <p class="lede measure mt-7">
         Pick a slot. A mutual NDA goes out before the call, so we can talk about your actual environment. You get a written proposal within 48 hours, and only if you ask for one.
       </p>
       <div class="mt-10 flex flex-wrap items-center gap-6">
