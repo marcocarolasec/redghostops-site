@@ -1,42 +1,261 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { eur, dayRate, entry, services, addons, recurring, terms } from '../data/pricing';
 const base = import.meta.env.BASE_URL;
+
+const tiers = (key: string) => services.find((s) => s.key === key)?.tiers ?? [];
+const label = (t: { days: number | null; price: number | null }) =>
+  t.price === null ? 'Quoted after scoping' : eur(t.price);
 ---
 
-<Layout title="Services — REDOPS Security" description="Detailed service catalog: web application pentest, Active Directory assessment, external/internal network testing, red team operations.">
+<Layout title="Services & Pricing — REDOPS Security" description="Fixed-scope offensive security engagements with published prices: attack surface review, web application pentest, Active Directory assessment, external network pentest, red team operations, continuous monitoring. Excl. VAT.">
   <!-- HERO -->
   <section class="pt-20 pb-16 border-b border-ash-lighter grid-bg">
     <div class="max-w-7xl mx-auto px-6">
       <div class="num-label mb-4 animate-fade-in">[ SERVICES ] // CATALOG</div>
       <h1 class="font-display text-5xl md:text-7xl font-bold mb-6 leading-[0.95] animate-fade-up">
-        Engagements,<br />
-        <span class="text-blood">scoped to fit.</span>
+        Fixed scope,<br />
+        <span class="text-blood">published price.</span>
       </h1>
       <p class="text-ghost-light text-lg md:text-xl max-w-2xl leading-relaxed animate-fade-up" style="animation-delay: 0.2s">
-        Each engagement is scoped to your specific environment. Below are typical packages. All include scoping call, execution, written report, and remediation walkthrough. Pricing on request after NDA.
+        Every package includes the scoping call, execution, written report, and remediation walkthrough. Scope beyond a package adds days at the same rate for everyone. All prices in EUR, excluding VAT.
       </p>
+      <div class="flex flex-col sm:flex-row gap-4 mt-10 animate-fade-up" style="animation-delay: 0.4s">
+        <a href="#pricing" class="cta-primary">
+          See Pricing
+          <span>→</span>
+        </a>
+        <a href={`${base}contact?service=${entry.key}`} class="cta-secondary">
+          Start with an {entry.name}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="py-20 border-b border-ash-lighter scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-12 gap-8 mb-12">
+        <div class="md:col-span-5">
+          <div class="num-label mb-4">// PRICING</div>
+          <h2 class="font-display text-4xl md:text-5xl font-bold leading-tight">
+            The price<br />
+            <span class="text-blood">is the price.</span>
+          </h2>
+        </div>
+        <div class="md:col-span-7 flex items-end">
+          <p class="text-ghost-light text-lg leading-relaxed">
+            What is published is what you pay for the scope described. Larger scope adds days at {eur(dayRate)}/day. There is no discount conversation, because a price that moves when you push is the opaque model we exist to replace.
+          </p>
+        </div>
+      </div>
+
+      <!-- Entry product -->
+      <div class="terminal-box p-6 md:p-8 mb-10 border-blood-dim">
+        <div class="grid md:grid-cols-12 gap-6 items-center">
+          <div class="md:col-span-8">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="pill pill-blood">Entry point</span>
+              <span class="font-mono text-xs text-ghost uppercase tracking-widest">{entry.days} days</span>
+            </div>
+            <h3 class="font-display text-2xl md:text-3xl font-bold text-bone mb-2">{entry.name}</h3>
+            <p class="text-ghost-light leading-relaxed">
+              {entry.scope}. Enumeration, exposure validation, prioritized inventory of what an attacker sees from the outside. Priced so a CTO can sign it without a procurement cycle. If you contract a full engagement within {entry.creditWindowDays} days, the full amount is credited against it.
+            </p>
+          </div>
+          <div class="md:col-span-4 md:text-right">
+            <div class="font-display text-4xl md:text-5xl font-bold text-blood">{eur(entry.price)}</div>
+            <div class="font-mono text-[0.65rem] text-ghost uppercase tracking-widest mt-1 mb-5">excl. VAT · fixed</div>
+            <a href={`${base}contact?service=${entry.key}`} class="cta-primary !text-xs">
+              Book the Review →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price list (mobile) -->
+      <ul class="md:hidden border border-ash-lighter divide-y divide-ash-lighter">
+        <li class="p-5 bg-blood/[0.03]">
+          <div class="flex justify-between items-baseline gap-4">
+            <span class="text-bone font-medium">{entry.name}</span>
+            <span class="font-mono text-blood font-bold whitespace-nowrap">{eur(entry.price)}</span>
+          </div>
+          <div class="text-ghost-light text-sm mt-1">{entry.scope} · {entry.days} days</div>
+        </li>
+        {services.flatMap((s) =>
+          s.tiers.map((t) => (
+            <li class="p-5">
+              <div class="flex justify-between items-baseline gap-4">
+                <span class="text-bone font-medium">
+                  {s.name}{t.label && <span class="text-ghost font-mono text-xs ml-2">· {t.label}</span>}
+                </span>
+                <span class:list={['font-mono whitespace-nowrap', t.price === null ? 'text-ghost text-[0.6rem] uppercase tracking-widest' : 'text-bone font-bold']}>{t.price === null ? 'Quoted' : eur(t.price)}</span>
+              </div>
+              <div class="text-ghost-light text-sm mt-1">{t.scope}{t.days !== null && ` · ${t.days} days`}</div>
+            </li>
+          ))
+        )}
+        {addons.map((a) => (
+          <li class="p-5">
+            <div class="flex justify-between items-baseline gap-4">
+              <span class="text-bone font-medium">{a.name}</span>
+              <span class="font-mono text-bone font-bold whitespace-nowrap">{eur(a.price)}</span>
+            </div>
+            <div class="text-ghost-light text-sm mt-1">{a.scope} · {a.days} {a.days === '1' ? 'day' : 'days'}</div>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Price table (desktop) -->
+      <div class="hidden md:block overflow-x-auto border border-ash-lighter">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-ash-lighter font-mono text-[0.65rem] uppercase tracking-widest text-ghost text-left">
+              <th scope="col" class="px-5 py-3 font-medium">Engagement</th>
+              <th scope="col" class="px-5 py-3 font-medium">Scope</th>
+              <th scope="col" class="px-5 py-3 font-medium whitespace-nowrap">Days</th>
+              <th scope="col" class="px-5 py-3 font-medium text-right whitespace-nowrap">Price (excl. VAT)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-ash-lighter">
+            <tr class="bg-blood/[0.03]">
+              <td class="px-5 py-4 text-bone font-medium">{entry.name}</td>
+              <td class="px-5 py-4 text-ghost-light">{entry.scope}</td>
+              <td class="px-5 py-4 font-mono text-ghost-light">{entry.days}</td>
+              <td class="px-5 py-4 font-mono text-blood font-bold text-right whitespace-nowrap">{eur(entry.price)}</td>
+            </tr>
+            {services.flatMap((s) =>
+              s.tiers.map((t, i) => (
+                <tr>
+                  <td class="px-5 py-4 text-bone font-medium">
+                    {s.name}{t.label && <span class="text-ghost font-mono text-xs ml-2">· {t.label}</span>}
+                  </td>
+                  <td class="px-5 py-4 text-ghost-light">{t.scope}</td>
+                  <td class="px-5 py-4 font-mono text-ghost-light">{t.days ?? '—'}</td>
+                  <td class:list={['px-5 py-4 font-mono text-right whitespace-nowrap', t.price === null ? 'text-ghost text-xs uppercase tracking-widest' : 'text-bone font-bold']}>{label(t)}</td>
+                </tr>
+              ))
+            )}
+            {addons.map((a) => (
+              <tr>
+                <td class="px-5 py-4 text-bone font-medium">{a.name}</td>
+                <td class="px-5 py-4 text-ghost-light">{a.scope}</td>
+                <td class="px-5 py-4 font-mono text-ghost-light">{a.days}</td>
+                <td class="px-5 py-4 font-mono text-bone font-bold text-right whitespace-nowrap">{eur(a.price)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Terms -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+        <div class="border-l border-blood pl-5">
+          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-2">// Payment</div>
+          <p class="text-ghost-light text-sm leading-relaxed">50% at signature, 50% on delivery for new clients. NET-30 for established clients. EUR, USD, or stablecoin.</p>
+        </div>
+        <div class="border-l border-blood pl-5">
+          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-2">// Bundles</div>
+          <p class="text-ghost-light text-sm leading-relaxed">
+            {terms.bundle[0].pct}% off when two services are contracted in the same quarter. {terms.bundle[1].pct}% off for three. Published, so nobody has to ask.
+          </p>
+        </div>
+        <div class="border-l border-blood pl-5">
+          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-2">// Retest</div>
+          <p class="text-ghost-light text-sm leading-relaxed">Free retest of High and Critical findings within 30 days of delivery, on every assessment. After the window, {eur(addons[0].price)}.</p>
+        </div>
+        <div class="border-l border-blood pl-5">
+          <div class="font-mono text-xs text-blood uppercase tracking-widest mb-2">// VAT</div>
+          <p class="text-ghost-light text-sm leading-relaxed">Invoiced by REDOPS Security Ltd. (Cyprus, EU). EU B2B clients: reverse charge, no VAT added. Outside the EU: no VAT.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- SERVICES DETAIL -->
   <section class="py-20">
     <div class="max-w-7xl mx-auto px-6 space-y-16">
-      
-      <!-- Service 1: Web App Pentest -->
+
+      <!-- Service 1: Attack Surface Review -->
       <div class="grid md:grid-cols-12 gap-8 reveal">
         <div class="md:col-span-4">
-          <div class="num-label mb-2">01 / 06</div>
-          <h2 class="font-display text-3xl font-bold mb-4">Web Application Pentest</h2>
+          <div class="num-label mb-2">01 / 07</div>
+          <h2 class="font-display text-3xl font-bold mb-4">{entry.name}</h2>
           <div class="terminal-box p-4 mb-4">
             <div class="font-mono text-xs space-y-2">
               <div class="flex justify-between">
                 <span class="text-ghost">Duration</span>
-                <span class="text-bone">5–7 days</span>
+                <span class="text-bone">{entry.days} days</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-ghost">Format</span>
                 <span class="text-bone">Remote</span>
               </div>
+              <div class="flex justify-between pt-2 border-t border-ash-lighter">
+                <span class="text-ghost">Price</span>
+                <span class="text-blood font-bold">{eur(entry.price)}</span>
+              </div>
+            </div>
+          </div>
+          <a href={`${base}contact?service=${entry.key}`} class="cta-primary !text-xs w-full justify-center">
+            Book the Review →
+          </a>
+        </div>
+        <div class="md:col-span-8 service-card !p-8">
+          <p class="text-bone mb-6 leading-relaxed">
+            Two days on your external perimeter, up to three root domains. What is exposed, what is outdated, what is misconfigured, what leaked. Validation only, no exploitation. The output is the prioritized list you would otherwise get from the first two days of a full external pentest, at a price that does not need a procurement cycle.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-4 mb-6">
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Coverage</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· Subdomain & DNS enumeration</li>
+                <li>· Exposed services & versions</li>
+                <li>· TLS & certificate hygiene</li>
+                <li>· Cloud asset discovery</li>
+                <li>· Leaked credentials & secrets</li>
+                <li>· Quick-win validation (no exploitation)</li>
+              </ul>
+            </div>
+            <div>
+              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Deliverables</div>
+              <ul class="space-y-2 text-sm text-ghost-light">
+                <li>· Attack surface inventory</li>
+                <li>· Prioritized exposure list</li>
+                <li>· One-page executive brief</li>
+                <li>· Scoping proposal for follow-up</li>
+                <li>· Full amount credited within {entry.creditWindowDays} days</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="pill">OSINT</span>
+            <span class="pill">Recon</span>
+            <span class="pill">Fixed Price</span>
+            <span class="pill">No Procurement Cycle</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 2: Web App Pentest -->
+      <div class="grid md:grid-cols-12 gap-8 reveal">
+        <div class="md:col-span-4">
+          <div class="num-label mb-2">02 / 07</div>
+          <h2 class="font-display text-3xl font-bold mb-4">Web Application Pentest</h2>
+          <div class="terminal-box p-4 mb-4">
+            <div class="font-mono text-xs space-y-2">
+              <div class="flex justify-between">
+                <span class="text-ghost">Format</span>
+                <span class="text-bone">Remote</span>
+              </div>
+              {tiers('web-pentest').map((t) => (
+                <div class="flex justify-between pt-2 border-t border-ash-lighter">
+                  <span class="text-ghost">{t.label} · {t.scope}</span>
+                  <span class:list={[t.price === null ? 'text-ghost-light' : 'text-blood font-bold', 'whitespace-nowrap ml-3']}>
+                    {t.price === null ? 'Custom' : `${t.days}d · ${eur(t.price)}`}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
           <a href={`${base}contact?service=web-pentest`} class="cta-primary !text-xs w-full justify-center">
@@ -80,21 +299,23 @@ const base = import.meta.env.BASE_URL;
         </div>
       </div>
 
-      <!-- Service 2: AD Assessment -->
+      <!-- Service 3: AD Assessment -->
       <div class="grid md:grid-cols-12 gap-8 reveal">
         <div class="md:col-span-4">
-          <div class="num-label mb-2">02 / 06</div>
+          <div class="num-label mb-2">03 / 07</div>
           <h2 class="font-display text-3xl font-bold mb-4">Active Directory Assessment</h2>
           <div class="terminal-box p-4 mb-4">
             <div class="font-mono text-xs space-y-2">
               <div class="flex justify-between">
-                <span class="text-ghost">Duration</span>
-                <span class="text-bone">7–10 days</span>
-              </div>
-              <div class="flex justify-between">
                 <span class="text-ghost">Format</span>
                 <span class="text-bone">Remote / On-site</span>
               </div>
+              {tiers('ad-assessment').map((t) => (
+                <div class="flex justify-between pt-2 border-t border-ash-lighter">
+                  <span class="text-ghost">{t.scope}</span>
+                  <span class="text-blood font-bold whitespace-nowrap ml-3">{t.days}d · {eur(t.price!)}</span>
+                </div>
+              ))}
             </div>
           </div>
           <a href={`${base}contact?service=ad-assessment`} class="cta-primary !text-xs w-full justify-center">
@@ -139,20 +360,24 @@ const base = import.meta.env.BASE_URL;
         </div>
       </div>
 
-      <!-- Service 3: External Network -->
+      <!-- Service 4: External Network -->
       <div class="grid md:grid-cols-12 gap-8 reveal">
         <div class="md:col-span-4">
-          <div class="num-label mb-2">03 / 06</div>
+          <div class="num-label mb-2">04 / 07</div>
           <h2 class="font-display text-3xl font-bold mb-4">External Network Pentest</h2>
           <div class="terminal-box p-4 mb-4">
             <div class="font-mono text-xs space-y-2">
               <div class="flex justify-between">
                 <span class="text-ghost">Duration</span>
-                <span class="text-bone">5–7 days</span>
+                <span class="text-bone">{tiers('external-pentest')[0].days} days</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-ghost">Format</span>
                 <span class="text-bone">Remote</span>
+              </div>
+              <div class="flex justify-between pt-2 border-t border-ash-lighter">
+                <span class="text-ghost">{tiers('external-pentest')[0].scope}</span>
+                <span class="text-blood font-bold whitespace-nowrap ml-3">{eur(tiers('external-pentest')[0].price!)}</span>
               </div>
             </div>
           </div>
@@ -196,10 +421,10 @@ const base = import.meta.env.BASE_URL;
         </div>
       </div>
 
-      <!-- Service 4: Red Team -->
+      <!-- Service 5: Red Team -->
       <div class="grid md:grid-cols-12 gap-8 reveal">
         <div class="md:col-span-4">
-          <div class="num-label mb-2">04 / 06</div>
+          <div class="num-label mb-2">05 / 07</div>
           <h2 class="font-display text-3xl font-bold mb-4">Red Team Operations</h2>
           <div class="terminal-box p-4 mb-4">
             <div class="font-mono text-xs space-y-2">
@@ -210,6 +435,10 @@ const base = import.meta.env.BASE_URL;
               <div class="flex justify-between">
                 <span class="text-ghost">Format</span>
                 <span class="text-bone">Remote / On-site</span>
+              </div>
+              <div class="flex justify-between pt-2 border-t border-ash-lighter">
+                <span class="text-ghost">Price</span>
+                <span class="text-bone whitespace-nowrap ml-3">Quoted after scoping · {eur(dayRate)}/day basis</span>
               </div>
             </div>
           </div>
@@ -255,10 +484,10 @@ const base = import.meta.env.BASE_URL;
         </div>
       </div>
 
-      <!-- Service 5: Cloud Assessment -->
+      <!-- Service 6: Cloud Assessment -->
       <div class="grid md:grid-cols-12 gap-8 reveal">
         <div class="md:col-span-4">
-          <div class="num-label mb-2">05 / 06</div>
+          <div class="num-label mb-2">06 / 07</div>
           <h2 class="font-display text-3xl font-bold mb-4">Cloud Security Assessment</h2>
           <div class="terminal-box p-4 mb-4">
             <div class="font-mono text-xs space-y-2">
@@ -269,6 +498,10 @@ const base = import.meta.env.BASE_URL;
               <div class="flex justify-between">
                 <span class="text-ghost">Format</span>
                 <span class="text-bone">Remote</span>
+              </div>
+              <div class="flex justify-between pt-2 border-t border-ash-lighter">
+                <span class="text-ghost">Price</span>
+                <span class="text-bone whitespace-nowrap ml-3">Quoted after scoping · {eur(dayRate)}/day basis</span>
               </div>
             </div>
           </div>
@@ -312,58 +545,52 @@ const base = import.meta.env.BASE_URL;
         </div>
       </div>
 
-      <!-- Service 6: Continuous Retainer -->
+      <!-- Service 7: Continuous / recurring -->
       <div class="grid md:grid-cols-12 gap-8 reveal">
         <div class="md:col-span-4">
-          <div class="num-label mb-2">06 / 06</div>
+          <div class="num-label mb-2">07 / 07</div>
           <h2 class="font-display text-3xl font-bold mb-4">Continuous Offensive Testing</h2>
           <div class="terminal-box p-4 mb-4">
             <div class="font-mono text-xs space-y-2">
               <div class="flex justify-between">
-                <span class="text-ghost">Duration</span>
-                <span class="text-bone">Monthly retainer</span>
+                <span class="text-ghost">Term</span>
+                <span class="text-bone">{terms.commitmentMonths}-month commitment</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-ghost">Format</span>
-                <span class="text-bone">Ongoing</span>
+                <span class="text-ghost">Billing</span>
+                <span class="text-bone">Monthly</span>
+              </div>
+              <div class="flex justify-between pt-2 border-t border-ash-lighter">
+                <span class="text-ghost">Annual prepay</span>
+                <span class="text-blood font-bold">−{terms.annualPrepayDiscount}%</span>
               </div>
             </div>
           </div>
-          <a href={`${base}contact?service=retainer`} class="cta-primary !text-xs w-full justify-center">
-            Request Scope →
-          </a>
-        </div>
-        <div class="md:col-span-8 service-card !p-8">
-          <p class="text-bone mb-6 leading-relaxed">
-            Ongoing offensive testing for mature security programs. Continuous attack surface monitoring, scoped engagements per quarter, rapid response for new asset releases, and on-demand consultation.
+          <p class="text-ghost-light text-sm leading-relaxed">
+            For teams shipping every week. The perimeter changes faster than an annual pentest can see, so the operator keeps watching it.
           </p>
-          <div class="grid sm:grid-cols-2 gap-4 mb-6">
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Included</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· Monthly attack surface scan</li>
-                <li>· Quarterly deep engagement (40h)</li>
-                <li>· New asset rapid assessment</li>
-                <li>· On-demand security consultation</li>
-                <li>· Slack/Teams direct channel</li>
-                <li>· Threat intel briefings</li>
+        </div>
+        <div class="md:col-span-8 grid sm:grid-cols-2 gap-4">
+          {recurring.map((plan) => (
+            <div class="service-card !p-6 flex flex-col">
+              <div class="flex items-baseline justify-between mb-4">
+                <h3 class="font-display text-2xl font-bold text-bone">{plan.name}</h3>
+                <div class="text-right">
+                  <div class="font-mono text-blood font-bold text-xl">{eur(plan.monthly)}</div>
+                  <div class="font-mono text-[0.6rem] text-ghost uppercase tracking-widest whitespace-nowrap">/ month · excl. VAT</div>
+                </div>
+              </div>
+              <ul class="space-y-2 text-sm text-ghost-light mb-6 flex-1">
+                {plan.includes.map((line) => <li>· {line}</li>)}
               </ul>
+              <a href={`${base}contact?service=${plan.key}`} class="cta-secondary !text-xs justify-center">
+                Start {plan.name} →
+              </a>
             </div>
-            <div>
-              <div class="font-mono text-xs text-blood uppercase tracking-widest mb-3">Best for</div>
-              <ul class="space-y-2 text-sm text-ghost-light">
-                <li>· SaaS companies with frequent releases</li>
-                <li>· Fintech / regulated industries</li>
-                <li>· Companies post-Series B funding</li>
-                <li>· Mature security teams</li>
-              </ul>
-            </div>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="pill">12-month minimum</span>
-            <span class="pill">Dedicated channel</span>
-            <span class="pill">Priority response</span>
-          </div>
+          ))}
+          <p class="sm:col-span-2 text-ghost text-xs font-mono leading-relaxed">
+            Need a quarterly deep engagement on retainer instead? Custom retainer, quoted after scoping.
+          </p>
         </div>
       </div>
 
@@ -379,9 +606,9 @@ const base = import.meta.env.BASE_URL;
         <span class="text-blood">you need?</span>
       </h2>
       <p class="text-ghost-light text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-        Mobile app pentest, source code review, phishing simulations, IoT/embedded testing, social engineering campaigns, M&amp;A cyber due diligence, vCISO advisory. Custom scoping available.
+        Mobile app pentest, source code review, phishing simulations, IoT/embedded testing, social engineering campaigns, M&amp;A cyber due diligence, vCISO advisory. Scoped in days at {eur(dayRate)}/day.
       </p>
-      <a href={`${base}contact`} class="cta-primary">
+      <a href={`${base}contact?service=custom`} class="cta-primary">
         Discuss Custom Engagement →
       </a>
     </div>
@@ -408,7 +635,7 @@ const base = import.meta.env.BASE_URL;
           <div class="font-mono text-blood text-3xl font-bold mb-4">02</div>
           <h3 class="font-display text-lg font-bold mb-3">Proposal & Contract</h3>
           <p class="text-ghost-light text-sm leading-relaxed">
-            Fixed-price proposal with clear scope, timeline, and deliverables. Standard MSA + SOW. 50% upfront, 50% on delivery.
+            Fixed-price proposal matching the published package, with scope, timeline, and deliverables. Standard MSA + SOW. 50% upfront, 50% on delivery.
           </p>
         </div>
         <div class="reveal">
