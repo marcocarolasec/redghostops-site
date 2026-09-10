@@ -94,6 +94,10 @@ export const recurring = [
   },
 ];
 
+// Discount off the published price for white-label partner work (MSPs,
+// consultancies, resellers). Placeholder value: review before quoting.
+export const partnerDiscountPct = 20;
+
 export const terms = {
   commitmentMonths: 12,
   annualPrepayDiscount: 10,

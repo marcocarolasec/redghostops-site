@@ -6,6 +6,7 @@ export interface Props {
   title?: string;
   description?: string;
   path?: string;
+  lang?: string;
 }
 
 const SITE = 'https://redghostops.com';
@@ -14,6 +15,7 @@ const {
   title = 'REDOPS Security — Offensive Security Consultancy',
   description = 'Penetration testing and adversary simulation by a senior operator. Fixed scope, published prices, reports your engineers can act on. EU-registered.',
   path = '/',
+  lang = 'en',
 } = Astro.props;
 
 const canonical = new URL(path, SITE).href;
@@ -23,11 +25,12 @@ const nav = [
   { href: '/services/', label: 'Services' },
   { href: '/about/', label: 'About' },
   { href: 'https://blog.redghostops.com', label: 'Research', external: true },
+  { href: '/partners/', label: 'Partners' },
 ];
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -131,6 +134,7 @@ const nav = [
             <li><a href="/services/" class="hover:text-critical-text transition-colors">Services and pricing</a></li>
             <li><a href="/about/" class="hover:text-critical-text transition-colors">About</a></li>
             <li><a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="hover:text-critical-text transition-colors">Research</a></li>
+            <li><a href="/partners/" class="hover:text-critical-text transition-colors">Partners</a></li>
             <li><a href="/contact/" class="hover:text-critical-text transition-colors">Contact</a></li>
           </ul>
         </div>

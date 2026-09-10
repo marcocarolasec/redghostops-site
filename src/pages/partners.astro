@@ -1,0 +1,199 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { services, entry, recurring, eur, fromPrice, partnerDiscountPct } from '../data/pricing';
+import { bookUrl, EMAIL } from '../data/site';
+
+const audience = [
+  ['MSPs y proveedores de IT gestionado', 'Administras el firewall, el Active Directory o el Microsoft 365 de tus clientes.'],
+  ['Consultoras e integradores', 'Vendes proyectos de infraestructura, cloud o desarrollo, y te llegan preguntas de seguridad que hoy derivas fuera.'],
+  ['Agentes digitalizadores del Kit Digital', 'Tienes cartera en las soluciones de Ciberseguridad, Comunicaciones seguras o Puesto de trabajo seguro.'],
+  ['Asesores digitales del Kit Consulting', 'Entregas el Servicio de Asesoramiento en Ciberseguridad.'],
+];
+
+const steps = [
+  ['Nos pasas la oportunidad', 'Tú detectas la necesidad y nos la cuentas. Una llamada de treinta minutos entre los tres, o solo contigo si prefieres que no aparezcamos todavía, para cerrar el alcance.'],
+  ['Propuesta a precio de partner', 'Te pasamos el presupuesto con la tarifa de partner. Tú se lo presentas al cliente con tu precio y tu marca. Nosotros no hablamos de precios con tu cliente.'],
+  ['Autorización de pruebas', 'El cliente final firma la autorización. En ella figura REDOPS Security Ltd. como ejecutor técnico, aunque el informe y la relación comercial sean tuyos. Es obligatorio. No se lanza nada contra sistemas de terceros sin autorización escrita que nombre a quien ejecuta.'],
+  ['Ejecución', 'Aviso el mismo día de cualquier hallazgo crítico y canal directo contigo durante todo el trabajo, no un buzón de tickets.'],
+  ['Entrega', 'Informe con tu marca y sesión de explicación técnica. La das tú, o la damos nosotros presentándonos como tu equipo de seguridad ofensiva. Retest gratuito de los hallazgos High y Critical a treinta días, igual que en cualquier trabajo nuestro.'],
+];
+
+const faq = [
+  ['¿El informe lleva mi marca o la vuestra?', 'La tuya. Nuestra referencia aparece solo en la autorización de pruebas que firma el cliente y en el contrato entre tú y REDOPS.'],
+  ['¿Podéis hablar con mi cliente?', 'Solo en las sesiones técnicas que organices tú, y presentados como tu equipo. Nunca para vender.'],
+  ['¿Quién factura a quién?', 'REDOPS te factura a ti, a precio de partner. Tú facturas a tu cliente lo que decidas. Nosotros no vemos esa cifra.'],
+  ['¿Qué pasa si el cliente quiere contrataros directamente después?', 'Le remitimos a ti. Está escrito en el contrato de partner y va en las dos direcciones.'],
+  ['¿Cubrís responsabilidad civil sobre el trabajo entregado bajo mi marca?', 'La autorización de pruebas y el contrato de partner definen quién responde de qué, y eso se revisa en la llamada con los dos contratos delante antes de firmar nada.'],
+  ['¿Y si el alcance que ha vendido mi comercial no es realista?', 'Te lo decimos antes de firmar, no a mitad del trabajo. Y buscamos juntos qué sí se puede hacer con ese presupuesto.'],
+];
+---
+
+<Layout
+  title="Partners: pentesting en marca blanca para MSPs y consultoras — REDOPS Security"
+  description="Ofrece pentesting y red team a tus clientes bajo tu marca. Tú vendes y gestionas la relación, REDOPS ejecuta. Para MSPs, consultoras IT, agentes digitalizadores y asesores del Kit Consulting."
+  path="/partners/"
+  lang="es"
+>
+  <section class="wrap pt-20 md:pt-28 pb-16">
+    <div class="rise">
+      <h1 class="text-step-5 display max-w-[18ch]">Pentesting en marca blanca para tus clientes.</h1>
+      <p class="lede measure mt-8">
+        Tú tienes la relación con el cliente y le facturas cada mes. Nosotros tenemos el equipo ofensivo. Tú vendes el pentest bajo tu marca, nosotros lo ejecutamos, el informe lleva tu logo y el cliente sigue siendo tuyo.
+      </p>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href={bookUrl('partners')} target="_blank" rel="noopener" class="btn-primary">Hablemos 30 minutos</a>
+        <a href="#como-funciona" class="btn-secondary">Cómo funciona</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-3 display">Para quién es.</h2>
+      <ul class="mt-10 divide-y divide-rule border-t border-b border-rule max-w-4xl">
+        {audience.map(([who, what]) => (
+          <li class="py-5 grid sm:grid-cols-[18rem_1fr] gap-x-8 gap-y-1">
+            <span class="font-medium">{who}</span>
+            <span class="text-muted text-step--1">{what}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-8 measure-wide">
+        El argumento no es la comisión. Es que si a tu cliente le van a encontrar una crítica, es mejor que se la encuentres tú antes que un tercero.
+      </p>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule" id="como-funciona">
+    <div class="wrap">
+      <h2 class="text-step-3 display">Cómo funciona.</h2>
+      <ol class="mt-12 grid md:grid-cols-2 gap-x-12 gap-y-10 max-w-4xl">
+        {steps.map(([title, body], i) => (
+          <li class="grid grid-cols-[2.5rem_1fr] gap-4">
+            <span class="machine text-muted pt-1">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <p class="font-medium">{title}</p>
+              <p class="mt-1 text-muted text-step--1">{body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="mt-10 text-muted measure-wide">
+        NDA mutuo antes de cualquier detalle técnico. Cláusula de no puenteo en las dos direcciones: nosotros no contactamos a tu cliente para venderle nada, tú no subcontratas el mismo trabajo a otro usando nuestro informe. Y nos reservamos el derecho a rechazar alcances que no podamos ejecutar con calidad. Preferimos decirte que no antes de que se lo prometas al cliente.
+      </p>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule" id="servicios">
+    <div class="wrap">
+      <h2 class="text-step-3 display">Qué puedes vender.</h2>
+      <p class="lede measure mt-4">
+        El catálogo es el mismo que está publicado, sin versión recortada para partners. Aquí solo va la tarifa de partida.
+      </p>
+
+      <div class="mt-12 overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-[480px] max-w-4xl">
+          <thead>
+            <tr class="border-b border-rule text-step--1 text-muted">
+              <th scope="col" class="py-3 pr-6 font-normal">Servicio</th>
+              <th scope="col" class="py-3 font-normal text-right">Tarifa publicada</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-rule">
+            <tr>
+              <th scope="row" class="py-4 pr-6 font-medium">{entry.name}</th>
+              <td class="py-4 machine text-right">{eur(entry.price)}</td>
+            </tr>
+            {services.map((s) => {
+              const from = fromPrice(s.key);
+              return (
+                <tr>
+                  <th scope="row" class="py-4 pr-6 font-medium">{s.name}</th>
+                  <td class="py-4 machine text-right">
+                    {from === null ? <span class="text-muted">a medida</span> : <span>desde {eur(from)}</span>}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mt-8 measure-wide">
+        Sobre esa tarifa aplicamos un {partnerDiscountPct}% de descuento de partner. Lo que le cobres tú a tu cliente lo decides tú, y no lo preguntamos. El desglose de alcance, días y entregables de cada servicio está en <a href="/services/" class="link-quiet">servicios y precios</a>.
+      </p>
+      <p class="mt-4 measure-wide">
+        Para abrir la conversación con un cliente que nunca ha hecho un pentest, empieza por el {entry.name}: {entry.days} días sobre su perímetro externo, sin explotación, con una lista priorizada de lo que tiene expuesto. Es barato de vender y suele ser lo que destapa el proyecto grande.
+      </p>
+      <p class="mt-4 measure-wide">
+        Si vendes mantenimiento mensual, los planes {recurring[0].name} y {recurring[1].name}, a {eur(recurring[0].monthly)} y {eur(recurring[1].monthly)} al mes, se integran en tu cuota sin que tengas que montar nada. La monitorización y el informe mensual corren por nuestra cuenta.
+      </p>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule" id="kit-digital">
+    <div class="wrap">
+      <h2 class="text-step-3 display">Si eres agente digitalizador del Kit Digital.</h2>
+      <p class="mt-8 measure-wide">
+        Primero lo obvio: el plazo de solicitudes del Kit Digital se cerró el 31 de octubre de 2025, con las dos últimas convocatorias que quedaban abiertas. De aquí en adelante el programa solo es ejecutar y justificar bonos ya concedidos.
+      </p>
+      <p class="mt-4 measure-wide">
+        Y lo segundo: el pentesting nunca ha sido una solución subvencionable del programa. No lo vendemos como si lo fuera y no te vamos a ayudar a presentarlo así.
+      </p>
+      <p class="mt-4 measure-wide">
+        La oportunidad está en tu cartera, no en el bono. A los clientes a los que instalaste antivirus, EDR, firewall o comunicaciones seguras les queda una pregunta sin responder, y es si eso funciona. Un {entry.name} o un pentest externo bajo tu marca es la respuesta. Servicio no subvencionado, a precio de mercado, vendido a un cliente que ya confía en ti.
+      </p>
+      <p class="mt-4 text-muted measure-wide">
+        Filtro claro, para no hacerte perder la llamada: esto tiene sentido con clientes de cincuenta empleados en adelante y una relación de mantenimiento continuada. Si tu cartera es de microempresas con una web y un CRM, dilo en la llamada y te decimos si merece la pena.
+      </p>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule" id="kit-consulting">
+    <div class="wrap">
+      <h2 class="text-step-3 display">Si eres asesor digital del Kit Consulting.</h2>
+      <p class="mt-8 measure-wide">
+        Conviene aclarar el estado del programa antes que nada. El Kit Consulting tuvo una única convocatoria, cerrada el 31 de marzo de 2025, y el último plazo para presentar acuerdos de prestación de servicios venció el 31 de mayo de 2026. No admite solicitudes nuevas. Igual que el Kit Digital, lo que queda es ejecución y justificación.
+      </p>
+      <p class="mt-4 measure-wide">
+        El bono iba dirigido a empresas de 10 a 249 empleados, con importes de 12.000, 18.000 y 24.000 euros según el tramo, y entre sus categorías está el Servicio de Asesoramiento en Ciberseguridad, en sus tres niveles: básico, avanzado y preparación para certificación.
+      </p>
+      <p class="mt-4 measure-wide">
+        Muchos asesores entregan ese servicio como un diagnóstico de escritorio: cuestionarios, políticas y un plan de acción a tres años. Un pentest externo real dentro del entregable convierte el asesoramiento en algo que el cliente puede enseñar a su dirección y a sus auditores. Nosotros ejecutamos la parte técnica en marca blanca y tú la integras en tu informe. Tu cliente ve un único proveedor, que eres tú.
+      </p>
+      <p class="mt-4 measure-wide">
+        El perfil de empresa al que apuntaban estos bonos, mediana, con infraestructura propia, Active Directory y servicios expuestos a internet, es exactamente el que mejor aprovecha un pentest. Esa cartera sigue ahí aunque el bono ya esté justificado, y el trabajo se vende igual, a precio de mercado.
+      </p>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-3 display">Preguntas frecuentes.</h2>
+      <div class="mt-10 divide-y divide-rule border-t border-b border-rule max-w-4xl">
+        {faq.map(([q, a]) => (
+          <div class="py-5">
+            <p class="font-medium">{q}</p>
+            <p class="mt-2 text-muted measure-wide">{a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <div class="sev sev-critical py-1 max-w-4xl">
+        <p class="text-step--1 text-muted">Primer trabajo de partner</p>
+        <h2 class="mt-2 text-step-4 display max-w-[20ch]">Empieza por un cliente real tuyo.</h2>
+        <p class="mt-6 measure-wide">
+          Un {entry.name} sobre el perímetro de uno de tus clientes, con el {partnerDiscountPct}% de partner sobre los {eur(entry.price)} publicados. Ves el informe con tu marca, se lo enseñas al cliente, y decides después si quieres que esto sea un canal. No hay mínimo de volumen ni exclusividad que firmar antes.
+        </p>
+        <a href={bookUrl('partners')} target="_blank" rel="noopener" class="btn-primary mt-8 text-step-0">Hablemos 30 minutos</a>
+        <p class="machine text-step--1 text-muted mt-5">
+          <a href={`mailto:${EMAIL}?subject=Programa%20de%20partners`} class="hover:text-critical-text transition-colors">{EMAIL}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
