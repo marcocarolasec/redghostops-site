@@ -1,0 +1,161 @@
+---
+// Body of the /partners/ section. Rendered twice, once per language; the
+// copy lives in data/partners.ts and the prices come from data/pricing.ts,
+// so this file holds layout and nothing a translator needs to touch.
+import { services, entry, eur, fromPrice } from '../data/pricing';
+import { bookUrl, EMAIL } from '../data/site';
+import { partnersCopy, PARTNERS_PATH, LANG_NAME, ANCHORS, type Lang } from '../data/partners';
+
+export interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = partnersCopy[lang];
+const a = ANCHORS[lang];
+
+// Fixed order, Spanish first: the labels should not swap places when the
+// reader switches, and Spanish is this section's default.
+const langs: Lang[] = ['es', 'en'];
+---
+
+<section class="wrap pt-20 md:pt-28 pb-16">
+  <div class="rise">
+    <p class="text-step--1 text-muted">
+      {langs.map((l, i) => (
+        <>
+          {i > 0 && <span class="px-2 text-rule" aria-hidden="true">/</span>}
+          {l === lang
+            ? <span class="text-ink font-medium" aria-current="true">{LANG_NAME[l]}</span>
+            : <a href={PARTNERS_PATH[l]} hreflang={l} lang={l} class="link-quiet">{LANG_NAME[l]}</a>}
+        </>
+      ))}
+    </p>
+
+    <h1 class="text-step-5 display max-w-[18ch] mt-6">{c.hero.h1}</h1>
+    <p class="lede measure mt-8">{c.hero.lede}</p>
+    <div class="mt-10 flex flex-wrap gap-4">
+      <a href={bookUrl('partners')} target="_blank" rel="noopener" class="btn-primary">{c.hero.ctaPrimary}</a>
+      <a href={`#${a.how}`} class="btn-secondary">{c.hero.ctaSecondary}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section border-t border-rule">
+  <div class="wrap">
+    <h2 class="text-step-3 display">{c.audience.heading}</h2>
+    <ul class="mt-10 divide-y divide-rule border-t border-b border-rule max-w-4xl">
+      {c.audience.rows.map(([who, what]) => (
+        <li class="py-5 grid sm:grid-cols-[18rem_1fr] gap-x-8 gap-y-1">
+          <span class="font-medium">{who}</span>
+          <span class="text-muted text-step--1">{what}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-8 measure-wide">{c.audience.close}</p>
+  </div>
+</section>
+
+<section class="section border-t border-rule" id={a.how}>
+  <div class="wrap">
+    <h2 class="text-step-3 display">{c.how.heading}</h2>
+    <ol class="mt-12 grid md:grid-cols-2 gap-x-12 gap-y-10 max-w-4xl">
+      {c.how.steps.map(([title, body], i) => (
+        <li class="grid grid-cols-[2.5rem_1fr] gap-4">
+          <span class="machine text-muted pt-1">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <p class="font-medium">{title}</p>
+            <p class="mt-1 text-muted text-step--1">{body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <p class="mt-10 text-muted measure-wide">{c.how.terms}</p>
+  </div>
+</section>
+
+<section class="section border-t border-rule" id={a.sell}>
+  <div class="wrap">
+    <h2 class="text-step-3 display">{c.sell.heading}</h2>
+    <p class="lede measure mt-4">{c.sell.lede}</p>
+
+    <div class="mt-12 overflow-x-auto">
+      <table class="w-full text-left border-collapse min-w-[480px] max-w-4xl">
+        <thead>
+          <tr class="border-b border-rule text-step--1 text-muted">
+            <th scope="col" class="py-3 pr-6 font-normal">{c.sell.thService}</th>
+            <th scope="col" class="py-3 font-normal text-right">{c.sell.thPrice}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-rule">
+          <tr>
+            <th scope="row" class="py-4 pr-6 font-medium">{entry.name}</th>
+            <td class="py-4 machine text-right">{eur(entry.price)}</td>
+          </tr>
+          {services.map((s) => {
+            const from = fromPrice(s.key);
+            return (
+              <tr>
+                <th scope="row" class="py-4 pr-6 font-medium">{s.name}</th>
+                <td class="py-4 machine text-right">
+                  {from === null
+                    ? <span class="text-muted">{c.sell.customLabel}</span>
+                    : <span>{c.sell.fromLabel} {eur(from)}</span>}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mt-8 measure-wide">
+      {c.sell.discount}<a href="/services/" class="link-quiet">{c.sell.servicesLink}</a>.
+    </p>
+    <p class="mt-4 measure-wide">{c.sell.entry}</p>
+    <p class="mt-4 measure-wide">{c.sell.recurring}</p>
+  </div>
+</section>
+
+<section class="section border-t border-rule" id="kit-digital">
+  <div class="wrap">
+    <h2 class="text-step-3 display">{c.kitDigital.heading}</h2>
+    {c.kitDigital.body.map((p) => <p class="mt-4 first:mt-8 measure-wide">{p}</p>)}
+    <p class="mt-4 text-muted measure-wide">{c.kitDigital.note}</p>
+  </div>
+</section>
+
+<section class="section border-t border-rule" id="kit-consulting">
+  <div class="wrap">
+    <h2 class="text-step-3 display">{c.kitConsulting.heading}</h2>
+    {c.kitConsulting.body.map((p) => <p class="mt-4 first:mt-8 measure-wide">{p}</p>)}
+  </div>
+</section>
+
+<section class="section border-t border-rule">
+  <div class="wrap">
+    <h2 class="text-step-3 display">{c.faq.heading}</h2>
+    <div class="mt-10 divide-y divide-rule border-t border-b border-rule max-w-4xl">
+      {c.faq.items.map(([q, a]) => (
+        <div class="py-5">
+          <p class="font-medium">{q}</p>
+          <p class="mt-2 text-muted measure-wide">{a}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section border-t border-rule">
+  <div class="wrap">
+    <div class="sev sev-critical py-1 max-w-4xl">
+      <p class="text-step--1 text-muted">{c.closing.kicker}</p>
+      <h2 class="mt-2 text-step-4 display max-w-[20ch]">{c.closing.heading}</h2>
+      <p class="mt-6 measure-wide">{c.closing.body}</p>
+      <a href={bookUrl('partners')} target="_blank" rel="noopener" class="btn-primary mt-8 text-step-0">{c.closing.cta}</a>
+      <p class="machine text-step--1 text-muted mt-5">
+        <a href={`mailto:${EMAIL}?subject=${c.closing.mailSubject}`} class="hover:text-critical-text transition-colors">{EMAIL}</a>
+      </p>
+    </div>
+  </div>
+</section>

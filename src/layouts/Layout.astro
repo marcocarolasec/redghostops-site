@@ -7,6 +7,7 @@ export interface Props {
   description?: string;
   path?: string;
   lang?: string;
+  alternates?: { hreflang: string; href: string }[];
 }
 
 const SITE = 'https://redghostops.com';
@@ -16,6 +17,7 @@ const {
   description = 'Penetration testing and adversary simulation by a senior operator. Fixed scope, published prices, reports your engineers can act on. EU-registered.',
   path = '/',
   lang = 'en',
+  alternates = [],
 } = Astro.props;
 
 const canonical = new URL(path, SITE).href;
@@ -37,6 +39,9 @@ const nav = [
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
+  {alternates.map((alt) => (
+    <link rel="alternate" hreflang={alt.hreflang} href={new URL(alt.href, SITE).href} />
+  ))}
 
   <link rel="icon" type="image/png" href="/logo.png" />
   <link rel="preload" href="/fonts/bricolage-var.woff2" as="font" type="font/woff2" crossorigin />

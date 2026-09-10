@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PartnersPage from '../../components/PartnersPage.astro';
+import { partnersCopy, PARTNERS_PATH } from '../../data/partners';
+
+const c = partnersCopy.es;
+---
+
+<Layout
+  title={c.meta.title}
+  description={c.meta.description}
+  path={PARTNERS_PATH.es}
+  lang="es"
+  alternates={[
+    { hreflang: 'es', href: PARTNERS_PATH.es },
+    { hreflang: 'en', href: PARTNERS_PATH.en },
+    { hreflang: 'x-default', href: PARTNERS_PATH.es },
+  ]}
+>
+  <PartnersPage lang="es" />
+</Layout>
