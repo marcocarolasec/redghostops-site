@@ -51,39 +51,37 @@ const career = [
     </div>
   </section>
 
-  <section class="section border-t border-rule">
-    <div class="wrap">
+  <section class="border-t border-rule bg-paper-raised">
+    <div class="wrap py-16 md:py-20">
       <h2 class="text-step-3 display max-w-[18ch]">Certifications an auditor will recognize.</h2>
-      <p class="lede measure mt-4">Offensive security certifications with public verification pages. Open a badge to check the credential.</p>
 
-      <ul class="mt-12 flex items-start gap-8 md:gap-12 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0 pb-3">
+      <ul class="mt-10 flex items-start gap-5 md:gap-6 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0 pb-3">
         {creds.map((c) => {
-          const tile = c.badge
-            ? <img src={c.badge} alt="" width="112" height="112" loading="lazy" class="h-28 w-28 object-contain" />
-            : (
-              <span class="h-28 w-28 border border-rule bg-paper-raised flex flex-col items-center justify-center machine leading-none">
-                <span class="text-step-3">{c.mark ?? c.code}</span>
-                {c.mark && <span class="mt-2 text-step--1 text-muted">CVEs</span>}
-              </span>
-            );
-          const label = (
-            <span class="block mt-4 text-step--1">
-              <span class="block font-medium">{c.code}</span>
-              <span class="block text-muted">{c.issuer}</span>
+          const tile = (
+            <span class="flex items-center justify-center w-36 h-36 bg-paper border border-rule transition-colors group-hover:border-muted">
+              {c.badge
+                ? <img src={c.badge} alt={c.code} width="96" height="96" loading="lazy" class="h-24 w-24 object-contain" />
+                : (
+                  <span class="flex flex-col items-center justify-center machine leading-none">
+                    <span class="text-step-4">{c.mark ?? c.code}</span>
+                    {c.mark && <span class="mt-2 text-step--1 text-muted">CVEs</span>}
+                  </span>
+                )}
             </span>
           );
+          const label = <span class="block mt-3 text-step--1 text-muted">{c.issuer}</span>;
           return (
-            <li class="shrink-0 snap-center w-28">
+            <li class="shrink-0 snap-center w-36">
               {c.href
-                ? <a href={c.href} target="_blank" rel="noopener" title={c.name} class="block hover:text-critical-text transition-colors">{tile}{label}</a>
+                ? <a href={c.href} target="_blank" rel="noopener" title={c.name} class="group block">{tile}{label}</a>
                 : <div title={c.name}>{tile}{label}</div>}
             </li>
           );
         })}
       </ul>
 
-      <p class="mt-8 text-step--1 text-muted measure-wide">
-        Research at <a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="link-quiet">blog.redghostops.com</a>.
+      <p class="mt-6 text-step--1 text-muted">
+        Each badge opens its credential on credential.net. Research at <a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="link-quiet">blog.redghostops.com</a>.
       </p>
     </div>
   </section>
