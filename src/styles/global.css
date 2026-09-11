@@ -176,6 +176,27 @@ body {
   }
 }
 
+/* Certification badges: monochrome by default so the page keeps its one
+   colour; the official artwork returns in full on hover or keyboard focus,
+   which doubles as the "open the credential" cue. Touch devices have no
+   hover, so they get colour outright. The image file is never altered. */
+.badge {
+  filter: grayscale(1) brightness(1.15) contrast(1.05);
+  opacity: 0.88;
+  transition: filter 0.2s, opacity 0.2s;
+}
+.group:hover .badge,
+.group:focus-visible .badge {
+  filter: none;
+  opacity: 1;
+}
+@media (hover: none) {
+  .badge {
+    filter: none;
+    opacity: 1;
+  }
+}
+
 /* Severity marker: a rule down the left edge, the way a finding is flagged. */
 .sev {
   border-left: 3px solid var(--rule);

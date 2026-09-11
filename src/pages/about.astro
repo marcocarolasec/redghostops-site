@@ -60,7 +60,7 @@ const career = [
           const tile = (
             <span class="flex items-center justify-center w-36 h-36 bg-paper border border-rule transition-colors group-hover:border-muted">
               {c.badge
-                ? <img src={c.badge} alt={c.code} width="96" height="96" loading="lazy" class="h-24 w-24 object-contain" />
+                ? <img src={c.badge} alt={c.code} width="96" height="96" loading="lazy" class="badge h-24 w-24 object-contain" />
                 : (
                   <span class="flex flex-col items-center justify-center machine leading-none">
                     <span class="text-step-4">{c.mark ?? c.code}</span>
@@ -81,7 +81,7 @@ const career = [
       </ul>
 
       <p class="mt-6 text-step--1 text-muted">
-        Each badge opens its credential on credential.net. Research at <a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="link-quiet">blog.redghostops.com</a>.
+        Hover a badge to see it in color. Each one opens its credential on credential.net. Research at <a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="link-quiet">blog.redghostops.com</a>.
       </p>
     </div>
   </section>
