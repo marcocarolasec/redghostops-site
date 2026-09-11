@@ -2,17 +2,18 @@
 import Layout from '../layouts/Layout.astro';
 import { bookUrl, CTA_LABEL } from '../data/site';
 
-// One row per credential. Rows with a badge and an href render as links to
-// the issuer's verification page (credential.net). Badges are shown as
-// issued: no recolouring. Strongest signal first.
-type Cred = { code: string; name: string; issuer: string; badge?: string; href?: string };
-const certs: Cred[] = [
+// The credentials band. Badges are shown as issued (no recolouring) and
+// link to the issuer's verification page on credential.net. Items without
+// a badge render as a typographic tile of the same footprint; drop a
+// `badge` path in to swap the tile for the image (CEH is waiting on its PNG).
+type Cred = { code: string; name: string; issuer: string; badge?: string; href?: string; mark?: string };
+const creds: Cred[] = [
   { code: 'OSEP', name: 'Offensive Security Experienced Penetration Tester', issuer: 'OffSec, 2026', badge: '/badges/osep.png', href: 'https://www.credential.net/9a744c32-be17-45b6-98be-79cb304296a5#acc.ARa97kdy' },
   { code: 'OSCP', name: 'Offensive Security Certified Professional', issuer: 'OffSec, 2023', badge: '/badges/oscp.png', href: 'https://www.credential.net/aea87c4e-59c4-430c-86d4-38cf0a00112b#acc.doP0DjcQ' },
   { code: 'CRTP', name: 'Certified Red Team Professional', issuer: 'Pentester Academy, 2022', badge: '/badges/crtp.png', href: 'https://www.credential.net/5fa454b3-6490-4049-bc45-ecb2b5e9725c#acc.uQSM7VnY' },
   { code: 'OSWP', name: 'Offensive Security Wireless Professional', issuer: 'OffSec, 2023', badge: '/badges/oswp.png', href: 'https://www.credential.net/f6b151bb-63de-4546-a8c2-8c9169b16677#acc.8bsBtuNV' },
   { code: 'CEH', name: 'Certified Ethical Hacker', issuer: 'EC-Council, 2022' },
-  { code: '10 CVEs', name: 'MITRE and INCIBE assigned', issuer: 'CVE-2024-8161 and nine more' },
+  { code: '10 CVEs', name: 'Published vulnerabilities', issuer: 'MITRE and INCIBE', mark: '10' },
 ];
 
 const career = [
@@ -38,48 +39,52 @@ const career = [
   </section>
 
   <section class="section border-t border-rule">
-    <div class="wrap grid md:grid-cols-[1fr_1fr] gap-x-16 gap-y-10">
-      <div>
-        <h2 class="text-step-3 display">Asier Barranco</h2>
-        <p class="text-muted mt-1">Founder and lead consultant</p>
-        <p class="mt-6 measure">
-          Six years of full-time offensive security across Spanish telecom, boutique consultancies, and international red team engagements. Most recently senior offensive security engineer at Telefónica Tech, leading penetration tests across Active Directory, web applications, cloud, mobile, and infrastructure for international clients.
-        </p>
-        <p class="mt-4 measure text-muted">
-          Specialties: modern Active Directory attack chains, EDR evasion against Sophos, CrowdStrike, and SentinelOne, custom loader development, and web application security at depth. Works in English and Spanish.
-        </p>
-      </div>
-      <div>
-        <h2 class="text-step-1 font-medium">Verifiable, before you sign anything.</h2>
-        <ul class="mt-5 divide-y divide-rule border-t border-b border-rule text-step--1">
-          {certs.map((c) => {
-            const row = (
-              <>
-                <span class="flex items-center justify-center w-12 h-12 shrink-0">
-                  {c.badge
-                    ? <img src={c.badge} alt="" width="48" height="48" loading="lazy" class="w-12 h-12" />
-                    : <span class="machine whitespace-nowrap">{c.code}</span>}
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-medium">{c.name}</span>
-                  <span class="block text-muted">{c.issuer}</span>
-                </span>
-                {c.href && <span class="machine text-[0.72rem] text-muted self-center hidden sm:inline">credential.net</span>}
-              </>
+    <div class="wrap">
+      <h2 class="text-step-3 display">Asier Barranco</h2>
+      <p class="text-muted mt-1">Founder and lead consultant</p>
+      <p class="mt-6 measure-wide">
+        Six years of full-time offensive security across Spanish telecom, boutique consultancies, and international red team engagements. Most recently senior offensive security engineer at Telefónica Tech, leading penetration tests across Active Directory, web applications, cloud, mobile, and infrastructure for international clients.
+      </p>
+      <p class="mt-4 measure-wide text-muted">
+        Specialties: modern Active Directory attack chains, EDR evasion against Sophos, CrowdStrike, and SentinelOne, custom loader development, and web application security at depth. Works in English and Spanish.
+      </p>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-3 display max-w-[18ch]">Certifications an auditor will recognize.</h2>
+      <p class="lede measure mt-4">Offensive security certifications with public verification pages. Open a badge to check the credential.</p>
+
+      <ul class="mt-12 flex items-start gap-8 md:gap-12 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0 pb-3">
+        {creds.map((c) => {
+          const tile = c.badge
+            ? <img src={c.badge} alt="" width="112" height="112" loading="lazy" class="h-28 w-28" />
+            : (
+              <span class="h-28 w-28 border border-rule bg-paper-raised flex flex-col items-center justify-center machine leading-none">
+                <span class="text-step-3">{c.mark ?? c.code}</span>
+                {c.mark && <span class="mt-2 text-step--1 text-muted">CVEs</span>}
+              </span>
             );
-            return (
-              <li>
-                {c.href
-                  ? <a href={c.href} target="_blank" rel="noopener" class="grid grid-cols-[minmax(3rem,auto)_1fr_auto] gap-4 items-center py-3 hover:text-critical-text transition-colors">{row}</a>
-                  : <div class="grid grid-cols-[minmax(3rem,auto)_1fr_auto] gap-4 items-center py-3">{row}</div>}
-              </li>
-            );
-          })}
-        </ul>
-        <p class="mt-4 text-step--1 text-muted">
-          Each badge opens its credential on credential.net. Research at <a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="link-quiet">blog.redghostops.com</a>.
-        </p>
-      </div>
+          const label = (
+            <span class="block mt-4 text-step--1">
+              <span class="block font-medium">{c.code}</span>
+              <span class="block text-muted">{c.issuer}</span>
+            </span>
+          );
+          return (
+            <li class="shrink-0 snap-center w-28">
+              {c.href
+                ? <a href={c.href} target="_blank" rel="noopener" title={c.name} class="block hover:text-critical-text transition-colors">{tile}{label}</a>
+                : <div title={c.name}>{tile}{label}</div>}
+            </li>
+          );
+        })}
+      </ul>
+
+      <p class="mt-8 text-step--1 text-muted measure-wide">
+        Research at <a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="link-quiet">blog.redghostops.com</a>.
+      </p>
     </div>
   </section>
 
