@@ -2,6 +2,16 @@
 import Layout from '../layouts/Layout.astro';
 import { bookUrl, CTA_LABEL } from '../data/site';
 
+// Official issuer badges, shown as issued: no recolouring, uniform height.
+// Order is strongest signal first. Add `href` with the verification URL
+// when available; the strip renders each as a link automatically.
+const badges = [
+  { src: '/badges/osep.png', alt: 'OffSec OSEP badge, Offensive Security Experienced Penetration Tester' },
+  { src: '/badges/oscp.png', alt: 'OffSec OSCP badge, Offensive Security Certified Professional' },
+  { src: '/badges/crtp.png', alt: 'CRTP badge, Certified Red Team Professional' },
+  { src: '/badges/oswp.png', alt: 'OffSec OSWP badge, Offensive Security Wireless Professional' },
+] as { src: string; alt: string; href?: string }[];
+
 const certs = [
   ['OSEP', 'Offensive Security Experienced Penetration Tester', 'OffSec, 2026'],
   ['OSCP', 'Offensive Security Certified Professional', 'OffSec, 2023'],
@@ -61,6 +71,22 @@ const career = [
         <p class="mt-4 text-step--1 text-muted">
           OSEP is verifiable on the OffSec certification page. Research at <a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="link-quiet">blog.redghostops.com</a>.
         </p>
+      </div>
+
+      <div class="md:col-span-2 mt-2 pt-10 border-t border-rule">
+        <ul role="list" class="flex items-center gap-10 md:gap-14 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0 pb-2">
+          {badges.map((b) => (
+            <li class="shrink-0 snap-center">
+              {b.href ? (
+                <a href={b.href} target="_blank" rel="noopener" class="block transition-transform hover:-translate-y-0.5 motion-reduce:transform-none">
+                  <img src={b.src} alt={b.alt} width="112" height="112" loading="lazy" class="h-24 md:h-28 w-auto" />
+                </a>
+              ) : (
+                <img src={b.src} alt={b.alt} width="112" height="112" loading="lazy" class="h-24 md:h-28 w-auto" />
+              )}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   </section>
