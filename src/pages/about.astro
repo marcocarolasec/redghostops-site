@@ -12,7 +12,7 @@ const creds: Cred[] = [
   { code: 'OSCP', name: 'Offensive Security Certified Professional', issuer: 'OffSec, 2023', badge: '/badges/oscp.png', href: 'https://www.credential.net/aea87c4e-59c4-430c-86d4-38cf0a00112b#acc.doP0DjcQ' },
   { code: 'CRTP', name: 'Certified Red Team Professional', issuer: 'Pentester Academy, 2022', badge: '/badges/crtp.png', href: 'https://www.credential.net/5fa454b3-6490-4049-bc45-ecb2b5e9725c#acc.uQSM7VnY' },
   { code: 'OSWP', name: 'Offensive Security Wireless Professional', issuer: 'OffSec, 2023', badge: '/badges/oswp.png', href: 'https://www.credential.net/f6b151bb-63de-4546-a8c2-8c9169b16677#acc.8bsBtuNV' },
-  { code: 'CEH', name: 'Certified Ethical Hacker', issuer: 'EC-Council, 2022' },
+  { code: 'CEH', name: 'Certified Ethical Hacker', issuer: 'EC-Council, 2022', badge: '/badges/ceh.png' },
   { code: '10 CVEs', name: 'Published vulnerabilities', issuer: 'MITRE and INCIBE', mark: '10' },
 ];
 
@@ -59,7 +59,7 @@ const career = [
       <ul class="mt-12 flex items-start gap-8 md:gap-12 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0 pb-3">
         {creds.map((c) => {
           const tile = c.badge
-            ? <img src={c.badge} alt="" width="112" height="112" loading="lazy" class="h-28 w-28" />
+            ? <img src={c.badge} alt="" width="112" height="112" loading="lazy" class="h-28 w-28 object-contain" />
             : (
               <span class="h-28 w-28 border border-rule bg-paper-raised flex flex-col items-center justify-center machine leading-none">
                 <span class="text-step-3">{c.mark ?? c.code}</span>
