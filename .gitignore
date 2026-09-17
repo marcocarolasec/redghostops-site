@@ -26,3 +26,6 @@ pnpm-debug.log*
 .vscode/
 .idea/
 *.swp
+
+# Cowork delivered files (screenshots, not part of the site)
+Claude outputs/
