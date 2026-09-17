@@ -46,12 +46,22 @@ export const services: Service[] = [
     tiers: [{ label: '', scope: 'Up to 50 live hosts', days: 5, price: 5900 }],
   },
   {
+    key: 'internal-pentest',
+    name: 'Internal Network Pentest',
+    tiers: [{ label: '', scope: 'Assumed breach, internal network', days: null, price: null }],
+  },
+  {
     key: 'ad-assessment',
     name: 'Active Directory Assessment',
     tiers: [
       { label: 'Single domain', scope: 'One AD domain', days: 7, price: 8900 },
       { label: 'Multi-domain', scope: 'Multi-domain / forest', days: 10, price: 11900 },
     ],
+  },
+  {
+    key: 'mobile-pentest',
+    name: 'Mobile Application Pentest',
+    tiers: [{ label: '', scope: 'iOS or Android, one app', days: null, price: null }],
   },
   {
     key: 'red-team',

@@ -6,10 +6,21 @@ import { bookUrl, CTA_LABEL, EMAIL } from '../data/site';
 const catalog = [
   { key: 'web-pentest', name: 'Web Application Pentest', line: 'Manual testing of web apps and APIs. Auth, business logic, authorization, injection chains.' },
   { key: 'external-pentest', name: 'External Network Pentest', line: 'Your internet-facing infrastructure from an attacker’s seat. Recon, enumeration, exploit validation.' },
+  { key: 'internal-pentest', name: 'Internal Network Pentest', line: 'Assumed breach to Domain Admin. AD attack chains, segmentation, lateral movement.' },
   { key: 'ad-assessment', name: 'Active Directory Assessment', line: 'Assumed foothold to Domain Admin. Kerberos, ACL abuse, relay, lateral movement.' },
+  { key: 'mobile-pentest', name: 'Mobile Application Pentest', line: 'iOS and Android, static and dynamic. Local storage, pinning, and the backend API.' },
   { key: 'red-team', name: 'Red Team Operations', line: 'Objective-based adversary simulation with EDR evasion. Tests prevention and detection together.' },
   { key: 'cloud', name: 'Cloud Security Assessment', line: 'AWS, Azure, GCP. IAM escalation paths, exposed storage, hybrid cloud-to-on-prem routes.' },
 ];
+
+// Services with a dedicated page; the rest deep-link into /services/.
+const pagePath: Record<string, string> = {
+  'web-pentest': '/web-pentest/',
+  'external-pentest': '/external-pentest/',
+  'internal-pentest': '/internal-pentest/',
+  'mobile-pentest': '/mobile-pentest/',
+  'red-team': '/red-team/',
+};
 
 const comparison = [
   ['Who does the work', 'Juniors, supervised remotely by a senior selling five other projects', 'The same senior operator from kickoff to retest'],
@@ -107,7 +118,7 @@ const comparison = [
           return (
             <li class="py-5 grid md:grid-cols-[1fr_auto] gap-x-8 gap-y-1 items-baseline">
               <div>
-                <a href={`/services/#${s.key}`} class="font-semibold tracking-tight hover:text-critical-text transition-colors">{s.name}</a>
+                <a href={pagePath[s.key] ?? `/services/#${s.key}`} class="font-semibold tracking-tight hover:text-critical-text transition-colors">{s.name}</a>
                 <p class="text-soft text-step--1 mt-1 measure-wide">{s.line}</p>
               </div>
               <div class="machine text-step-0 text-muted md:text-right">

@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://redghostops.com/</loc></url>
   <url><loc>https://redghostops.com/services/</loc></url>
+  <url><loc>https://redghostops.com/internal-pentest/</loc></url>
+  <url><loc>https://redghostops.com/internal-pentest/es/</loc></url>
+  <url><loc>https://redghostops.com/external-pentest/</loc></url>
+  <url><loc>https://redghostops.com/external-pentest/es/</loc></url>
+  <url><loc>https://redghostops.com/web-pentest/</loc></url>
+  <url><loc>https://redghostops.com/web-pentest/es/</loc></url>
+  <url><loc>https://redghostops.com/mobile-pentest/</loc></url>
+  <url><loc>https://redghostops.com/mobile-pentest/es/</loc></url>
+  <url><loc>https://redghostops.com/red-team/</loc></url>
+  <url><loc>https://redghostops.com/red-team/es/</loc></url>
   <url><loc>https://redghostops.com/about/</loc></url>
   <url><loc>https://redghostops.com/contact/</loc></url>
   <url><loc>https://redghostops.com/partners/</loc></url>

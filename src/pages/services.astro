@@ -34,7 +34,28 @@ const detail = {
     delivers: ['Cloud attack surface map and IAM privilege graph', 'Exploitable misconfigurations with a hardening playbook', 'Free retest within 30 days'],
     format: 'Remote, 5–10 days',
   },
+  'internal-pentest': {
+    summary: 'Assumed-breach testing of your internal network, from a standard user or an unprivileged host toward Domain Admin and Tier-0. Maps the path a real intruder takes once the perimeter is behind them.',
+    covers: ['Active Directory, ADCS, and credential access', 'Segmentation and lateral movement', 'Privilege escalation to Tier-0'],
+    delivers: ['Attack path documentation with BloodHound graphs', 'Prioritized remediation and detection hints', 'Free retest within 30 days'],
+    format: 'Remote or on-site',
+  },
+  'mobile-pentest': {
+    summary: 'iOS and Android application testing, static and dynamic, covering the app on the device and the backend API it trusts. Aligned to OWASP MASVS.',
+    covers: ['Local storage, keychain, and platform misuse', 'Certificate pinning and transport security', 'The backend API and its authorization'],
+    delivers: ['Findings with CVSS scores and reproduction steps', 'Static and dynamic results, app and API', 'Free retest within 30 days'],
+    format: 'Remote',
+  },
 } as const;
+
+// Services with a dedicated deep-dive page. The rest link to the price list.
+const briefPage: Record<string, string> = {
+  'web-pentest': '/web-pentest/',
+  'external-pentest': '/external-pentest/',
+  'internal-pentest': '/internal-pentest/',
+  'mobile-pentest': '/mobile-pentest/',
+  'red-team': '/red-team/',
+};
 
 const process = [
   ['Scoping call', 'Thirty minutes to understand objectives, scope, and constraints. Mutual NDA in place before any technical detail.'],
@@ -160,7 +181,9 @@ const process = [
             <p class="mt-6 measure">{d.summary}</p>
             <div class="mt-6 flex flex-wrap items-center gap-6">
               <a href={bookUrl(s.key)} target="_blank" rel="noopener" class="btn-primary">{CTA_LABEL}</a>
-              <a href="#pricing" class="link-quiet text-step--1">Price list</a>
+              {briefPage[s.key]
+                ? <a href={briefPage[s.key]} class="link-quiet text-step--1">Full brief</a>
+                : <a href="#pricing" class="link-quiet text-step--1">Price list</a>}
             </div>
           </div>
           <div class="grid sm:grid-cols-2 gap-8 text-step--1">

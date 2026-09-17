@@ -1,0 +1,20 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import RedTeamPage from '../../components/RedTeamPage.astro';
+import { redteamCopy, REDTEAM_PATH } from '../../data/redteam';
+const c = redteamCopy.en;
+---
+
+<Layout
+  title={c.meta.title}
+  description={c.meta.description}
+  path={REDTEAM_PATH.en}
+  lang="en"
+  alternates={[
+    { hreflang: 'en', href: REDTEAM_PATH.en },
+    { hreflang: 'es', href: REDTEAM_PATH.es },
+    { hreflang: 'x-default', href: REDTEAM_PATH.en },
+  ]}
+>
+  <RedTeamPage lang="en" />
+</Layout>
