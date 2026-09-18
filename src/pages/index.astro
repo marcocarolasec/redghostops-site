@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { entry, eur, fromPrice } from '../data/pricing';
 import { bookUrl, CTA_LABEL, EMAIL } from '../data/site';
+import { band } from '../data/clients';
 
 const catalog = [
   { key: 'web-pentest', name: 'Web Application Pentest', line: 'Manual testing of web apps and APIs. Auth, business logic, authorization, injection chains.' },
@@ -23,7 +24,7 @@ const pagePath: Record<string, string> = {
 };
 
 const comparison = [
-  ['Who does the work', 'Juniors, supervised remotely by a senior selling five other projects', 'The same senior operator from kickoff to retest'],
+  ['Who does the work', 'Juniors, supervised remotely by a senior selling five other projects', 'A senior operator, the same one from kickoff to retest. No juniors, no handoffs'],
   ['The report', 'Mostly boilerplate, CVSS inflated to justify the invoice', 'Written for your environment, scored honestly, remediation for your stack'],
   ['Communication', 'An account manager in the middle; answers take days', 'A direct channel to the operator; answers in hours'],
   ['Procurement', 'Forty-page MSAs, weeks of onboarding, change-order fees', 'NDA in 24 hours, proposal in 48, testing within three weeks'],
@@ -39,7 +40,7 @@ const comparison = [
         Adversary simulation for <span class="redact" tabindex="0" title="Hover to reveal">you</span>.
       </h1>
       <p class="lede measure mt-8">
-        Penetration testing and red team operations by one senior operator, start to finish. Fixed scope, published prices, and a report your engineers can act on.
+        Penetration testing and red team operations by a small team of senior operators. The person who scopes your engagement is the person who runs it, start to finish. Fixed scope, published prices, and a report your engineers can act on.
       </p>
       <div class="mt-10 flex flex-wrap gap-4">
         <a href={bookUrl()} target="_blank" rel="noopener" class="btn-primary">{CTA_LABEL}</a>
@@ -49,7 +50,7 @@ const comparison = [
         Start small: {entry.name}, <span class="machine text-ink">{eur(entry.price)}</span>, two days, credited against a full engagement.
       </p>
       <p class="mt-6 text-step--1 text-muted measure">
-        OSEP and OSCP certified. Ten published CVEs. Six years of full-time offensive work. Registered in Cyprus, EU.
+        OSEP and OSCP certified. Ten published CVEs. Head of Security at AuditOne. Formerly Telefónica Tech. Registered in Cyprus, EU.
       </p>
     </div>
 
@@ -74,6 +75,36 @@ const comparison = [
     </figure>
   </section>
 
+  <section class="border-t border-rule bg-paper-raised overflow-hidden">
+    <div class="wrap py-10 md:py-12">
+      <div class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+        <p class="machine text-[0.72rem] uppercase tracking-wider text-muted">Track record</p>
+        <a href="/clients/" class="link-quiet text-step--1">Every name, with the public source</a>
+      </div>
+    </div>
+    <div class="marquee" aria-label="Organisations we have worked with">
+      {[0, 1].map((copy) => (
+        <ul class="marquee-track" aria-hidden={copy === 1}>
+          {band.map((c) => (
+            <li class="marquee-item">
+              <a href="/clients/" title={c.relation} tabindex={copy === 1 ? -1 : 0} class="block opacity-60 hover:opacity-100 transition-opacity">
+                {c.logo
+                  ? <img src={c.logo} alt={c.name} height={c.logoH ?? 26} style={`height:${c.logoH ?? 26}px`} class="w-auto max-w-[200px] logo-mono" loading="lazy" />
+                  : <span class="display text-step-1 tracking-tight whitespace-nowrap">{c.short ?? c.name}</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+    <div class="wrap pb-10 md:pb-12">
+      <p class="mt-8 text-step--1 text-muted measure-wide">
+        Where we have worked, in-house and as a vendor. Public audit reports where the client agreed to publish; the rest under NDA and available as references on request.
+      </p>
+    </div>
+  </section>
+
+
   <section class="section border-t border-rule">
     <div class="wrap">
       <h2 class="display text-step-4 md:text-step-5 max-w-[16ch]">
@@ -82,7 +113,7 @@ const comparison = [
       <div class="mt-12 grid md:grid-cols-3 gap-10">
         <div class="measure">
           <p class="font-semibold">Senior only.</p>
-          <p class="mt-2 text-soft">Every engagement is executed end to end by the same OSEP-certified operator. No juniors learning on your network.</p>
+          <p class="mt-2 text-soft">A small team, all senior, all OSEP or OSCP certified. Every engagement is executed end to end by the same operator. No juniors learning on your network.</p>
         </div>
         <div class="measure">
           <p class="font-semibold">Manual depth.</p>
@@ -158,7 +189,7 @@ const comparison = [
         </table>
       </div>
       <p class="mt-6 text-step--1 text-muted measure-wide">
-        Credentials you can check before signing anything: OSEP on the OffSec verification page, CVEs with MITRE and INCIBE identifiers, research at <a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="link-quiet">blog.redghostops.com</a>.
+        Credentials you can check before signing anything: OSEP on the OffSec verification page, CVEs with MITRE and INCIBE identifiers, public audit reports on <a href="/clients/" class="link-quiet">the clients page</a>, research at <a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="link-quiet">blog.redghostops.com</a>.
       </p>
     </div>
   </section>

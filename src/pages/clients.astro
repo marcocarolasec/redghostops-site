@@ -1,0 +1,104 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { bookUrl, CTA_LABEL, EMAIL } from '../data/site';
+import { clients, KIND_LABEL } from '../data/clients';
+
+// Public engagements first, then in-house history, then partners.
+const order = ['client', 'platform', 'institution', 'employer', 'partner'] as const;
+const sorted = [...clients].sort((a, b) => order.indexOf(a.kind) - order.indexOf(b.kind));
+
+const numbers = [
+  ['10', 'published CVEs, MITRE and INCIBE identifiers'],
+  ['6+', 'years of full-time offensive work'],
+  ['2', 'public audit reports you can read today'],
+  ['19', 'findings on the AuditOne platform, 3 Critical/High'],
+];
+---
+
+<Layout
+  title="Clients and track record — REDOPS Security"
+  description="Who REDOPS Security has worked for, in-house and as a vendor: Telefónica Tech, AuditOne, Bloom Wallet, INCIBE, Bullhost, SPRI and more. Public audit reports linked."
+  path="/clients/"
+>
+  <section class="wrap pt-20 md:pt-28 pb-16">
+    <div class="rise">
+      <h1 class="text-step-5 display max-w-[16ch]">Names you can check.</h1>
+      <p class="lede measure mt-8">
+        Most pentest work is under NDA, so most consultancies show you nothing. This is what we can show: where the team has worked, the engagements clients agreed to publish, and the public bodies that carry our research.
+      </p>
+    </div>
+  </section>
+
+  <section class="border-t border-rule bg-paper-raised">
+    <div class="wrap py-12 md:py-14">
+      <dl class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-8">
+        {numbers.map(([n, label]) => (
+          <div>
+            <dt class="machine text-step-4 md:text-step-5 leading-none">{n}</dt>
+            <dd class="mt-3 text-step--1 text-muted measure">{label}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-3 display">Track record.</h2>
+      <p class="text-muted mt-3 measure-wide">Every entry links to a public source where one exists. Where the client has not published, the engagement is described and available as a reference on request, with their consent.</p>
+
+      <ol class="mt-10 divide-y divide-rule border-t border-b border-rule">
+        {sorted.map((c) => (
+          <li class="py-7 grid md:grid-cols-[14rem_1fr_auto] gap-x-10 gap-y-3 items-start">
+            <div>
+              <p class="display text-step-2 tracking-tight leading-tight">{c.name}</p>
+              <p class="machine text-[0.72rem] uppercase tracking-wider text-muted mt-2">{KIND_LABEL[c.kind]}{c.since ? ` · since ${c.since}` : ''}</p>
+            </div>
+            <div>
+              <p class="text-step--1 text-muted">{c.sector}</p>
+              <p class="mt-2 font-medium">{c.relation}</p>
+              {c.detail && <p class="mt-2 text-soft text-step--1 measure-wide">{c.detail}</p>}
+              {c.proof && !c.proof.startsWith('http') && <p class="mt-2 machine text-step--1 text-muted">{c.proof}</p>}
+            </div>
+            <div class="flex flex-col gap-2 md:text-right text-step--1">
+              {c.href && <a href={c.href} target="_blank" rel="noopener" class="link-quiet">{c.hrefLabel ?? 'Website'} ↗</a>}
+              {c.proof && c.proof.startsWith('http') && <a href={c.proof} target="_blank" rel="noopener" class="link-quiet">Auditor profile ↗</a>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap grid md:grid-cols-2 gap-x-16 gap-y-12">
+      <div>
+        <h2 class="text-step-2 display">Sectors we have tested.</h2>
+        <ul class="mt-6 space-y-3 text-muted measure">
+          <li><span class="text-ink font-medium">Banking and fintech.</span> External perimeter, web and API, internal Active Directory.</li>
+          <li><span class="text-ink font-medium">Healthcare.</span> Clinical and hospital environments, patient data flows, third-party hosted medical software.</li>
+          <li><span class="text-ink font-medium">Telecom and OT/IT.</span> Segmentation, legacy infrastructure, wireless.</li>
+          <li><span class="text-ink font-medium">SaaS and Web3.</span> Wallets, platforms, transaction integrations, cloud IAM.</li>
+          <li><span class="text-ink font-medium">Public sector and MSPs.</span> Through partners and public programmes in Spain.</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-step-2 display">References.</h2>
+        <p class="mt-6 text-muted measure">
+          For engagements under NDA we can arrange a reference call with a previous client, with their consent, once we have scoped your project. Ask on the call or write to <a href={`mailto:${EMAIL}`} class="link-quiet machine">{EMAIL}</a>.
+        </p>
+        <p class="mt-4 text-muted measure">
+          Team credentials, badge by badge, are on the <a href="/about/" class="link-quiet">About page</a>. Research and tooling are at <a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="link-quiet">blog.redghostops.com</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-t border-rule">
+    <div class="wrap">
+      <h2 class="text-step-4 display max-w-[18ch]">Want to be the next public report?</h2>
+      <p class="lede measure mt-6">Thirty minutes, NDA first. Publishing is always your call, never ours.</p>
+      <a href={bookUrl()} target="_blank" rel="noopener" class="btn-primary mt-10 text-step-0">{CTA_LABEL}</a>
+    </div>
+  </section>
+</Layout>

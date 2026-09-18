@@ -14,7 +14,7 @@ const SITE = 'https://redghostops.com';
 
 const {
   title = 'REDOPS Security — Offensive Security Consultancy',
-  description = 'Penetration testing and adversary simulation by a senior operator. Fixed scope, published prices, reports your engineers can act on. EU-registered.',
+  description = 'Penetration testing and adversary simulation by a small team of senior operators. Fixed scope, published prices, reports your engineers can act on. EU-registered.',
   path = '/',
   lang = 'en',
   alternates = [],
@@ -23,7 +23,6 @@ const {
 const canonical = new URL(path, SITE).href;
 
 const nav = [
-  { href: '/', label: 'Home' },
   {
     href: '/services/',
     label: 'Services',
@@ -37,6 +36,7 @@ const nav = [
       { href: '/red-team/', label: 'Red Team Operations' },
     ],
   },
+  { href: '/clients/', label: 'Clients' },
   { href: '/about/', label: 'About' },
   { href: 'https://blog.redghostops.com', label: 'Research', external: true },
   { href: '/partners/', label: 'Partners' },
@@ -177,7 +177,7 @@ const nav = [
         <div>
           <div class="font-semibold mb-3">REDOPS Security</div>
           <p class="text-muted text-step--1 max-w-prose">
-            Penetration testing and adversary simulation, delivered by the person who does the testing.
+            Penetration testing and adversary simulation, delivered by the people who do the testing.
           </p>
           <p class="machine text-step--1 text-muted mt-4">REDOPS Security Ltd. · Cyprus · HE 491541</p>
         </div>
@@ -188,6 +188,7 @@ const nav = [
             <li><a href="/services/" class="hover:text-critical-text transition-colors">Services and pricing</a></li>
             <li><a href="/red-team/" class="hover:text-critical-text transition-colors">Red team operations</a></li>
             <li><a href="/about/" class="hover:text-critical-text transition-colors">About</a></li>
+            <li><a href="/clients/" class="hover:text-critical-text transition-colors">Clients</a></li>
             <li><a href="https://blog.redghostops.com" rel="noopener" target="_blank" class="hover:text-critical-text transition-colors">Research</a></li>
             <li><a href="/partners/" class="hover:text-critical-text transition-colors">Partners</a></li>
             <li><a href="/contact/" class="hover:text-critical-text transition-colors">Contact</a></li>

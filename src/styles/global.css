@@ -268,3 +268,36 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #3a3a40;
 }
+
+/* Client logos in the track-record band: rendered as one-colour marks so nine
+   different brand palettes read as a single row. Originals live in /public/logos. */
+.logo-mono { filter: brightness(0) invert(1); }
+
+/* Track-record marquee. Two identical tracks scroll left; when the first has
+   moved exactly its own width the loop restarts, so the seam is invisible.
+   Pauses on hover and stands still for people who asked for less motion. */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 5rem;
+  padding-right: 5rem;
+  margin: 0;
+  list-style: none;
+  animation: marquee 48s linear infinite;
+}
+.marquee-item { display: flex; align-items: center; height: 3rem; flex-shrink: 0; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-100%); } }
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  .marquee { flex-wrap: wrap; mask-image: none; -webkit-mask-image: none; padding: 0 1.5rem; }
+  .marquee-track[aria-hidden="true"] { display: none; }
+  .marquee-track { flex-wrap: wrap; gap: 2rem 3rem; }
+}

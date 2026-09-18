@@ -17,7 +17,7 @@ export const redteamCopy = {
   en: {
     meta: {
       title: 'Red Team Operations — REDOPS Security',
-      description: 'Objective-based adversary simulation by a senior operator. Custom tooling, EDR evasion, and a debrief that tells your SOC exactly what it caught and what it missed.',
+      description: 'Objective-based adversary simulation by senior operators. Custom tooling, EDR evasion, and a debrief that tells your SOC exactly what it caught and what it missed.',
     },
     kicker: 'Red team',
     h1: 'Find out what your defenders actually catch.',
@@ -35,7 +35,7 @@ export const redteamCopy = {
     },
     stages: {
       heading: 'How the operation runs.',
-      lede: 'One senior operator from planning to debrief. Every action logged, critical findings escalated the day they happen.',
+      lede: 'One senior operator, the same one from planning to debrief. Every action logged, critical findings escalated the day they happen.',
       steps: [
         ['Threat intel and planning', 'We agree on the adversary to emulate and the objective that defines success. Recon builds the picture: exposed infrastructure, people, technology, leaked credentials. The blue team is not told.'],
         ['Initial access', 'Phishing, external exploitation, or an agreed assumed-breach starting point. Whatever a real operator with that objective would use, inside the rules of engagement.'],
@@ -97,7 +97,7 @@ export const redteamCopy = {
     different: {
       heading: 'Why this red team is different.',
       items: [
-        ['One senior operator', 'The person who plans the operation runs it and writes it up. No juniors on your network, no handoffs.'],
+        ['Senior only', 'A small team of senior operators. The person who plans the operation runs it and writes it up. No juniors on your network, no handoffs.'],
         ['Custom tooling', 'Loaders and C2 built for the engagement, not off-the-shelf frameworks every EDR already fingerprints. Loader research is public on the blog.'],
         ['Real evasion', 'EDR evasion developed and tested against Sophos, CrowdStrike, and SentinelOne, not assumed from a course.'],
         ['Research to back it', 'Ten published CVEs with MITRE and INCIBE identifiers, and OSEP certification. Verifiable before you sign anything.'],
